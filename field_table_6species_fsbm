@@ -1,0 +1,732 @@
+# added by FRE: sphum must be present in atmos
+# specific humidity for moist runs
+ "TRACER", "atmos_mod", "sphum"
+           "longname",     "specific humidity"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# prognostic cloud water mixing ratio
+ "TRACER", "atmos_mod", "liq_wat"
+           "longname",     "cloud water mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "rainwat"
+           "longname",     "rain mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "ice_wat"
+           "longname",     "cloud ice mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "snowwat"
+           "longname",     "snow mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "graupel"
+           "longname",     "graupel mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# prognostic ozone mixing ratio tracer
+ "TRACER", "atmos_mod", "o3mr"
+           "longname",     "ozone mixing ratio"
+           "units",        "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# prognostic spectral-bin hydrometeor and aerosol
+ "TRACER", "atmos_mod", "qlr_1"
+           "longname",    "cloud water and rain mixing ratio bin 1"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_2"
+           "longname",    "cloud water and rain mixing ratio bin 2"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_3"
+           "longname",    "cloud water and rain mixing ratio bin 3"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_4"
+           "longname",    "cloud water and rain mixing ratio bin 4"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_5"
+           "longname",    "cloud water and rain mixing ratio bin 5"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_6"
+           "longname",    "cloud water and rain mixing ratio bin 6"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_7"
+           "longname",    "cloud water and rain mixing ratio bin 7"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_8"
+           "longname",    "cloud water and rain mixing ratio bin 8"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_9"
+           "longname",    "cloud water and rain mixing ratio bin 9"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_10"
+           "longname",    "cloud water and rain mixing ratio bin 10"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_11"
+           "longname",    "cloud water and rain mixing ratio bin 11"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_12"
+           "longname",    "cloud water and rain mixing ratio bin 12"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_13"
+           "longname",    "cloud water and rain mixing ratio bin 13"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_14"
+           "longname",    "cloud water and rain mixing ratio bin 14"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_15"
+           "longname",    "cloud water and rain mixing ratio bin 15"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_16"
+           "longname",    "cloud water and rain mixing ratio bin 16"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_17"
+           "longname",    "cloud water and rain mixing ratio bin 17"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_18"
+           "longname",    "cloud water and rain mixing ratio bin 18"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_19"
+           "longname",    "cloud water and rain mixing ratio bin 19"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_20"
+           "longname",    "cloud water and rain mixing ratio bin 20"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_21"
+           "longname",    "cloud water and rain mixing ratio bin 21"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_22"
+           "longname",    "cloud water and rain mixing ratio bin 22"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_23"
+           "longname",    "cloud water and rain mixing ratio bin 23"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_24"
+           "longname",    "cloud water and rain mixing ratio bin 24"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_25"
+           "longname",    "cloud water and rain mixing ratio bin 25"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_26"
+           "longname",    "cloud water and rain mixing ratio bin 26"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_27"
+           "longname",    "cloud water and rain mixing ratio bin 27"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_28"
+           "longname",    "cloud water and rain mixing ratio bin 28"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_29"
+           "longname",    "cloud water and rain mixing ratio bin 29"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_30"
+           "longname",    "cloud water and rain mixing ratio bin 30"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_31"
+           "longname",    "cloud water and rain mixing ratio bin 31"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_32"
+           "longname",    "cloud water and rain mixing ratio bin 32"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qlr_33"
+           "longname",    "cloud water and rain mixing ratio bin 33"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_1"
+           "longname",    "cloud ice and snow mixing ratio bin 1"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_2"
+           "longname",    "cloud ice and snow mixing ratio bin 2"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_3"
+           "longname",    "cloud ice and snow mixing ratio bin 3"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_4"
+           "longname",    "cloud ice and snow mixing ratio bin 4"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_5"
+           "longname",    "cloud ice and snow mixing ratio bin 5"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_6"
+           "longname",    "cloud ice and snow mixing ratio bin 6"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_7"
+           "longname",    "cloud ice and snow mixing ratio bin 7"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_8"
+           "longname",    "cloud ice and snow mixing ratio bin 8"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_9"
+           "longname",    "cloud ice and snow mixing ratio bin 9"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_10"
+           "longname",    "cloud ice and snow mixing ratio bin 10"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_11"
+           "longname",    "cloud ice and snow mixing ratio bin 11"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_12"
+           "longname",    "cloud ice and snow mixing ratio bin 12"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_13"
+           "longname",    "cloud ice and snow mixing ratio bin 13"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_14"
+           "longname",    "cloud ice and snow mixing ratio bin 14"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_15"
+           "longname",    "cloud ice and snow mixing ratio bin 15"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_16"
+           "longname",    "cloud ice and snow mixing ratio bin 16"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_17"
+           "longname",    "cloud ice and snow mixing ratio bin 17"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_18"
+           "longname",    "cloud ice and snow mixing ratio bin 18"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_19"
+           "longname",    "cloud ice and snow mixing ratio bin 19"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_20"
+           "longname",    "cloud ice and snow mixing ratio bin 20"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_21"
+           "longname",    "cloud ice and snow mixing ratio bin 21"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_22"
+           "longname",    "cloud ice and snow mixing ratio bin 22"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_23"
+           "longname",    "cloud ice and snow mixing ratio bin 23"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_24"
+           "longname",    "cloud ice and snow mixing ratio bin 24"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_25"
+           "longname",    "cloud ice and snow mixing ratio bin 25"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_26"
+           "longname",    "cloud ice and snow mixing ratio bin 26"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_27"
+           "longname",    "cloud ice and snow mixing ratio bin 27"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_28"
+           "longname",    "cloud ice and snow mixing ratio bin 28"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_29"
+           "longname",    "cloud ice and snow mixing ratio bin 29"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_30"
+           "longname",    "cloud ice and snow mixing ratio bin 30"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_31"
+           "longname",    "cloud ice and snow mixing ratio bin 31"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_32"
+           "longname",    "cloud ice and snow mixing ratio bin 32"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qis_33"
+           "longname",    "cloud ice and snow mixing ratio bin 33"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_1"
+           "longname",    "graupel mixing ratio bin 1"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_2"
+           "longname",    "graupel mixing ratio bin 2"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_3"
+           "longname",    "graupel mixing ratio bin 3"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_4"
+           "longname",    "graupel mixing ratio bin 4"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_5"
+           "longname",    "graupel mixing ratio bin 5"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_6"
+           "longname",    "graupel mixing ratio bin 6"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_7"
+           "longname",    "graupel mixing ratio bin 7"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_8"
+           "longname",    "graupel mixing ratio bin 8"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_9"
+           "longname",    "graupel mixing ratio bin 9"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_10"
+           "longname",    "graupel mixing ratio bin 10"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_11"
+           "longname",    "graupel mixing ratio bin 11"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_12"
+           "longname",    "graupel mixing ratio bin 12"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_13"
+           "longname",    "graupel mixing ratio bin 13"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_14"
+           "longname",    "graupel mixing ratio bin 14"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_15"
+           "longname",    "graupel mixing ratio bin 15"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_16"
+           "longname",    "graupel mixing ratio bin 16"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_17"
+           "longname",    "graupel mixing ratio bin 17"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_18"
+           "longname",    "graupel mixing ratio bin 18"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_19"
+           "longname",    "graupel mixing ratio bin 19"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_20"
+           "longname",    "graupel mixing ratio bin 20"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_21"
+           "longname",    "graupel mixing ratio bin 21"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_22"
+           "longname",    "graupel mixing ratio bin 22"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_23"
+           "longname",    "graupel mixing ratio bin 23"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_24"
+           "longname",    "graupel mixing ratio bin 24"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_25"
+           "longname",    "graupel mixing ratio bin 25"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_26"
+           "longname",    "graupel mixing ratio bin 26"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_27"
+           "longname",    "graupel mixing ratio bin 27"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_28"
+           "longname",    "graupel mixing ratio bin 28"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_29"
+           "longname",    "graupel mixing ratio bin 29"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_30"
+           "longname",    "graupel mixing ratio bin 30"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_31"
+           "longname",    "graupel mixing ratio bin 31"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_32"
+           "longname",    "graupel mixing ratio bin 32"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_33"
+           "longname",    "graupel mixing ratio bin 33"
+           "units",     "kg/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_1"
+           "longname",    "aerosol number concentration bin 1"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_2"
+           "longname",    "aerosol number concentration bin 2"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_3"
+           "longname",    "aerosol number concentration bin 3"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_4"
+           "longname",    "aerosol number concentration bin 4"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_5"
+           "longname",    "aerosol number concentration bin 5"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_6"
+           "longname",    "aerosol number concentration bin 6"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_7"
+           "longname",    "aerosol number concentration bin 7"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_8"
+           "longname",    "aerosol number concentration bin 8"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_9"
+           "longname",    "aerosol number concentration bin 9"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_10"
+           "longname",    "aerosol number concentration bin 10"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_11"
+           "longname",    "aerosol number concentration bin 11"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_12"
+           "longname",    "aerosol number concentration bin 12"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_13"
+           "longname",    "aerosol number concentration bin 13"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_14"
+           "longname",    "aerosol number concentration bin 14"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_15"
+           "longname",    "aerosol number concentration bin 15"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_16"
+           "longname",    "aerosol number concentration bin 16"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_17"
+           "longname",    "aerosol number concentration bin 17"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_18"
+           "longname",    "aerosol number concentration bin 18"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_19"
+           "longname",    "aerosol number concentration bin 19"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_20"
+           "longname",    "aerosol number concentration bin 20"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_21"
+           "longname",    "aerosol number concentration bin 21"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_22"
+           "longname",    "aerosol number concentration bin 22"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_23"
+           "longname",    "aerosol number concentration bin 23"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_24"
+           "longname",    "aerosol number concentration bin 24"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_25"
+           "longname",    "aerosol number concentration bin 25"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_26"
+           "longname",    "aerosol number concentration bin 26"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_27"
+           "longname",    "aerosol number concentration bin 27"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_28"
+           "longname",    "aerosol number concentration bin 28"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_29"
+           "longname",    "aerosol number concentration bin 29"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_30"
+           "longname",    "aerosol number concentration bin 30"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_31"
+           "longname",    "aerosol number concentration bin 31"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_32"
+           "longname",    "aerosol number concentration bin 32"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_33"
+           "longname",    "aerosol number concentration bin 33"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_1"
+           "longname",    "cloud condensation nuclei bin 1"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_2"
+           "longname",    "cloud condensation nuclei bin 2"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_3"
+           "longname",    "cloud condensation nuclei bin 3"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_4"
+           "longname",    "cloud condensation nuclei bin 4"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_5"
+           "longname",    "cloud condensation nuclei bin 5"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_6"
+           "longname",    "cloud condensation nuclei bin 6"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_7"
+           "longname",    "cloud condensation nuclei bin 7"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_8"
+           "longname",    "cloud condensation nuclei bin 8"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_9"
+           "longname",    "cloud condensation nuclei bin 9"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_10"
+           "longname",    "cloud condensation nuclei bin 10"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_11"
+           "longname",    "cloud condensation nuclei bin 11"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_12"
+           "longname",    "cloud condensation nuclei bin 12"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_13"
+           "longname",    "cloud condensation nuclei bin 13"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_14"
+           "longname",    "cloud condensation nuclei bin 14"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_15"
+           "longname",    "cloud condensation nuclei bin 15"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_16"
+           "longname",    "cloud condensation nuclei bin 16"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_17"
+           "longname",    "cloud condensation nuclei bin 17"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_18"
+           "longname",    "cloud condensation nuclei bin 18"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_19"
+           "longname",    "cloud condensation nuclei bin 19"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_20"
+           "longname",    "cloud condensation nuclei bin 20"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_21"
+           "longname",    "cloud condensation nuclei bin 21"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_22"
+           "longname",    "cloud condensation nuclei bin 22"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_23"
+           "longname",    "cloud condensation nuclei bin 23"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_24"
+           "longname",    "cloud condensation nuclei bin 24"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_25"
+           "longname",    "cloud condensation nuclei bin 25"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_26"
+           "longname",    "cloud condensation nuclei bin 26"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_27"
+           "longname",    "cloud condensation nuclei bin 27"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_28"
+           "longname",    "cloud condensation nuclei bin 28"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_29"
+           "longname",    "cloud condensation nuclei bin 29"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_30"
+           "longname",    "cloud condensation nuclei bin 30"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_31"
+           "longname",    "cloud condensation nuclei bin 31"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_32"
+           "longname",    "cloud condensation nuclei bin 32"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_33"
+           "longname",    "cloud condensation nuclei bin 33"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# number concentration
+ "TRACER", "atmos_mod", "ql_num"
+           "longname",    "cloud water number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qr_num"
+           "longname",    "rain number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qi_num"
+           "longname",    "cloud ice number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qs_num"
+           "longname",    "snow number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qg_num"
+           "longname",    "graupel number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qa_num"
+           "longname",    "aerosol number concentration"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+ "TRACER", "atmos_mod", "qn_num"
+           "longname",    "cloud condensation nuclei"
+           "units",     "#/kg"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# prognostic tke
+ "TRACER", "atmos_mod", "sgs_tke"
+           "longname",    "TKE"
+           "units",     "m**2/s**2"
+       "profile_type", "fixed", "surface_value=1.e30" /
+# non-prognostic cloud amount
+ "TRACER", "atmos_mod", "cld_amt"
+           "longname",     "cloud amount"
+           "units",        "1"
+       "profile_type", "fixed", "surface_value=1.e30" /

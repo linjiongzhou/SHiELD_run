@@ -1,0 +1,35 @@
+#!/bin/csh -f
+
+#set echo
+
+set title = "IPDv4_DP_gfdlmp_ljz_rt2020_fsbm_res"
+
+set MEMO = "_RT2020_e032_res1"
+
+set EXE = "RT2020.e032.x"
+
+set basescript = "RUN_${title}.csh"
+
+set DATE = "20160801.00Z"
+
+set runname = SHiELD_${title}${MEMO}.${DATE}
+echo $runname
+
+sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+     s#EXE=x#EXE='$EXE'#g \
+     s#set COMP = "prod"#set COMP = "debug"#g \
+     s#set days = "1"#set days = "0"#g \
+     s#set hours = "0"#set hours = "2"#g \
+     s#set layout_x = "6"#set layout_x = "6"#g \
+     s#set layout_y = "6"#set layout_y = "3"#g \
+     s#set nthreads = "2"#set nthreads = "2"#g \
+     s#set HYPT = "on"#set HYPT = "on"#g \
+     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+     s#fv_debug = .F.#fv_debug = .T.#g' \
+$basescript >! ${runname}.csh
+
+chmod 755 ${runname}.csh
+sbatch --job-name=${runname} ${runname}.csh
+#rm -f ${runname}.csh

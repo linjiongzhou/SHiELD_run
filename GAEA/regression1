@@ -1,0 +1,88 @@
+#!/bin/csh -f
+
+#set echo
+
+#set title = "IPDv4_c768_gfdlmp_gfsic_ljz_rt2018_res"
+#set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2018_res"
+#set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2019_res"
+#set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_res"
+#set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_v15_res"
+set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_v15_aero_res"
+
+#set MEMO = "_rt2018_e2_res1"
+#set MEMO = "_20190305mods_rt1_res1"
+#set MEMO = "_20190305mods_rt2_res1"
+#set MEMO = "_20190417mods_rt1_res1"
+#set MEMO = "_20190417mods_rt2_res1"
+#set MEMO = "_20190417mods_rt3_res1"
+#set MEMO = "_20190417mods_rt4_res1"
+#set MEMO = "_RT2018_res1"
+#set MEMO = "_RT2019_res1"
+#set MEMO = "_RT2019_e44_res3"
+#set MEMO = "_RT2020_e005_res1"
+#set MEMO = "_RT2020_e005_noinline_res1"
+#set MEMO = "_RT2020_e007_res1"
+#set MEMO = "_RT2020_e035_v15_res1"
+#set MEMO = "_RT2020_e036_res1"
+#set MEMO = "_RT2020_e053_res3"
+set MEMO = "_RT2020_e056_res1"
+
+#set EXE = "x"
+#set EXE = "20190305mods.rt1.x"
+#set EXE = "20190305mods.rt2.x"
+#set EXE = "20190417mods.rt1.x"
+#set EXE = "20190417mods.rt2.x"
+#set EXE = "20190417mods.rt3.x"
+#set EXE = "20190417mods.rt4.x"
+#set EXE = "RT2019.e43.x"
+#set EXE = "RT2019.e44.x"
+#set EXE = "RT2020.e005.x"
+#set EXE = "RT2020.e007.x"
+#set EXE = "RT2020.e035.x"
+#set EXE = "RT2020.e036.x"
+#set EXE = "RT2020.e053.x"
+set EXE = "RT2020.e056.x"
+
+set basescript = "RUN_${title}.csh"
+
+#set DATE = "20160801.00Z"
+set DATE = "20190801.00Z"
+
+set runname = SHiELD_${title}${MEMO}.${DATE}
+echo $runname
+
+# c768
+#sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+#     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+#     s#EXE=x#EXE='$EXE'#g \
+#     s#set COMP = "prod"#set COMP = "debug"#g \
+#     s#set days = "10"#set days = "0"#g \
+#     s#set hours = "0"#set hours = "2"#g \
+#     s#set layout_x = "16"#set layout_x = "16"#g \
+#     s#set layout_y = "16"#set layout_y = "16"#g \
+#     s#set nthreads = "4"#set nthreads = "4"#g \
+#     s#set HYPT = "on"#set HYPT = "on"#g \
+#     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+#     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+#     s#fv_debug = .F.#fv_debug = .T.#g' \
+#$basescript >! ${runname}.csh
+
+# c48
+sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+     s#EXE=x#EXE='$EXE'#g \
+     s#set COMP = "prod"#set COMP = "debug"#g \
+     s#set days = "10"#set days = "0"#g \
+     s#set hours = "0"#set hours = "2"#g \
+     s#set layout_x = "2"#set layout_x = "2"#g \
+     s#set layout_y = "2"#set layout_y = "2"#g \
+     s#set nthreads = "2"#set nthreads = "2"#g \
+     s#set HYPT = "on"#set HYPT = "on"#g \
+     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+     s#fv_debug = .F.#fv_debug = .T.#g' \
+$basescript >! ${runname}.csh
+
+chmod 755 ${runname}.csh
+sbatch --job-name=${runname} ${runname}.csh
+#rm -f ${runname}.csh

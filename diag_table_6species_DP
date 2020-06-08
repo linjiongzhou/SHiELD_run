@@ -1,0 +1,686 @@
+#output files
+"grid_spec",              -1,  "seconds",    1, "seconds",  "time"
+"atmos",                  45,  "seconds",    1, "seconds",  "time"
+"atmos_daily",            45,  "seconds",    1, "seconds",  "time"
+"atmos_static",           -1,  "seconds",    1, "seconds",  "time"
+"atmos_sos",              45,  "seconds",    1, "seconds",  "time"
+#NOTE: Using multiple gfs output files appears to cause OOM errors.
+#"gfs_physics",             0,  "seconds",    1, "seconds",  "time"
+#"gfs_surface",             0,  "seconds",    1, "seconds",  "time"
+# files needed for NGGPS evaluation (only at end of simulation, here)
+"nggps3d",                45,  "seconds",    1, "seconds",  "time"
+"nggps2d",                 0,  "seconds",    1, "seconds",  "time"
+"tracer3d",               45,  "seconds",    1, "seconds",  "time"
+"tracer3d_qlr",           45,  "seconds",    1, "seconds",  "time"
+"tracer3d_qis",           45,  "seconds",    1, "seconds",  "time"
+"tracer3d_qg",            45,  "seconds",    1, "seconds",  "time"
+"tracer3d_ccn",           45,  "seconds",    1, "seconds",  "time"
+"nggps3d_dt",             45,  "seconds",    1, "seconds",  "time"
+
+#
+#output variables
+#
+#
+#=======================
+# ATMOSPHERE DIAGNOSTICS
+#=======================
+###
+# grid_spec
+###
+ "dynamics", "grid_lon", "grid_lon", "grid_spec", "all", .false.,  "none", 2,
+ "dynamics", "grid_lat", "grid_lat", "grid_spec", "all", .false.,  "none", 2,
+ "dynamics", "grid_lont", "grid_lont", "grid_spec", "all", .false.,  "none", 2,
+ "dynamics", "grid_latt", "grid_latt", "grid_spec", "all", .false.,  "none", 2,
+ "dynamics", "area",     "area",     "grid_spec", "all", .false.,  "none", 2,
+###
+# 4x daily output
+###
+ "dynamics",  "slp",         "slp",        "atmos", "all", .false.,  "none", 2
+ "dynamics",  "vort850",     "vort850",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "vort200",     "vort200",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "cape",        "cape",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "aam",         "aam",        "atmos", "all", .false.,  "none", 2
+###
+ "dynamics",  "us",          "us",         "atmos", "all", .false.,  "none", 2
+# "dynamics",  "u1000",       "u1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "u850",        "u850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "u700",        "u700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "u500",        "u500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "u200",        "u200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "u100",        "u100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "u50",         "u50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "u10",         "u10",        "atmos", "all", .false.,  "none", 2
+###
+ "dynamics",  "vs",          "vs",         "atmos", "all", .false.,  "none", 2
+# "dynamics",  "v1000",       "v1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "v850",        "v850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "v700",        "v700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "v500",        "v500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "v200",        "v200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "v100",        "v100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "v50",         "v50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "v10",         "v10",        "atmos", "all", .false.,  "none", 2
+####
+ "dynamics",  "tm",          "tm",         "atmos", "all", .false.,  "none", 2
+# "dynamics",  "t1000",       "t1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "t850",        "t850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "t700",        "t700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "t500",        "t500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "t200",        "t200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "t100",        "t100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "t50",         "t50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "t10",         "t10",        "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "z1000",       "h1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "z850",        "h850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "z700",        "h700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "z500",        "h500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "z200",        "h200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "z100",        "h100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "z50",         "h50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "z10",         "h10",        "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "w1000",       "w1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "w850",        "w850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "w700",        "w700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "w500",        "w500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "w200",        "w200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "w100",        "w100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "w50",         "w50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "w10",         "w10",        "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "q1000",       "q1000",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "q850",        "q850",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "q700",        "q700",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "q500",        "q500",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "q200",        "q200",       "atmos", "all", .false.,  "none", 2
+ "dynamics",  "q100",        "q100",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "q50",         "q50",        "atmos", "all", .false.,  "none", 2
+# "dynamics",  "q10",         "q10",        "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "rh1000",      "rh1000",     "atmos", "all", .false.,  "none", 2
+ "dynamics",  "rh850",       "rh850",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "rh700",       "rh700",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "rh500",       "rh500",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "rh200",       "rh200",      "atmos", "all", .false.,  "none", 2
+ "dynamics",  "rh100",       "rh100",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "rh50",        "rh50",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "rh10",        "rh10",       "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "omg1000",     "omg1000",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "omg850",      "omg850",     "atmos", "all", .false.,  "none", 2
+ "dynamics",  "omg700",      "omg700",     "atmos", "all", .false.,  "none", 2
+ "dynamics",  "omg500",      "omg500",     "atmos", "all", .false.,  "none", 2
+ "dynamics",  "omg200",      "omg200",     "atmos", "all", .false.,  "none", 2
+ "dynamics",  "omg100",      "omg100",     "atmos", "all", .false.,  "none", 2
+# "dynamics",  "omg50",       "omg50",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "omg10",       "omg10",      "atmos", "all", .false.,  "none", 2
+###
+ "dynamics", "max_reflectivity",  "REFC",    "atmos","all",.false., "none", 2
+# "dynamics", "base_reflectivity", "REFD1km", "atmos","all",.false., "none", 2
+# "dynamics", "4km_reflectivity",  "REFD4km", "atmos","all",.false., "none", 2
+# "dynamics", "m10C_reflectivity","REFDm10C", "atmos","all",.false., "none", 2
+####
+ "dynamics",  "intqv",     "intqv",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "intql",     "intql",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "intqi",     "intqi",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "intqr",     "intqr",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "intqs",     "intqs",    "atmos", "all", .false.,  "none", 2
+ "dynamics",  "intqg",     "intqg",    "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "prer",       "prer",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "prei",       "prei",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "pres",       "pres",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "preg",       "preg",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "cond",       "cond",      "atmos", "all", .false.,  "none", 2
+# "dynamics",  "dep",        "dep",       "atmos", "all", .false.,  "none", 2
+# "dynamics",  "reevap",     "reevap",    "atmos", "all", .false.,  "none", 2
+# "dynamics",  "sub",        "sub",       "atmos", "all", .false.,  "none", 2
+####
+# "dynamics",  "aero_now",     "aero_now",    "atmos", "all", .false.,  "none", 2
+###
+# Daily averages:
+###
+# "dynamics",      "u850",        "u850",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "v850",        "v850",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "u200",        "u200",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "v200",        "v200",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "t200",        "t200",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "t100",        "t100",        "atmos_daily", "all", .true.,  "none", 2
+# "dynamics",      "slp",         "slp",         "atmos_daily", "all", .true.,  "none", 2
+###
+# gfs static data
+###
+ "dynamics",      "pk",          "pk",           "atmos_static",      "all", .false.,  "none", 2
+ "dynamics",      "bk",          "bk",           "atmos_static",      "all", .false.,  "none", 2
+ "dynamics",      "hyam",        "hyam",         "atmos_static",      "all", .false.,  "none", 2
+ "dynamics",      "hybm",        "hybm",         "atmos_static",      "all", .false.,  "none", 2
+ "dynamics",      "zsurf",       "zsurf",        "atmos_static",      "all", .false.,  "none", 2
+# "dynamics",      "aero_ann",    "aero_ann",     "atmos_static",      "all", .false.,  "none", 2
+###
+# tracer
+###
+ "dynamics",  "sphum",         "sphum",        "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "liq_wat",       "liq_wat",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "ice_wat",       "ice_wat",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "rainwat",       "rainwat",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "snowwat",       "snowwat",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "graupel",       "graupel",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "cld_amt",       "cld_amt",      "tracer3d",  "all",  .false.,  "none",  2
+# "dynamics",  "o3mr",          "o3mr",         "tracer3d",  "all",  .false.,  "none",  2
+# "dynamics",  "aerosol",       "aerosol",      "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "ql_num",        "ql_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qr_num",        "qr_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qi_num",        "qi_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qs_num",        "qs_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qg_num",        "qg_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qa_num",        "qa_num",       "tracer3d",  "all",  .false.,  "none",  2
+ "dynamics",  "qn_num",        "qn_num",       "tracer3d",  "all",  .false.,  "none",  2
+###
+# more tracer
+###
+# "dynamics",  "qlr_1",     "qlr_1",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_2",     "qlr_2",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_3",     "qlr_3",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_4",     "qlr_4",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_5",     "qlr_5",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_6",     "qlr_6",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_7",     "qlr_7",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_8",     "qlr_8",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_9",     "qlr_9",     "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_10",    "qlr_10",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_11",    "qlr_11",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_12",    "qlr_12",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_13",    "qlr_13",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_14",    "qlr_14",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_15",    "qlr_15",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_16",    "qlr_16",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_17",    "qlr_17",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_18",    "qlr_18",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_19",    "qlr_19",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_20",    "qlr_20",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_21",    "qlr_21",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_22",    "qlr_22",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_23",    "qlr_23",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_24",    "qlr_24",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_25",    "qlr_25",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_26",    "qlr_26",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_27",    "qlr_27",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_28",    "qlr_28",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_29",    "qlr_29",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_30",    "qlr_30",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_31",    "qlr_31",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_32",    "qlr_32",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qlr_33",    "qlr_33",    "tracer3d_qlr",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_1",     "qis_1",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_2",     "qis_2",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_3",     "qis_3",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_4",     "qis_4",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_5",     "qis_5",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_6",     "qis_6",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_7",     "qis_7",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_8",     "qis_8",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_9",     "qis_9",     "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_10",    "qis_10",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_11",    "qis_11",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_12",    "qis_12",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_13",    "qis_13",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_14",    "qis_14",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_15",    "qis_15",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_16",    "qis_16",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_17",    "qis_17",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_18",    "qis_18",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_19",    "qis_19",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_20",    "qis_20",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_21",    "qis_21",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_22",    "qis_22",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_23",    "qis_23",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_24",    "qis_24",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_25",    "qis_25",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_26",    "qis_26",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_27",    "qis_27",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_28",    "qis_28",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_29",    "qis_29",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_30",    "qis_30",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_31",    "qis_31",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_32",    "qis_32",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qis_33",    "qis_33",    "tracer3d_qis",  "all",  .false.,  "none",  2
+# "dynamics",  "qg_1",      "qg_1",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_2",      "qg_2",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_3",      "qg_3",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_4",      "qg_4",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_5",      "qg_5",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_6",      "qg_6",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_7",      "qg_7",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_8",      "qg_8",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_9",      "qg_9",      "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_10",     "qg_10",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_11",     "qg_11",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_12",     "qg_12",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_13",     "qg_13",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_14",     "qg_14",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_15",     "qg_15",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_16",     "qg_16",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_17",     "qg_17",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_18",     "qg_18",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_19",     "qg_19",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_20",     "qg_20",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_21",     "qg_21",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_22",     "qg_22",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_23",     "qg_23",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_24",     "qg_24",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_25",     "qg_25",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_26",     "qg_26",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_27",     "qg_27",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_28",     "qg_28",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_29",     "qg_29",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_30",     "qg_30",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_31",     "qg_31",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_32",     "qg_32",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qg_33",     "qg_33",     "tracer3d_qg",   "all",  .false.,  "none",  2
+# "dynamics",  "qa_1",      "qa_1",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_2",      "qa_2",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_3",      "qa_3",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_4",      "qa_4",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_5",      "qa_5",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_6",      "qa_6",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_7",      "qa_7",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_8",      "qa_8",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_9",      "qa_9",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_10",     "qa_10",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_11",     "qa_11",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_12",     "qa_12",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_13",     "qa_13",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_14",     "qa_14",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_15",     "qa_15",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_16",     "qa_16",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_17",     "qa_17",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_18",     "qa_18",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_19",     "qa_19",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_20",     "qa_20",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_21",     "qa_21",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_22",     "qa_22",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_23",     "qa_23",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_24",     "qa_24",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_25",     "qa_25",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_26",     "qa_26",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_27",     "qa_27",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_28",     "qa_28",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_29",     "qa_29",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_30",     "qa_30",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_31",     "qa_31",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_32",     "qa_32",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qa_33",     "qa_33",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_1",      "qn_1",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_2",      "qn_2",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_3",      "qn_3",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_4",      "qn_4",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_5",      "qn_5",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_6",      "qn_6",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_7",      "qn_7",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_8",      "qn_8",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_9",      "qn_9",      "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_10",     "qn_10",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_11",     "qn_11",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_12",     "qn_12",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_13",     "qn_13",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_14",     "qn_14",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_15",     "qn_15",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_16",     "qn_16",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_17",     "qn_17",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_18",     "qn_18",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_19",     "qn_19",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_20",     "qn_20",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_21",     "qn_21",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_22",     "qn_22",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_23",     "qn_23",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_24",     "qn_24",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_25",     "qn_25",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_26",     "qn_26",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_27",     "qn_27",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_28",     "qn_28",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_29",     "qn_29",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_30",     "qn_30",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_31",     "qn_31",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_32",     "qn_32",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+# "dynamics",  "qn_33",     "qn_33",     "tracer3d_ccn",  "all",  .false.,  "none",  2
+#############################################################################################
+###
+# FV3 variabls needed for NGGPS evaluation
+###
+ "dynamics",  "ucomp",       "ucomp",      "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "vcomp",       "vcomp",      "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "temp",        "temp",       "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "delp",        "delp",       "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pfhy",        "hypres",     "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pfnh",        "nhpres",     "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "w",           "w",          "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "delz",        "delz",       "nggps3d",  "all",  .false.,  "none",  2
+ "dynamics",  "rh",          "rh",         "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "u_plev",       "u_plev",      "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "v_plev",       "v_plev",      "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "t_plev",       "t_plev",      "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "h_plev",       "h_plev",      "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "q_plev",       "q_plev",      "nggps3d",  "all",  .false.,  "none",  2
+# "dynamics",  "omg_plev",     "omg_plev",    "nggps3d",  "all",  .false.,  "none",  2
+###
+# tendencies
+###
+# "dynamics", "qv_dt_gfdlmp", "qv_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "ql_dt_gfdlmp", "ql_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "qi_dt_gfdlmp", "qi_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "qr_dt_gfdlmp", "qr_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "qg_dt_gfdlmp", "qg_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "qs_dt_gfdlmp", "qs_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
+# "dynamics", "T_dt_gfdlmp",  "T_dt_gfdlmp",  "nggps3d_dt", "all", .false., "none", 2
+###
+# GFS variabls needed for NGGPS evaluation
+###
+# "gfs_phys",  "ALBDOsfc"       "ALBDOsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "cnvprcp"        "CPRATsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totprcp"        "PRATEsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "DLWRFsfc"       "DLWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "ULWRFsfc"       "ULWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "DSWRFsfc"       "DSWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "USWRFsfc"       "USWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "DSWRFtoa"       "DSWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "USWRFtoa"       "USWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "ULWRFtoa"       "ULWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "gflux"          "GFLUXsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "HGTsfc"         "HGTsfc"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "hpbl"           "HPBLsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "fice"           "ICECsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "SLMSKsfc"       "SLMSKsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dqsfc"          "LHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dtsfc"          "SHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "psurf"          "PRESsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "pwat"           "PWATclm"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "soilm"          "SOILM"      "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILW1"         "SOILW1"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILW2"         "SOILW2"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILW3"         "SOILW3"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILW4"         "SOILW4"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "q2m"            "SPFH2m"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "TCDCclm"        "TCDCclm"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "TCDChcl"        "TCDChcl"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "TCDClcl"        "TCDClcl"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "TCDCmcl"        "TCDCmcl"    "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILT1"         "SOILT1"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILT2"         "SOILT2"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILT3"         "SOILT3"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "SOILT4"         "SOILT4"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "t2m"            "TMP2m"      "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "tsfc"           "TMPsfc"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dugwd"          "UGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dvgwd"          "VGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dusfc"          "UFLXsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "dvsfc"          "VFLXsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "u10m"           "UGRD10m"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "v10m"           "VGRD10m"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "weasd"          "WEASDsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "snowd"          "SNODsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "ZORLsfc"        "ZORLsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "VFRACsfc"       "VFRACsfc"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "f10m"           "F10Msfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "vtype"          "VTYPEsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_sfc",   "stype"          "STYPEsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totice"         "ICEsfc"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totsnw"         "SNOWsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totgrp"         "GRAUPELsfc" "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "netflxsfc"      "netflxsfc"  "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "tclim_iano"     "tclim_iano" "nggps2d",         "all",  .false.,  "none",  2
+
+#############################################################################################
+###
+# gfs physics data
+###
+#"gfs_phys",  "fluxr_01"   "fluxr_01"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_02"   "fluxr_02"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_03"   "fluxr_03"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_04"   "fluxr_04"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_05"   "fluxr_05"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_06"   "fluxr_06"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_07"   "fluxr_07"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_08"   "fluxr_08"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_09"   "fluxr_09"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_10"   "fluxr_10"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_11"   "fluxr_11"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_12"   "fluxr_12"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_13"   "fluxr_13"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_14"   "fluxr_14"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_15"   "fluxr_15"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_16"   "fluxr_16"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_17"   "fluxr_17"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_18"   "fluxr_18"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_19"   "fluxr_19"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_20"   "fluxr_20"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_21"   "fluxr_21"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_22"   "fluxr_22"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_23"   "fluxr_23"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_24"   "fluxr_24"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_25"   "fluxr_25"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_26"   "fluxr_26"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_27"   "fluxr_27"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_28"   "fluxr_28"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_29"   "fluxr_29"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_30"   "fluxr_30"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_31"   "fluxr_31"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_32"   "fluxr_32"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_33"   "fluxr_33"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_34"   "fluxr_34"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_35"   "fluxr_35"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_36"   "fluxr_36"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_37"   "fluxr_37"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_38"   "fluxr_38"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "fluxr_39"   "fluxr_39"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dswcmp_1"   "dswcmp_1"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dswcmp_2"   "dswcmp_2"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dswcmp_3"   "dswcmp_3"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dswcmp_4"   "dswcmp_4"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "uswcmp_1"   "uswcmp_1"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "uswcmp_2"   "uswcmp_2"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "uswcmp_3"   "uswcmp_3"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "uswcmp_4"   "uswcmp_4"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "sw_upfxc"   "sw_upfxc"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "sw_dnfxc"   "sw_dnfxc"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "sw_upfx0"   "sw_upfx0"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "lw_upfxc"   "lw_upfxc"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "lw_upfx0"   "lw_upfx0"   "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "srunoff"    "srunoff"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "evbsa"      "evbsa"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "evcwa"      "evcwa"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "snohfa"     "snohfa"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "transa"     "transa"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "sbsnoa"     "sbsnoa"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "snowca"     "snowca"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "soilm"      "soilm"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "tmpmin"     "tmpmin"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "tmpmax"     "tmpmax"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dusfc"      "dusfc"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dvsfc"      "dvsfc"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dtsfc"      "dtsfc"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dqsfc"      "dqsfc"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "totprcp"    "totprcp"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "gflux"      "gflux"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dlwsfc"     "dlwsfc"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "ulwsfc"     "ulwsfc"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "suntim"     "suntim"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "runoff"     "runoff"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "ep"         "ep"         "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "cldwrk"     "cldwrk"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dugwd"      "dugwd"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dvgwd"      "dvgwd"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "psmean"     "psmean"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "cnvprcp"    "cnvprcp"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "spfhmin"    "spfhmin"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "spfhmax"    "spfhmax"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "rain"       "rain"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "rainc"      "rainc"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "u10m"       "u10m"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "v10m"       "v10m"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "zlvl"       "zlvl"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "psurf"      "psurf"      "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "hpbl"       "hpbl"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "pwat"       "pwat"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "t1"         "t1"         "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "q1"         "q1"         "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "u1"         "u1"         "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "v1"         "v1"         "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "chh"        "chh"        "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "cmm"        "cmm"        "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dlwsfci"    "dlwsfci"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "ulwsfci"    "ulwsfci"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dswsfci"    "dswsfci"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "uswsfci"    "uswsfci"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dusfci"     "dusfci"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dvsfci"     "dvsfci"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dtsfci"     "dtsfci"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "dqsfci"     "dqsfci"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "gfluxi"     "gfluxi"     "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "epi"        "epi"        "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "smcwlt2"    "smcwlt2"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "smcref2"    "smcref2"    "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "wet1"       "wet1"       "gfs_physics",   "all",  .false.,  "none",  2
+#"gfs_phys",  "sr"         "sr"         "gfs_physics",   "all",  .false.,  "none",  2
+###
+# gfs surface data
+###
+#"gfs_sfc",   "alnsf"      "alnsf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "alnwf"      "alnwf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "alvsf"      "alvsf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "alvwf"      "alvwf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "canopy"     "canopy"     "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "f10m"       "f10m"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "facsf"      "facsf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "facwf"      "facwf"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "ffhh"       "ffhh"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "ffmm"       "ffmm"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "fice"       "fice"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "hice"       "hice"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "snoalb"     "snoalb"     "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "shdmax"     "shdmax"     "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "shdmin"     "shdmin"     "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "snowd"      "snowd"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "stype"      "stype"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "q2m"        "q2m"        "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "t2m"        "t2m"        "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "tsfc"       "tsfc"       "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "tg3"        "tg3"        "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "tisfc"      "tisfc"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "tprcp"      "tprcp"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "vtype"      "vtype"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "weasd"      "weasd"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "slc_1"      "slc_1"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "slc_2"      "slc_2"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "slc_3"      "slc_3"      "gfs_surface",   "all",  .false.,  "none",  2
+#"gfs_sfc",   "slc_4"      "slc_4"      "gfs_surface",   "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "dt3dt_1"    "dt3dt_1"    "gfs_physics1",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dt3dt_2"    "dt3dt_2"    "gfs_physics1",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dt3dt_3"    "dt3dt_3"    "gfs_physics1",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dt3dt_4"    "dt3dt_4"    "gfs_physics1",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dt3dt_5"    "dt3dt_5"    "gfs_physics1",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dt3dt_6"    "dt3dt_6"    "gfs_physics1",  "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "dq3dt_1"    "dq3dt_1"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_2"    "dq3dt_2"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_3"    "dq3dt_3"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_4"    "dq3dt_4"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_5"    "dq3dt_5"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_6"    "dq3dt_6"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_7"    "dq3dt_7"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_8"    "dq3dt_8"    "gfs_physics2",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dq3dt_9"    "dq3dt_9"    "gfs_physics2",  "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "du3dt_1"    "du3dt_1"    "gfs_physics3",  "all",  .false.,  "none",  2
+#"gfs_phys",  "du3dt_2"    "du3dt_2"    "gfs_physics3",  "all",  .false.,  "none",  2
+#"gfs_phys",  "du3dt_3"    "du3dt_3"    "gfs_physics3",  "all",  .false.,  "none",  2
+#"gfs_phys",  "du3dt_4"    "du3dt_4"    "gfs_physics3",  "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "dv3dt_1"    "dv3dt_1"    "gfs_physics4",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dv3dt_2"    "dv3dt_2"    "gfs_physics4",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dv3dt_3"    "dv3dt_3"    "gfs_physics4",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dv3dt_4"    "dv3dt_4"    "gfs_physics4",  "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "dtemp_dt"   "dtemp_dt"   "gfs_physics5",  "all",  .false.,  "none",  2
+#"gfs_phys",  "du_dt"      "du_dt"      "gfs_physics5",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dv_dt"      "dv_dt"      "gfs_physics5",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dsphum_dt"  "dsphum_dt"  "gfs_physics5",  "all",  .false.,  "none",  2
+###
+#"gfs_phys",  "dclwmr_dt"  "dclwmr_dt"  "gfs_physics6",  "all",  .false.,  "none",  2
+#"gfs_phys",  "do3mr_dt"   "do3mr_dt"   "gfs_physics6",  "all",  .false.,  "none",  2
+#"gfs_phys",  "dqdt_v"     "dqdt_v"     "gfs_physics6",  "all",  .false.,  "none",  2
+####
+## SOS high-frequency
+####
+ "dynamics",  "tq",          "tq",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "lw",          "lw",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "iw",          "iw",          "atmos_sos", "all", .false., "none", 2
+# "dynamics",  "tb",          "tb",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "ps",          "ps",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "us",          "us",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "vs",          "vs",          "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "slp",         "slp",         "atmos_sos", "all", .false., "none", 2
+ "dynamics",  "vort850",     "vort850",     "atmos_sos", "all", .false., "none", 2
+# "dynamics",  "w850",        "w850",        "atmos_sos", "all", .false., "none", 2
+# "dynamics",  "ctt",         "ctt",         "atmos_sos", "all", .false., "none", 2
+# "dynamics",  "ctp",         "ctp",         "atmos_sos", "all", .false., "none", 2
+####
+## Monthly averages:
+####
+# "dynamics",      "zsurf",       "zsurf",       "atmos_month", "all", .false.,  "none", 2
+# "dynamics",      "bk",          "bk",          "atmos_month", "all", .false., "none", 2
+# "dynamics",      "pk",          "pk",          "atmos_month", "all", .false., "none", 2
+# "dynamics",      "ps",          "ps",          "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "slp",         "slp",         "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "tm",          "tm",          "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "cld_amt",     "cld_amt",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "liq_wat",     "liq_wat",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "ice_wat",     "ice_wat",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "snowwat",     "snowwat",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "rainwat",     "rainwat",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "graupel",     "graupel",     "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "iw",          "iw",          "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "lw",          "lw",          "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "aam",         "aam",         "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "amdt",        "amdt",        "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "z500",        "h500",        "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "temp",        "temp",        "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "ucomp",       "ucomp",       "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "vcomp",       "vcomp",       "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "sphum",       "sphum",       "atmos_month", "all", .true.,  "none", 2
+# "dynamics",      "omega",       "omega",       "atmos_month", "all", .true.,  "none", 2
+#
+#=============================================================================================
+#
+#====> This file can be used with diag_manager/v2.0a (or higher) <====
+#
+#
+#  FORMATS FOR FILE ENTRIES (not all input values are used)
+#  ------------------------
+#
+#"file_name", output_freq, "output_units", format, "time_units", "long_name",
+#
+#
+#output_freq:  > 0  output frequency in "output_units"
+#              = 0  output frequency every time step
+#              =-1  output frequency at end of run
+#
+#output_units = units used for output frequency
+#               (years, months, days, minutes, hours, seconds)
+#
+#time_units   = units used to label the time axis
+#               (days, minutes, hours, seconds)
+#
+#
+#  FORMAT FOR FIELD ENTRIES (not all input values are used)
+#  ------------------------
+#
+#"module_name", "field_name", "output_name", "file_name" "time_sampling", time_avg, "other_opts", packing
+#
+#time_avg = .true. or .false.
+#
+#packing  = 1  double precision
+#         = 2  float
+#         = 4  packed 16-bit integers
+#         = 8  packed 1-byte (not tested?)
