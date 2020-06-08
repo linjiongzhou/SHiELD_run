@@ -1,4 +1,4 @@
-#!/bin/tcsh 
+#!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=DP_20150801.00Z
 #SBATCH --partition=batch
@@ -7,7 +7,7 @@
 #SBATCH --cluster=c4
 #SBATCH --nodes=1
 #SBATCH --qos=urgent
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,CPN=36,ALL
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,ALL
 
 # To run supercell case, add -DSUPER_K to mk_makefile
 # This script is optimized for GFDL MP runs using GFS ICs
@@ -17,7 +17,8 @@ set echo
 
 set BASEDIR    = "/lustre/f2/scratch/${USER}/SHiELD"
 set INPUT_DATA = "/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA"
-set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/fv3_gfs_build"
+set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
+set RUN_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_run"
 
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
@@ -36,7 +37,7 @@ set NO_SEND = "no_send"    # choices:  send, no_send
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
-set executable = ${BUILD_AREA}/FV3GFS/BUILD/bin/fv3_gfs_${TYPE}.${COMP}.${MODE}.${EXE}
+set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 set FIX  = ${INPUT_DATA}/fix.v201912
@@ -133,7 +134,6 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     endif
 
     # variables for hyperthreading
-    set cores_per_node = $CPN
     if (${HYPT} == "on") then
       set hyperthread = ".true."
       set j_opt = "-j2"
@@ -180,14 +180,14 @@ cat > diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${BUILD_AREA}/FV3GFS/RUN/RETRO/diag_table_6species_DP >> diag_table
+cat ${RUN_AREA}/diag_table_6species_DP >> diag_table
 
 # copy over the other tables and executable
-cp ${BUILD_AREA}/FV3GFS/RUN/RETRO/data_table data_table
+cp ${RUN_AREA}/data_table data_table
 if ( $do_fsbm == ".true." ) then
-  cp ${BUILD_AREA}/FV3GFS/RUN/RETRO/field_table_6species_fsbm field_table
+  cp ${RUN_AREA}/field_table_6species_fsbm field_table
 else
-  cp ${BUILD_AREA}/FV3GFS/RUN/RETRO/field_table_6species field_table
+  cp ${RUN_AREA}/field_table_6species field_table
 endif
 cp $executable .
 
@@ -349,7 +349,6 @@ cat > input.nml <<EOF
        memuse_verbose = .false.
        atmos_nthreads = $nthreads
        use_hyper_thread = $hyperthread
-       ncores_per_node = $cores_per_node
 /
 
  &external_ic_nml 

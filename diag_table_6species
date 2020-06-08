@@ -8,9 +8,9 @@
 #"gfs_physics",             0,  "hours",    1, "hours",  "time"
 #"gfs_surface",             0,  "hours",    1, "hours",  "time"
 # files needed for NGGPS evaluation (only at end of simulation, here)
-"nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
+#"nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
-"tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
+#"tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
 "nggps3d_dt",              6,  "hours",    1, "hours",  "time"
 
 #
@@ -156,34 +156,34 @@
 ###
 # tracer
 ###
- "dynamics",  "sphum",         "sphum",        "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "liq_wat",       "liq_wat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "ice_wat",       "ice_wat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "rainwat",       "rainwat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "snowwat",       "snowwat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "graupel",       "graupel",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "cld_amt",       "cld_amt",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "o3mr",          "o3mr",         "tracer3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "aerosol",       "aerosol",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "sphum",         "sphum",        "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "liq_wat",       "liq_wat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "ice_wat",       "ice_wat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rainwat",       "rainwat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "snowwat",       "snowwat",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "graupel",       "graupel",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "cld_amt",       "cld_amt",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "o3mr",          "o3mr",         "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "aerosol",       "aerosol",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
 #############################################################################################
 ###
 # FV3 variabls needed for NGGPS evaluation
 ###
- "dynamics",  "ucomp",       "ucomp",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "vcomp",       "vcomp",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "temp",        "temp",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "delp",        "delp",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "pfhy",        "hypres",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "pfnh",        "nhpres",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "w",           "w",          "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "delz",        "delz",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
- "dynamics",  "rh",          "rh",         "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "u_plev",       "u_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "v_plev",       "v_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "t_plev",       "t_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "h_plev",       "h_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "q_plev",       "q_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "omg_plev",     "omg_plev",    "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "ucomp",       "ucomp",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "vcomp",       "vcomp",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "temp",        "temp",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "delp",        "delp",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "pfhy",        "hypres",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "pfnh",        "nhpres",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "w",           "w",          "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "delz",        "delz",       "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rh",          "rh",         "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "u_plev",       "u_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "v_plev",       "v_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "t_plev",       "t_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "h_plev",       "h_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "q_plev",       "q_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+## "dynamics",  "omg_plev",     "omg_plev",    "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 ###
 # tendencies
 ###
