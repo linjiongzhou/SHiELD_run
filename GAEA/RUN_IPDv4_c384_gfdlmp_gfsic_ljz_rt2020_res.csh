@@ -1,11 +1,11 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C48_20150801.00Z
+#SBATCH --job-name=C384_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=02:00:00
-#SBATCH --cluster=c3
-#SBATCH --nodes=1
+#SBATCH --cluster=c4
+#SBATCH --nodes=74
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
@@ -25,7 +25,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C48"
+set CASE = "C384"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v201903/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v201810/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v201912
-set GRID = ${INPUT_DATA}/global.v201903/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v201810/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -68,28 +68,28 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "49"
-    set npy = "49"
-    set npz = "91"
-    set layout_x = "2" 
-    set layout_y = "2" 
-    set io_layout = "1,1"
-    set nthreads = "2"
+    set npx = "385"
+    set npy = "385"
+    set npz = "63"
+    set layout_x = "18"
+    set layout_y = "12" 
+    set io_layout = "2,2"
+    set nthreads = "4"
 
     # blocking factor used for threading and general physics performance
-    set blocksize = "32"
+    set blocksize = "31"
 
     # run length
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "450"
+    set dt_atmos = "225"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -98,8 +98,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
 #    set fdiag = "6.,12.,18.,24.,30.,36.,42.,48.,54.,60.,66.,72.,78.,84.,90.,96.,102.,108.,114.,120.,126.,132.,138.,144.,150.,156.,162.,168.,174.,180.,186.,192.,198.,204.,210.,216.,222.,228.,234.,240."
-    set fdiag = "6."
-    set fhzer = "6."
+    set fdiag = "3."
+    set fhzer = "3."
     set fhcyc = "24."
 
     # determines whether FV3 or GFS physics calculate geopotential
@@ -116,14 +116,14 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".F."
+      set make_nh = ".T."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "2"
-      set n_split = "6"
+      set k_split = "1"
+      set n_split = "8"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -322,8 +322,8 @@ cat >! input.nml <<EOF
        d2_bg = 0.
        nord =  3
        dddmp = 0.2
-       d4_bg = 0.15
-       vtdm4 = 0.03
+       d4_bg = 0.16
+       vtdm4 = 0.06
        delt_max = 0.002
        ke_bg = 0.
        do_vort_damp = $do_vort_damp
@@ -374,14 +374,14 @@ cat >! input.nml <<EOF
 
  &gfs_physics_nml
        fhzero         = $fhzer
-       ldiag3d        = .false.
+       ldiag3d        = .true.
        fhcyc          = $fhcyc
        nst_anl        = .true.
        use_ufo        = .true.
        pre_rad        = .false.
        ncld           = 5
        zhao_mic       = .false.
-       pdfcld         = .true.
+       pdfcld         = .false.
        fhswr          = 3600.
        fhlwr          = 3600.
        ialb           = 1
@@ -400,31 +400,29 @@ cat >! input.nml <<EOF
        redrag         = .true.
        dspheat        = .true.
        hybedmf        = .false.
+       satmedmf       = .true.
+       isatmedmf      = 1
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
-       imfdeepcnv     = 2
-       cdmbgwd        = 3.5, 0.25
+       imfshalcnv     = 1
+       imfdeepcnv     = 1
+       cdmbgwd        = 1.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
        ysupbl         = .false.
-       satmedmf       = .true.
-       isatmedmf      = 0
-       do_dk_hb19     = .false.
-       xkzminv        = 0.0
-	   xkzm_m         = 1.5
-       xkzm_h         = 1.5
-	   xkzm_ml        = 1.0
-       xkzm_hl        = 1.0
-	   xkzm_mi        = 1.5
-       xkzm_hi        = 1.5
-       cap_k0_land    = .false.
+       xkzminv        = 1.0
+	   xkzm_m         = 1.0
+       xkzm_h         = 1.0
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       clam_deep      = 0.13
+       clam_shal      = 0.18
+       pgcon_deep     = 0.7
+       pgcon_shal     = 0.7
 /
 
  &ocean_nml
@@ -433,22 +431,20 @@ cat >! input.nml <<EOF
      restore_method   = 2
      mld_obs_ratio    = 1.
      use_rain_flux    = .true.
-     sst_restore_tscale = 2.
-     start_lat        = -30.
-     end_lat          = 30.
-     Gam              = 0.2
+     sst_restore_tscale = 15.
+     start_lat        = -40.
+     end_lat          = 40.
+     Gam              = 0.12
      use_old_mlm      = .true.
      do_mld_restore   = .true.
-	 mld_restore_tscale = 2.
-     stress_ratio     = 1.
+	 mld_restore_tscale = 7.
+     stress_ratio     = 0.75
      eps_day          = 10.
 /
 
  &gfdl_mp_nml
        sedi_transport = .true.
-       do_sedi_w = .true.
-       do_sedi_heat = .false.
-       disp_heat = .true.
+       do_sedi_heat = .true.
        rad_snow = .true.
        rad_graupel = .true.
        rad_rain = .true.
@@ -471,12 +467,12 @@ cat >! input.nml <<EOF
        tau_l2v = 225.
        tau_v2l = 150.
        tau_g2v = 900.
-       rthresh = 10.e-6
-       dw_land = 0.16
+       rthresh = 10.e-6  ! This is a key parameter for cloud water
+       dw_land  = 0.16
        dw_ocean = 0.10
        ql_gen = 1.0e-3
        ql_mlt = 1.0e-3
-       qi0_crt = 8.0e-5
+       qi0_crt = 8.0E-5
        qs0_crt = 1.0e-3
        tau_i2s = 1000.
        c_psaci = 0.05
@@ -490,12 +486,10 @@ cat >! input.nml <<EOF
        c_cracw = 0.8
        use_ppm = .false.
        mono_prof = .true.
-       z_slope_liq = .true.
-       z_slope_ice = .true.
+       z_slope_liq  = .true.
+       z_slope_ice  = .true.
        fix_negative = .true.
        icloud_f = 0
-       do_cld_adj = .true.
-       f_dq_p = 3.0
 /
 
  &cld_eff_rad_nml
@@ -549,7 +543,7 @@ cat >! input.nml <<EOF
        FSMCL(2) = 99999
        FSMCL(3) = 99999
        FSMCL(4) = 99999
-       FTSFS    = 90
+       FTSFS    = 180
        FAISS    = 99999
        FSNOL    = 99999
        FSICL    = 99999

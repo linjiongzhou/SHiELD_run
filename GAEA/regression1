@@ -3,6 +3,7 @@
 #set echo
 
 #set title = "IPDv4_c768_gfdlmp_gfsic_ljz_rt2018_res"
+#set title = "IPDv4_c384_gfdlmp_gfsic_ljz_rt2020_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2018_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2019_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_res"
@@ -26,7 +27,10 @@ set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_v15_aero_res"
 #set MEMO = "_RT2020_e036_res1"
 #set MEMO = "_RT2020_e053_res3"
 #set MEMO = "_RT2020_e056_res1"
-set MEMO = "_RT2020_e058_res1"
+#set MEMO = "_RT2020_e058_res1"
+#set MEMO = "_RT2020_e061_res1"
+#set MEMO = "_RT2020_e067_res1"
+set MEMO = "_RT2020_e068_res1"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -43,7 +47,10 @@ set MEMO = "_RT2020_e058_res1"
 #set EXE = "RT2020.e036.x"
 #set EXE = "RT2020.e053.x"
 #set EXE = "RT2020.e056.x"
-set EXE = "RT2020.e058.x"
+#set EXE = "RT2020.e058.x"
+#set EXE = "RT2020.e061.x"
+#set EXE = "RT2020.e067.x"
+set EXE = "RT2020.e068.x"
 
 set basescript = "RUN_${title}.csh"
 
@@ -62,6 +69,22 @@ echo $runname
 #     s#set hours = "0"#set hours = "2"#g \
 #     s#set layout_x = "16"#set layout_x = "16"#g \
 #     s#set layout_y = "16"#set layout_y = "16"#g \
+#     s#set nthreads = "4"#set nthreads = "4"#g \
+#     s#set HYPT = "on"#set HYPT = "on"#g \
+#     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+#     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+#     s#fv_debug = .F.#fv_debug = .T.#g' \
+#$basescript >! ${runname}.csh
+
+# c384
+#sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+#     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+#     s#EXE=x#EXE='$EXE'#g \
+#     s#set COMP = "prod"#set COMP = "debug"#g \
+#     s#set days = "10"#set days = "0"#g \
+#     s#set hours = "0"#set hours = "2"#g \
+#     s#set layout_x = "18"#set layout_x = "18"#g \
+#     s#set layout_y = "12"#set layout_y = "12"#g \
 #     s#set nthreads = "4"#set nthreads = "4"#g \
 #     s#set HYPT = "on"#set HYPT = "on"#g \
 #     s#set NUM_TOT = 1#set NUM_TOT = 1#g \

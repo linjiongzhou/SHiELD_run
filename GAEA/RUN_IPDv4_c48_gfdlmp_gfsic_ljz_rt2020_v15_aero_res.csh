@@ -420,9 +420,15 @@ cat >! input.nml <<EOF
        ysupbl         = .false.
        satmedmf       = .true.
        isatmedmf      = 0
-       xkzminv        = 1.0
-	   xkzm_m         = 1.0
-       xkzm_h         = 1.0
+       do_dk_hb19     = .false.
+       xkzminv        = 0.0
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
+	   xkzm_ml        = 1.0
+       xkzm_hl        = 1.0
+	   xkzm_mi        = 1.5
+       xkzm_hi        = 1.5
+       cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
        do_ocean       = .true.
@@ -496,6 +502,8 @@ cat >! input.nml <<EOF
        z_slope_ice = .true.
        fix_negative = .true.
        icloud_f = 0
+       do_cld_adj = .true.
+       f_dq_p = 3.0
 /
 
  &cld_eff_rad_nml
