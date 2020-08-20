@@ -457,9 +457,6 @@ cat > input.nml <<EOF
  &cld_eff_rad_nml
        qmin = 1.0e-12
        beta = 1.22
-       prog_ccn = .false.
-       ccn_l = 159.
-       ccn_o = 66.
        rewflag = 1
        reiflag = 5
        rewmin = 5.0
@@ -496,7 +493,7 @@ cat > input.nml <<EOF
        FNVETC   = "$FIX/global_vegtype.igbp.t1534.3072.1536.rg.grb",
        FNSOTC   = "$FIX/global_soiltype.statsgo.t1534.3072.1536.rg.grb",
        FNSMCC   = "$FIX/global_soilmgldas.t1534.3072.1536.grb",
-       FNMSKH   = "$FIX/seaice_newland.grb",
+       FNMSKH   = "$FIX/global_slmask.t1534.3072.1536.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",

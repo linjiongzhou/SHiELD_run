@@ -501,7 +501,7 @@ cat > input.nml <<EOF
        FNVETC   = "$FIX/global_vegtype.igbp.t1534.3072.1536.rg.grb",
        FNSOTC   = "$FIX/global_soiltype.statsgo.t1534.3072.1536.rg.grb",
        FNSMCC   = "$FIX/global_soilmgldas.t1534.3072.1536.grb",
-       FNMSKH   = "$FIX/seaice_newland.grb",
+       FNMSKH   = "$FIX/global_slmask.t1534.3072.1536.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",

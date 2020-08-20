@@ -55,7 +55,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npz = "91"
     set layout_x = $LX
     set layout_y = "24" 
-    set io_layout = "2,2"
+    set io_layout = "1,1"
     set nthreads = "4"
 
     # blocking factor used for threading and general physics performance
@@ -179,7 +179,7 @@ cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species_aero field_table
+cp ${RUN_AREA}/field_table_6species field_table
 cp $executable .
 
 mkdir -p INPUT
@@ -189,13 +189,6 @@ ln -sf ${GRID}/* INPUT/
 
 # Date specific ICs
 ln -sf ${ICS}/* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -280,7 +273,7 @@ cat > input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -312,7 +305,6 @@ cat > input.nml <<EOF
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
-       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -429,7 +421,7 @@ cat > input.nml <<EOF
        vg_max = 12.
        vr_max = 12.
        qi_lim = 1.
-       prog_ccn = .true.
+       prog_ccn = .false.
        do_qa = .true.
        do_sat_adj = .false.
        tau_l2v = 225.
@@ -448,8 +440,8 @@ cat > input.nml <<EOF
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
-       ccn_l = 159.
-       ccn_o = 66.
+       ccn_l = 300.
+       ccn_o = 100.
        c_paut = 0.5
        c_cracw = 0.8
        use_ppm = .false.

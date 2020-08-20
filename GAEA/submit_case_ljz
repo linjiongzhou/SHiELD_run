@@ -12,14 +12,15 @@
 #set title = "c768_gfdlmp_gfsic_ljz_rt2019_v15"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c768_gfdlmp_ifsic_jhc_rt2020"
-set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15"
+#set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_tmp"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_fv3gfsic"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c1152_gfdlmp_ifsic_jhc_rt2020"
 #set title = "c1152_gfdlmp_ifsic_jhc_rt2020_aero"
-#set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15"
+set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15"
+#set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15_ctrl"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15_aero"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2020"
@@ -245,7 +246,10 @@ set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15"
 #set MEMO = "_RT2020_e066" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
 #set MEMO = "_RT2020_e067_cld" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
 #set MEMO = "_RT2020_e068_hord6" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
-set MEMO = "_RT2020_e069" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
+#set MEMO = "_RT2020_e069" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
+#set MEMO = "_RT2020_e070_ctrl" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
+#set MEMO = "_RT2020_e071_L88" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, new fv_eta
+set MEMO = "_RT2020_e072_lsm" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -381,7 +385,10 @@ set MEMO = "_RT2020_e069" # based on RT2019_e43, update GFDL MP, TKE-EDMF, impro
 #set EXE = "RT2020.e066.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF
 #set EXE = "RT2020.e067.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF
 #set EXE = "RT2020.e068.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF
-set EXE = "RT2020.e069.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter
+#set EXE = "RT2020.e069.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter
+#set EXE = "RT2020.e070.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter
+#set EXE = "RT2020.e071.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta
+set EXE = "RT2020.e072.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, new FMS
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -403,9 +410,9 @@ set EXE = "RT2020.e069.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF,
 
 #set reso = "DP"
 #set reso = "C48"
-set reso = "C768"
-#set reso = "C1152"
-#set reso = "C1536"
+#set reso = "C768"
+set reso = "C1152"
+#set reso = "C1536"l
 #set reso = "C3072"
 
 #set cluster = "c3"
@@ -468,6 +475,7 @@ foreach DATE ( \
 	## \
 	#20160801.00Z \
 	20190801.00Z \
+	#20190901.00Z \
 	## \
 	## every 5 days cases since 20160101.00Z \
 	#20160101.00Z 20160106.00Z 20160111.00Z 20160116.00Z 20160121.00Z 20160126.00Z 20160131.00Z 20160205.00Z \
@@ -725,17 +733,17 @@ foreach DATE ( \
 	#20191111.00Z 20191113.00Z 20191114.00Z 20191115.00Z 20191116.00Z 20191118.00Z 20191119.00Z 20191120.00Z \
 	#20191121.00Z 20191123.00Z 20191124.00Z 20191125.00Z 20191126.00Z 20191128.00Z 20191129.00Z 20191130.00Z \
 	# 2017 hurricane season \
-	#20170901.00Z 20170902.00Z 20170903.00Z 20170904.00Z 20170905.00Z 20170906.00Z 20170907.00Z 20170908.00Z 20170909.00Z 20170910.00Z \
-	#20170911.00Z 20170912.00Z 20170913.00Z 20170914.00Z 20170915.00Z 20170916.00Z 20170917.00Z 20170918.00Z 20170919.00Z 20170920.00Z \
-	#20170921.00Z 20170922.00Z 20170923.00Z 20170924.00Z 20170925.00Z 20170926.00Z 20170927.00Z 20170928.00Z 20170929.00Z 20170930.00Z \
+	#20170901.12Z 20170902.12Z 20170903.12Z 20170904.12Z 20170905.12Z 20170906.12Z 20170907.12Z 20170908.12Z 20170909.12Z 20170910.12Z \
+	#20170911.12Z 20170912.12Z 20170913.12Z 20170914.12Z 20170915.12Z 20170916.12Z 20170917.12Z 20170918.12Z 20170919.12Z 20170920.12Z \
+	#20170921.12Z 20170922.12Z 20170923.12Z 20170924.12Z 20170925.12Z 20170926.12Z 20170927.12Z 20170928.12Z 20170929.12Z 20170930.12Z \
 	# 2018 hurricane season \
-	#20180901.00Z 20180902.00Z 20180903.00Z 20180904.00Z 20180905.00Z 20180906.00Z 20180907.00Z 20180908.00Z 20180909.00Z 20180910.00Z \
-	#20180911.00Z 20180912.00Z 20180913.00Z 20180914.00Z 20180915.00Z 20180916.00Z 20180917.00Z 20180918.00Z 20180919.00Z 20180920.00Z \
-	#20180921.00Z 20180922.00Z 20180923.00Z 20180924.00Z 20180925.00Z 20180926.00Z 20180927.00Z 20180928.00Z 20180929.00Z 20180930.00Z \
+	#20180901.12Z 20180902.12Z 20180903.12Z 20180904.12Z 20180905.12Z 20180906.12Z 20180907.12Z 20180908.12Z 20180909.12Z 20180910.12Z \
+	#20180911.12Z 20180912.12Z 20180913.12Z 20180914.12Z 20180915.12Z 20180916.12Z 20180917.12Z 20180918.12Z 20180919.12Z 20180920.12Z \
+	#20180921.12Z 20180922.12Z 20180923.12Z 20180924.12Z 20180925.12Z 20180926.12Z 20180927.12Z 20180928.12Z 20180929.12Z 20180930.12Z \
 	# 2019 hurricane season \
-	#20190901.00Z 20190902.00Z 20190903.00Z 20190904.00Z 20190905.00Z 20190906.00Z 20190907.00Z 20190908.00Z 20190909.00Z 20190910.00Z \
-	#20190911.00Z 20190912.00Z 20190913.00Z 20190914.00Z 20190915.00Z 20190916.00Z 20190917.00Z 20190918.00Z 20190919.00Z 20190920.00Z \
-	#20190921.00Z 20190922.00Z 20190923.00Z 20190924.00Z 20190925.00Z 20190926.00Z 20190927.00Z 20190928.00Z 20190929.00Z 20190930.00Z \
+	#20190901.12Z 20190902.12Z 20190903.12Z 20190904.12Z 20190905.12Z 20190906.12Z 20190907.12Z 20190908.12Z 20190909.12Z 20190910.12Z \
+	#20190911.12Z 20190912.12Z 20190913.12Z 20190914.12Z 20190915.12Z 20190916.12Z 20190917.12Z 20190918.12Z 20190919.12Z 20190920.12Z \
+	#20190921.12Z 20190922.12Z 20190923.12Z 20190924.12Z 20190925.12Z 20190926.12Z 20190927.12Z 20190928.12Z 20190929.12Z 20190930.12Z \
 	)
 	set runname = SHiELD_${title}${MEMO}.${DATE}
 	echo $runname
