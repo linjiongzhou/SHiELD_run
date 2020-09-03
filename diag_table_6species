@@ -11,7 +11,7 @@
 "nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
 "tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
-"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
+#"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
 
 #
 #output variables
