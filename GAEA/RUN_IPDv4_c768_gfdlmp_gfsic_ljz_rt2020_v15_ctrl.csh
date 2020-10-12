@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C1536_20150801.00Z
+#SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 #SBATCH --cluster=c3
-#SBATCH --nodes=216
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=24,ALL
+#SBATCH --nodes=96
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,7 +25,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C1536"
+set CASE = "C768"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -38,6 +38,7 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
+#set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
 set ICS  = ${INPUT_DATA}/global.v201903/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v201912
 set GRID = ${INPUT_DATA}/global.v201903/${CASE}/GRID
@@ -50,11 +51,11 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "1537"
-    set npy = "1537"
+    set npx = "769"
+    set npy = "769"
     set npz = "91"
     set layout_x = $LX
-    set layout_y = "24" 
+    set layout_y = "16" 
     set io_layout = "1,1"
     set nthreads = "4"
 
@@ -104,7 +105,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "2"
+      set k_split = "1"
       set n_split = "8"
     else
       # hydrostatic options
@@ -189,6 +190,7 @@ ln -sf ${GRID}/* INPUT/
 
 # Date specific ICs
 ln -sf ${ICS}/* INPUT/
+#ln -sf ${ICS_new}/*sfc_data* INPUT/
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -231,7 +233,7 @@ cat > input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 12000000,
+       domains_stack_size = 3000000,
        print_memory_usage = .false.
 /
 
@@ -361,7 +363,7 @@ cat > input.nml <<EOF
        cnvcld         = .false.
        imfshalcnv     = 2
        imfdeepcnv     = 2
-       cdmbgwd        = 5.0, 0.25
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -412,7 +414,7 @@ cat > input.nml <<EOF
        const_vs = .false.
        const_vg = .false.
        const_vr = .false.
-       vi_fac = 0.8
+       vi_fac = 1.
        vs_fac = 1.
        vg_fac = 1.
        vr_fac = 1.
@@ -440,8 +442,8 @@ cat > input.nml <<EOF
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
-       ccn_l = 159.
-       ccn_o = 66.
+       ccn_l = 300.
+       ccn_o = 100.
        c_paut = 0.5
        c_cracw = 0.8
        use_ppm = .false.
@@ -460,10 +462,10 @@ cat > input.nml <<EOF
        rewflag = 1
        reiflag = 5
        rewmin = 5.0
-       rewmax = 15.0
+       rewmax = 10.0
        reimin = 10.0
        reimax = 150.0
-       rermin = 15.0
+       rermin = 10.0
        rermax = 10000.0
        resmin = 150.0
        resmax = 10000.0
