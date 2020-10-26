@@ -39,9 +39,9 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 set EC_data = /lustre/f2/pdata/gfdl/gfdl_W/Jan-Huey.Chen/EC_data/IFS_AN0_${NAME}.nc
-set ICS  = ${INPUT_DATA}/global.v201810/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v201903/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v201912
-set GRID = ${INPUT_DATA}/global.v201810/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v201903/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -372,9 +372,15 @@ cat > input.nml <<EOF
        ysupbl         = .false.
        satmedmf       = .true.
        isatmedmf      = 0
-       xkzminv        = 1.0
-	   xkzm_m         = 1.0
-       xkzm_h         = 1.0
+       do_dk_hb19     = .false.
+       xkzminv        = 0.0
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
+	   xkzm_ml        = 1.0
+       xkzm_hl        = 1.0
+	   xkzm_mi        = 1.5
+       xkzm_hi        = 1.5
+       cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
        do_ocean       = .true.
@@ -448,6 +454,8 @@ cat > input.nml <<EOF
        z_slope_ice = .true.
        fix_negative = .true.
        icloud_f = 0
+       do_cld_adj = .true.
+       f_dq_p = 3.0
 /
 
  &cld_eff_rad_nml
@@ -489,7 +497,7 @@ cat > input.nml <<EOF
        FNVETC   = "$FIX/global_vegtype.igbp.t1534.3072.1536.rg.grb",
        FNSOTC   = "$FIX/global_soiltype.statsgo.t1534.3072.1536.rg.grb",
        FNSMCC   = "$FIX/global_soilmgldas.t1534.3072.1536.grb",
-       FNMSKH   = "$FIX/seaice_newland.grb",
+       FNMSKH   = "$FIX/global_slmask.t1534.3072.1536.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",
