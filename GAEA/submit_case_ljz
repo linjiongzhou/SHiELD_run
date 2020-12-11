@@ -11,7 +11,7 @@
 #set title = "c768_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2019_v15"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020"
-set title = "c768_gfdlmp_ifsic_jhc_rt2020"
+#set title = "c768_gfdlmp_ifsic_jhc_rt2020"
 #set title = "c768_gfdlmp_ifsic_jhc_rt2020_v15"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_ctrl"
@@ -19,6 +19,8 @@ set title = "c768_gfdlmp_ifsic_jhc_rt2020"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_tmp"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_fv3gfsic"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v16"
+#set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15"
+set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c1152_gfdlmp_ifsic_jhc_rt2020"
@@ -26,14 +28,29 @@ set title = "c768_gfdlmp_ifsic_jhc_rt2020"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15_ctrl"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020_v15_aero"
+#set title = "c1152_gfdlmp_gfsic_ljz_rt2021_v15"
+#set title = "c1152_gfdlmp_gfsic_ljz_rt2021_v15_IC"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2020_v15"
+#set title = "c1536_gfdlmp_gfsic_ljz_rt2021_v15"
+#set title = "c1536_gfdlmp_gfsic_ljz_rt2021_v15_IC"
 #set title = "c3072_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c3072_gfdlmp_gfsic_ljz_rt2020_v15"
 #set title = "DP_gfdlmp_ljz_rt2020"
 #set title = "DP_gfdlmp_ljz_rt2020_fsbm"
 #set title = "DP_gfdlmp_ljz_rt2020_fsbm_res"
+
+#set title = "c48_gfsic_rt2021_v15_IC"
+#set title = "c96_gfsic_rt2021_v15_IC"
+#set title = "c192_gfsic_rt2021_v15_IC"
+#set title = "c384_gfsic_rt2021_v15_IC"
+#set title = "c768_gfsic_rt2021_v15_IC"
+#set title = "c1536_gfsic_rt2021_v15_IC"
+#set title = "c3072_gfsic_rt2021_v15_IC"
+
+set basescript = "RUN_IPDv4_${title}.csh"
+#set basescript = "Z_RUN_${title}.csh"
 
 #set MEMO = "_RT2018" # 2018RT
 #set MEMO = "_RT2018_kn24" # 2018RT
@@ -263,7 +280,43 @@ set title = "c768_gfdlmp_ifsic_jhc_rt2020"
 #set MEMO = "_RT2020_e079" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS, GFSv16 physics, GFSv16 IC, remove convection update
 #set MEMO = "_RT2020_e080" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS, GFSv16 physics, GFSv16 IC, remove convection update
 #set MEMO = "_RT2020_e081" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS
-set MEMO = "_RT2020_e082" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS, w_limiter update
+#set MEMO = "_RT2020_e082" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS, w_limiter update
+#set MEMO = "_RT2020_e083" # based on RT2019_e43, update GFDL MP, TKE-EDMF, improve GFDL MP 3, advect TKE, no sedi_heat, bugfix to ccn, inflag=1, merge lmh and kng, new TKE, updated fix files, cdmbgwd=5.0, vi_fac = 0.8, aerosol, CCN update in cld_eff_rad, new ccn in cld_eff_rad, bugfix to openmp, new T extrapolation, newer TKE-EDMF, 2020.03-beta1 FMS, w_limiter update, RT2020 Real-Time System
+#set MEMO = "_RT2021_e001_IC" # based on RT2020, update dycore from fv3team
+#set MEMO = "_RT2021_e002_IC" # based on RT2020, update dycore from fv3team, update SAS
+#set MEMO = "_RT2021_e003_IC" # based on RT2020, update dycore from fv3team, update SAS new
+#set MEMO = "_RT2021_e004_IC" # based on RT2020, update dycore from fv3team, update SAS new
+#set MEMO = "_RT2021_e005_IC" # based on RT2020, update dycore from fv3team, update SAS new
+#set MEMO = "_RT2021_e007_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e008_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e009_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e010_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e011_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e012_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e013_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e014_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e015_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e016_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e017_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e018_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e019_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e020_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e021_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e022_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub
+#set MEMO = "_RT2021_e023_oldtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e024_newtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e025_newtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e026_newtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e027_newtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e028_newtke" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set MEMO = "_RT2021_e029_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e030_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e031_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e032_newsas" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e033_oldlsm" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e034_0.5rad" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e035_newlsm" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+set MEMO = "_RT2021_e035" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -412,7 +465,42 @@ set MEMO = "_RT2020_e082" # based on RT2019_e43, update GFDL MP, TKE-EDMF, impro
 #set EXE = "RT2020.e079.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS, GFSv16 physics, new noah mp, GFSv16 IC, remove convection update
 #set EXE = "RT2020.e080.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS, GFSv16 physics, new noah mp, GFSv16 IC, remove convection update
 #set EXE = "RT2020.e081.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS
-set EXE = "RT2020.e082.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS, w_limiter update
+#set EXE = "RT2020.e082.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS, w_limiter update
+#set EXE = "RT2020.e083.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF, updated external_ic, inprove GFDL MP 3, sfc_gfdl, merge in LMH, bugfix to ccn, bugfix to test_case nml, some fixes, enable to fix cosz, merge lmh and kng, updated fix files, FSBM, mp tendency fix, new test case #19, heating at the center, pturb = 2.1, qv0 = 17, updated TKE-EDMF, new TKE-EDMF background diffusion, CCN update in cld_eff_rad, P + C + E, with FSBM, -DSUPER_K, updated aerosol vertical interpolation, bugfix to openmp, merge rusty's branches, new T extrapolation, Newer TKE-EDMF, w_limiter, new fv_eta, 2020.03-beta1 FMS, w_limiter update
+#set EXE = "RT2021.e001.x" # based on RT2020.e082.x, update dycore based on fv3team
+#set EXE = "RT2021.e002.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS
+#set EXE = "RT2021.e003.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new
+#set EXE = "RT2021.e004.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new
+#set EXE = "RT2021.e005.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new
+#set EXE = "RT2021.e007.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e008.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e009.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e010.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e011.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e012.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e013.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e014.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e015.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e016.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e017.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e018.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e019.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e020.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e021.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e022.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub
+#set EXE = "RT2021.e023.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e024.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e025.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e026.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e027.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e028.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e029.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e030.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e031.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e032.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e033.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e034.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+set EXE = "RT2021.e035.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -434,13 +522,16 @@ set EXE = "RT2020.e082.x" # based on RT2019.e43.x, update GFDL MP, add TKE-EDMF,
 
 #set reso = "DP"
 #set reso = "C48"
+#set reso = "C96"
+#set reso = "C192"
+#set reso = "C384"
 set reso = "C768"
 #set reso = "C1152"
 #set reso = "C1536"
 #set reso = "C3072"
 
-#set cluster = "c3"
-set cluster = "c4"
+set cluster = "c3"
+#set cluster = "c4"
 
 set account = "gfdl_w"
 #set account = "nggps_gfdl"
@@ -448,6 +539,7 @@ set account = "gfdl_w"
 set qos = "normal"
 #set qos = "urgent"
 
+set LX = 0
 if ( $cluster == "c3" ) then
 	if ( $reso == "DP" ) then
 		set nodes = 11
@@ -493,13 +585,62 @@ if ( $cluster == "c4" ) then
 	endif
 endif
 
-set basescript = "RUN_IPDv4_${title}.csh"
+if ( `echo $basescript | cut -c1-1` == "Z" ) then
+	if ( $cluster == "c3" ) then
+		if ( $reso == "C48" ) then
+			set nodes = 6
+		endif
+		if ( $reso == "C96" ) then
+			set nodes = 14
+		endif
+		if ( $reso == "C192" ) then
+			set nodes = 24
+		endif
+		if ( $reso == "C384" ) then
+			set nodes = 54
+		endif
+		if ( $reso == "C768" ) then
+			set nodes = 96
+		endif
+		if ( $reso == "C1536" ) then
+			set nodes = 216
+		endif
+		if ( $reso == "C3072" ) then
+			set nodes = 864
+		endif
+	endif
+	if ( $cluster == "c4" ) then
+		if ( $reso == "C48" ) then
+			set nodes = 6
+		endif
+		if ( $reso == "C96" ) then
+			set nodes = 12
+		endif
+		if ( $reso == "C192" ) then
+			set nodes = 22
+		endif
+		if ( $reso == "C384" ) then
+			set nodes = 48
+		endif
+		if ( $reso == "C768" ) then
+			set nodes = 86
+		endif
+		if ( $reso == "C1536" ) then
+			set nodes = 192
+		endif
+		if ( $reso == "C3072" ) then
+			set nodes = 768
+		endif
+	endif
+endif
 
 foreach DATE ( \
 	## \
 	#20160801.00Z \
-	20190801.00Z \
+	#20190630.00Z \
+	#20190801.00Z \
 	#20190901.00Z \
+	#20200101.00Z \
 	#20200903.06Z \
 	## \
 	## every 5 days cases since 20160101.00Z \
@@ -680,18 +821,28 @@ foreach DATE ( \
 	#20190601.00Z 20190604.00Z \
 	# \
 	## monthly cases since 20190625.00Z \
-	#20190630.00Z 20190730.00Z 20190829.00Z 20190928.00Z 20191028.00Z 20191127.00Z 20200101.00Z 20200131.00Z \
-	#20200302.00Z 20200401.00Z 20200501.00Z 20200531.00Z \
+	20190630.00Z 20190730.00Z 20190829.00Z 20190928.00Z 20191028.00Z 20191127.00Z 20200101.00Z 20200131.00Z \
+	20200302.00Z 20200401.00Z 20200501.00Z 20200531.00Z \
+	20200630.00Z 20200730.00Z 20200829.00Z 20200928.00Z 20201028.00Z 20201127.00Z 20210101.00Z 20210131.00Z \
+	20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z \
 	## \
 	## every 5 days cases without monthly cases \
-	#20190625.00Z 20190705.00Z 20190710.00Z 20190715.00Z 20190720.00Z 20190725.00Z 20190801.00Z 20190804.00Z \
-	#20190809.00Z 20190814.00Z 20190819.00Z 20190824.00Z 20190903.00Z 20190908.00Z 20190913.00Z 20190918.00Z \
-	#20190923.00Z 20191003.00Z 20191008.00Z 20191013.00Z 20191018.00Z 20191023.00Z 20191102.00Z 20191107.00Z \
-	#20191112.00Z 20191117.00Z 20191122.00Z 20191202.00Z 20191207.00Z 20191212.00Z 20191217.00Z 20191222.00Z \
-	#20191227.00Z 20200106.00Z 20200111.00Z 20200116.00Z 20200121.00Z 20200126.00Z 20200205.00Z 20200210.00Z \
-	#20200215.00Z 20200220.00Z 20200225.00Z 20200307.00Z 20200312.00Z 20200317.00Z 20200322.00Z 20200327.00Z \
-	#20200406.00Z 20200411.00Z 20200416.00Z 20200421.00Z 20200426.00Z 20200506.00Z 20200511.00Z 20200516.00Z \
-	#20200521.00Z 20200526.00Z 20200605.00Z 20200610.00Z 20200615.00Z 20200620.00Z \
+	20190625.00Z 20190705.00Z 20190710.00Z 20190715.00Z 20190720.00Z 20190725.00Z 20190801.00Z 20190804.00Z \
+	20190809.00Z 20190814.00Z 20190819.00Z 20190824.00Z 20190903.00Z 20190908.00Z 20190913.00Z 20190918.00Z \
+	20190923.00Z 20191003.00Z 20191008.00Z 20191013.00Z 20191018.00Z 20191023.00Z 20191102.00Z 20191107.00Z \
+	20191112.00Z 20191117.00Z 20191122.00Z 20191202.00Z 20191207.00Z 20191212.00Z 20191217.00Z 20191222.00Z \
+	20191227.00Z 20200106.00Z 20200111.00Z 20200116.00Z 20200121.00Z 20200126.00Z 20200205.00Z 20200210.00Z \
+	20200215.00Z 20200220.00Z 20200225.00Z 20200307.00Z 20200312.00Z 20200317.00Z 20200322.00Z 20200327.00Z \
+	20200406.00Z 20200411.00Z 20200416.00Z 20200421.00Z 20200426.00Z 20200506.00Z 20200511.00Z 20200516.00Z \
+	20200521.00Z 20200526.00Z 20200605.00Z 20200610.00Z 20200615.00Z 20200620.00Z \
+	20200625.00Z 20200705.00Z 20200710.00Z 20200715.00Z 20200720.00Z 20200725.00Z 20200801.00Z 20200804.00Z \
+	20200809.00Z 20200814.00Z 20200819.00Z 20200824.00Z 20200903.00Z 20200908.00Z 20200913.00Z 20200918.00Z \
+	20200923.00Z 20201003.00Z 20201008.00Z 20201013.00Z 20201018.00Z 20201023.00Z 20201102.00Z 20201107.00Z \
+	20201112.00Z 20201117.00Z 20201122.00Z 20201202.00Z 20201207.00Z 20201212.00Z 20201217.00Z 20201222.00Z \
+	20201227.00Z 20210106.00Z 20210111.00Z 20210116.00Z 20210121.00Z 20210126.00Z 20210205.00Z 20210210.00Z \
+	20210215.00Z 20210220.00Z 20210225.00Z 20210307.00Z 20210312.00Z 20210317.00Z 20210322.00Z 20210327.00Z \
+	20210406.00Z 20210411.00Z 20210416.00Z 20210421.00Z 20210426.00Z 20210506.00Z 20210511.00Z 20210516.00Z \
+	20210521.00Z 20210526.00Z 20210605.00Z 20210610.00Z 20210615.00Z 20210620.00Z \
 	## \
 	## daily cases without every 5 days cases \
 	#20190701.00Z 20190702.00Z 20190703.00Z 20190704.00Z 20190706.00Z 20190707.00Z 20190708.00Z 20190709.00Z \
