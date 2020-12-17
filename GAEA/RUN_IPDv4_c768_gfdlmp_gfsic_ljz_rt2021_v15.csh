@@ -6,7 +6,7 @@
 #SBATCH --time=03:00:00
 #SBATCH --cluster=c3
 #SBATCH --nodes=96
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2021,EXE=x,LX=16,ALL
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov

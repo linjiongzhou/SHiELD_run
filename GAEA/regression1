@@ -36,7 +36,7 @@ set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v15_IC_res"
 #set MEMO = "_RT2020_e072_res1"
 #set MEMO = "_RT2020_e080_res1"
 #set MEMO = "_RT2021_e028_res1"
-set MEMO = "_RT2021_e035_res1"
+set MEMO = "_RT2021_e037_res1"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -61,7 +61,7 @@ set MEMO = "_RT2021_e035_res1"
 #set EXE = "RT2020.e072.x"
 #set EXE = "RT2020.e080.x"
 #set EXE = "RT2021.e028.x"
-set EXE = "RT2021.e035.x"
+set EXE = "RT2021.e037.x"
 
 set basescript = "RUN_${title}.csh"
 
@@ -122,3 +122,5 @@ $basescript >! ${runname}.csh
 chmod 755 ${runname}.csh
 sbatch --job-name=${runname} ${runname}.csh
 #rm -f ${runname}.csh
+
+exit 0
