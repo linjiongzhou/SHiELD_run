@@ -402,10 +402,10 @@ cat > input.nml <<EOF
 /
 
  &gfdl_mp_nml
-       sedi_transport = .true.
+       do_sedi_uv = .true.
        do_sedi_w = .true.
        do_sedi_heat = .false.
-       disp_heat = .true.
+       do_disp_heat = .true.
        rad_snow = .true.
        rad_graupel = .true.
        rad_rain = .true.
@@ -424,10 +424,8 @@ cat > input.nml <<EOF
        qi_lim = 1.
        prog_ccn = .false.
        do_qa = .true.
-       do_sat_adj = .false.
        tau_l2v = 225.
        tau_v2l = 150.
-       tau_g2v = 900.
        rthresh = 10.e-6
        dw_land = 0.16
        dw_ocean = 0.10
@@ -444,7 +442,7 @@ cat > input.nml <<EOF
        ccn_l = 159.
        ccn_o = 66.
        c_paut = 0.5
-       c_cracw = 0.8
+       c_pracw = 0.8
        use_ppm = .false.
        mono_prof = .true.
        z_slope_liq = .true.
@@ -453,10 +451,7 @@ cat > input.nml <<EOF
        icloud_f = 0
        do_cld_adj = .true.
        f_dq_p = 3.0
-/
-
- &cld_eff_rad_nml
-       qmin = 1.0e-12
+       do_melt_ice = .false.
        beta = 1.22
        rewflag = 1
        reiflag = 5

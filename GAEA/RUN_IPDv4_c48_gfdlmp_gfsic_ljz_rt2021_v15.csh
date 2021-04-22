@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -452,9 +452,6 @@ cat > input.nml <<EOF
        icloud_f = 0
        do_cld_adj = .true.
        f_dq_p = 3.0
-/
-
- &cld_eff_rad_nml
        qmin = 1.0e-12
        beta = 1.22
        rewflag = 1

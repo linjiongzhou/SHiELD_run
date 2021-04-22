@@ -6,7 +6,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=1
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=2,ALL
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -32,6 +32,24 @@ set CASE = "C48"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
 set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 1         # run cycle, 1: no restart
+
+set SCRIPT_AREA = $PWD
+set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
+set RST_COUNT = ${SCRIPT}.rst.count
+if ( -f ${RST_COUNT} ) then
+  set num = `cat ${RST_COUNT}`
+  set RESTART_RUN = "T"
+else
+  set num = 0
+  set RESTART_RUN = "F"
+endif
+if ( $num >= $NUM_TOT ) then
+  echo "Amount of runs already reaches NUM_TOT."
+  exit -1
+endif
+@ num ++
+echo ${num} >! ${RST_COUNT}
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
@@ -54,7 +72,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npx = "49"
     set npy = "49"
     set npz = "91"
-    set layout_x = $LX
+    set layout_x = "2" 
     set layout_y = "2" 
     set io_layout = "1,1"
     set nthreads = "2"
@@ -155,14 +173,44 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 # necessary for OpenMP when using Intel
     setenv KMP_STACKSIZE 256m
 
-\rm -rf $WORKDIR/rundir
+if (${RESTART_RUN} == "F") then
 
-mkdir -p $WORKDIR/rundir
-cd $WORKDIR/rundir
+  \rm -rf $WORKDIR/rundir
 
-mkdir -p RESTART
+  mkdir -p $WORKDIR/rundir
+  cd $WORKDIR/rundir
 
-# build the date for curr_date and diag_table from NAME
+  mkdir -p RESTART
+
+  # Date specific ICs
+  mkdir -p INPUT
+  ln -sf ${ICS}/* INPUT/
+
+  # set variables in input.nml for initial run
+  set nggps_ic = ".T."
+  set mountain = ".F."
+  set external_ic = ".T."
+  set warm_start = ".F."
+
+else
+
+  cd $WORKDIR/rundir
+  \rm -rf INPUT/*
+
+  # move the restart data into INPUT/
+  mv RESTART/* INPUT/.
+
+  # reset values in input.nml for restart run
+  set make_nh = ".F."
+  set nggps_ic = ".F."
+  set mountain = ".T."
+  set external_ic = ".F."
+  set warm_start = ".T."
+  set na_init = 0
+
+endif
+
+# build the date for curr_date from NAME
 unset echo
 set y = `echo ${NAME} | cut -c1-4`
 set m = `echo ${NAME} | cut -c5-6`
@@ -172,7 +220,7 @@ set echo
 set curr_date = "${y},${m},${d},${h},0,0"
 
 # build the diag_table with the experiment name and date stamp
-cat > diag_table << EOF
+cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
@@ -180,16 +228,19 @@ cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species field_table
+cp ${RUN_AREA}/field_table_6species_aero field_table
 cp $executable .
 
-mkdir -p INPUT
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
 
-# Date specific ICs
-ln -sf ${ICS}/* INPUT/
+# aerosol data
+if ( $io_layout == "1,1" ) then
+	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc INPUT/
+else
+	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc.* INPUT/
+endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -206,7 +257,7 @@ foreach file ( $FIX/global_volcanic_aerosols_????-????.txt )
 	ln -sf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
 end
 
-cat > input.nml <<EOF
+cat >! input.nml <<EOF
  &amip_interp_nml
      interp_oi_sst = .true.
      use_ncep_sst = .true.
@@ -274,7 +325,7 @@ cat > input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 1
+       dnats = 2
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -284,10 +335,10 @@ cat > input.nml <<EOF
        delt_max = 0.002
        ke_bg = 0.
        do_vort_damp = $do_vort_damp
-       external_ic = .T.
+       external_ic = $external_ic
        gfs_phil = $gfs_phil
-       nggps_ic = .T.
-       mountain = .F.
+       nggps_ic = $nggps_ic
+       mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
        hord_mt = 5
@@ -302,10 +353,11 @@ cat > input.nml <<EOF
        fill = .T.
        dwind_2d = .F.
        print_freq = $print_freq
-       warm_start = .F.
+       warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
+       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -407,6 +459,7 @@ cat > input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
+       prog_ccn = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -500,14 +553,21 @@ cat > input.nml <<EOF
 EOF
 
 # run the executable
-   ${run_cmd} | tee fms.out
-   if ( $? != 0 ) then
-     exit
-   endif
-
-if ($NO_SEND == "no_send") then
+${run_cmd} | tee fms.out
+if ( $? != 0 || `grep Main fms.out | wc -l ` != 1 ) then
+  if ( ${num} == 1 ) then
+    rm -f ${RST_COUNT}
+  else
+    mv ./INPUT/*.res* ./RESTART/
+    mv ./INPUT/phy_data* ./RESTART/
+    mv ./INPUT/sfc_data* ./RESTART/
+    @ num = $num - 1
+    echo ${num} >! ${RST_COUNT}
+  endif
   exit
 endif
+
+if ($NO_SEND == "send") then
 
 #########################################################################
 # generate date for file names
@@ -533,10 +593,12 @@ endif
      exit 1
     endif
 
+	mkdir -p $WORKDIR/ascii/$begindate
     foreach out (`ls *.out *.results input*.nml *_table`)
-      mv $out $begindate.$out
+      mv $out $WORKDIR/ascii/$begindate/
     end
 
+    cd $WORKDIR/ascii/$begindate
     tar cvf - *\.out *\.results | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
@@ -581,6 +643,8 @@ endif
       foreach index ($list)
         mv $WORKDIR/rundir/RESTART/$index $restart_file/$index
       end
+
+      ln -sf $restart_file/* $WORKDIR/rundir/RESTART/
 
       sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -630,3 +694,30 @@ endif
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+
+else
+
+    cd $WORKDIR/rundir
+
+    set begindate = `$TIME_STAMP -bhf digital`
+    if ( $begindate == "" ) set begindate = tmp`date '+%j%H%M%S'`
+    set enddate = `$TIME_STAMP -ehf digital`
+    if ( $enddate == "" ) set enddate = tmp`date '+%j%H%M%S'`
+
+    mkdir -p $WORKDIR/ascii/$begindate
+	mv *.out *.results *.nml *_table $WORKDIR/ascii/$begindate
+
+    mkdir -p $WORKDIR/history/$begindate
+    mv *.nc $WORKDIR/history/$begindate
+
+    mkdir -p $WORKDIR/restart/$enddate
+    mv RESTART/* $WORKDIR/restart/$enddate
+	ln -sf $WORKDIR/restart/$enddate/* RESTART/
+
+endif
+
+if ($num < $NUM_TOT) then
+  echo "resubmitting... "
+  cd $SCRIPT_AREA
+  sbatch --job-name=$SLURM_JOB_NAME --account=$SLURM_JOB_ACCOUNT --qos=$SLURM_JOB_QOS --cluster=$SLURM_CLUSTER_NAME --nodes=$SLURM_JOB_NUM_NODES --export=NAME=${NAME},MEMO=${MEMO},EXE=${EXE},ALL $SCRIPT:t.csh
+endif

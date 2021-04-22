@@ -180,7 +180,7 @@ cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species field_table
+cp ${RUN_AREA}/field_table_6species_aero field_table
 cp $executable .
 
 mkdir -p INPUT
@@ -190,6 +190,13 @@ ln -sf ${GRID}/* INPUT/
 
 # Date specific ICs
 ln -sf ${ICS}/* INPUT/
+
+# aerosol data
+if ( $io_layout == "1,1" ) then
+	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc INPUT/
+else
+	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc.* INPUT/
+endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -274,7 +281,7 @@ cat > input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 1
+       dnats = 2
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -306,6 +313,7 @@ cat > input.nml <<EOF
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
+       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -407,6 +415,7 @@ cat > input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
+       prog_ccn = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10

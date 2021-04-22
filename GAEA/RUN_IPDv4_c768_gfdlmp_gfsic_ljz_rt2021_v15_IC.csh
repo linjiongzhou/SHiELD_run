@@ -40,7 +40,7 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 # input filesets
 #set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
 set ICS  = ${INPUT_DATA}/global.v202012/${CASE}/${NAME}_IC
-set FIX  = ${INPUT_DATA}/fix.v201912
+set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
@@ -404,73 +404,49 @@ cat > input.nml <<EOF
 /
 
  &gfdl_mp_nml
-       sedi_transport = .true.
-       do_sedi_w = .true.
        do_sedi_heat = .false.
-       disp_heat = .true.
-       rad_snow = .true.
-       rad_graupel = .true.
-       rad_rain = .true.
-       const_vi = .false.
-       const_vs = .false.
-       const_vg = .false.
-       const_vr = .false.
-       vi_fac = 1.
-       vs_fac = 1.
-       vg_fac = 1.
-       vr_fac = 1.
        vi_max = 1.
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       qi_lim = 1.
-       prog_ccn = .false.
-       do_qa = .true.
-       do_sat_adj = .false.
        tau_l2v = 225.
-       tau_v2l = 150.
-       tau_g2v = 900.
-       rthresh = 10.e-6
        dw_land = 0.16
        dw_ocean = 0.10
-       ql_gen = 1.0e-3
        ql_mlt = 1.0e-3
        qi0_crt = 8.0e-5
-       qs0_crt = 1.0e-3
-       tau_i2s = 1000.
-       c_psaci = 0.05
-       c_pgacs = 0.01
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
        ccn_l = 300.
        ccn_o = 200.
        c_paut = 0.5
-       c_cracw = 0.8
-       use_ppm = .false.
-       mono_prof = .true.
-       z_slope_liq = .true.
-       z_slope_ice = .true.
-       fix_negative = .true.
-       icloud_f = 0
+       c_pracw = 0.35
+       c_psacw = 1.0
+       c_pgacw = 1.e-4
+       c_praci = 1.0
+       c_psaci = 0.35
+       c_pgaci = 0.05
        do_cld_adj = .true.
+       use_rhc_revap = .true.
        f_dq_p = 3.0
-/
-
- &cld_eff_rad_nml
-       qmin = 1.0e-12
-       beta = 1.22
-       rewflag = 1
-       reiflag = 5
-       rewmin = 5.0
        rewmax = 10.0
-       reimin = 10.0
-       reimax = 150.0
        rermin = 10.0
-       rermax = 10000.0
-       resmin = 150.0
-       resmax = 10000.0
-       liq_ice_combine = .false.
+       do_new_acc_water = .true.
+       do_psd_water_fall = .true.
+       n0w_sig = 1.2
+       n0w_exp = 66
+       muw = 11.0
+       alinw = 3.e7
+       blinw = 2.0
+       rewflag = 4
+       do_new_acc_ice = .true.
+       do_psd_ice_fall = .true.
+       n0i_sig = 1.0
+       n0i_exp = 10
+       mui = 1.0
+       alini = 11.72
+       blini = 0.41
+       reiflag = 7
 /
 
  &diag_manager_nml 

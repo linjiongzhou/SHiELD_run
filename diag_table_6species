@@ -100,6 +100,66 @@
 # "dynamics",  "q50",         "q50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "q10",         "q10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
+ "dynamics",  "ql1000",      "ql1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql850",       "ql850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql700",       "ql700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql500",       "ql500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql250",       "ql250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql200",       "ql200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql100",       "ql100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "ql50",        "ql50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "ql10",        "ql10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qi1000",      "qi1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi850",       "qi850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi700",       "qi700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi500",       "qi500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi250",       "qi250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi200",       "qi200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi100",       "qi100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qi50",        "qi50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qi10",        "qi10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qr1000",      "qr1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr850",       "qr850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr700",       "qr700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr500",       "qr500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr250",       "qr250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr200",       "qr200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr100",       "qr100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qr50",        "qr50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qr10",        "qr10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qs1000",      "qs1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs850",       "qs850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs700",       "qs700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs500",       "qs500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs250",       "qs250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs200",       "qs200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs100",       "qs100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qs50",        "qs50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qs10",        "qs10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qg1000",      "qg1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg850",       "qg850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg700",       "qg700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg500",       "qg500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg250",       "qg250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg200",       "qg200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg100",       "qg100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qg50",        "qg50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qg10",        "qg10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "cf1000",      "cf1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf850",       "cf850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf700",       "cf700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf500",       "cf500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf250",       "cf250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf200",       "cf200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf100",       "cf100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "cf50",        "cf50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "cf10",        "cf10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
  "dynamics",  "rh1000",      "rh1000",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "rh850",       "rh850",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "rh700",       "rh700",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -132,6 +192,7 @@
  "dynamics",  "intqs",     "intqs",    "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "intqg",     "intqg",    "atmos_4xdaily", "all", .false.,  "none", 2
 ####
+ "dynamics",  "prew",       "prew",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "prer",       "prer",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "prei",       "prei",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "pres",       "pres",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -191,6 +252,12 @@
 # "dynamics",  "t_plev",       "t_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "h_plev",       "h_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "q_plev",       "q_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "ql_plev",      "ql_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qi_plev",      "qi_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qr_plev",      "qr_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qs_plev",      "qs_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qg_plev",      "qg_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "cf_plev",      "cf_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "omg_plev",     "omg_plev",    "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 ###
 # tendencies
