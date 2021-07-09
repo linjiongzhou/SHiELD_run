@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202012/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "64"
+    set ncep_levs = "127"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data

@@ -4,7 +4,7 @@
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=02:00:00
-#SBATCH --cluster=c4
+#SBATCH --cluster=c3
 #SBATCH --nodes=1
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202012/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -78,7 +78,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
-    set blocksize = "32"
+    @ blocksize = ( ${npx} - 1 ) / ${layout_x} * ( ${npy} - 1 ) / ${layout_y}
 
     # run length
     set months = "0"
@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "64"
+    set ncep_levs = "127"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -224,7 +224,7 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_cosp >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
@@ -426,6 +426,7 @@ cat >! input.nml <<EOF
        do_inline_mp   = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -491,6 +492,198 @@ cat >! input.nml <<EOF
        !alini = 11.72				! e122_psd
        !blini = 0.41				! e122_psd
        !reiflag = 7					! e122_psd
+       snow_grauple_combine = .false.
+/
+
+&COSP_INPUT
+  NPOINTS_IT=0,! Max number of gridpoints to be processed in one iteration
+  NCOLUMNS=20,  ! Number of subcolumns
+  USE_VGRID=.true., ! Use fixed vertical grid for outputs? (if .true. then you need to define number of levels with Nlr)
+  NLVGRID=40,       ! Number of levels in statistical outputs (only used if USE_VGRID=.true.)
+  CSAT_VGRID=.true., ! CloudSat vertical grid? (if .true. then the CloudSat standard grid is used for the outputs.
+                     !  USE_VGRID needs also be .true.)
+  !----------------------------------------------------------------------------------
+  !--------------- Inputs related to radar simulations
+  !----------------------------------------------------------------------------------
+  cloudsat_RADAR_FREQ=94.0, ! CloudSat radar frequency (GHz)
+  SURFACE_RADAR=0, ! surface=1, spaceborne=0
+  cloudsat_use_gas_abs=1,   ! include gaseous absorption? yes=1,no=0
+  cloudsat_do_ray=0,        ! calculate/output Rayleigh refl=1, not=0
+  cloudsat_k2=-1,           ! |K|^2, -1=use frequency dependent default
+  use_precipitation_fluxes=.true.,  ! True if precipitation fluxes are input to the algorithm
+  cloudsat_micro_scheme='MMF_v3_single_moment', !'MMF_v3.5_two_moment'
+  !----------------------------------------------------------------------------------
+  !---------------- Inputs related to lidar simulations
+  !----------------------------------------------------------------------------------
+  lidar_ice_type=0,    ! Ice particle shape in lidar calculations (0=ice-spheres ; 1=ice-non-spherical)
+  OVERLAP=3,           !  overlap assumption used by scops: 1=max, 2=rand, 3=max/rand
+  !----------------------------------------------------------------------------------
+  !---------------- Inputs related to ISCCP simulator
+  !----------------------------------------------------------------------------------
+  ISCCP_TOPHEIGHT=1,  !  1 = adjust top height using both a computed
+                       !  infrared brightness temperature and the visible
+                       !  optical depth to adjust cloud top pressure. Note
+                       !  that this calculation is most appropriate to compare
+                       !  to ISCCP data during sunlit hours.
+                      !  2 = do not adjust top height, that is cloud top
+                       !  pressure is the actual cloud top pressure
+                       !  in the model
+                      !  3 = adjust top height using only the computed
+                       !  infrared brightness temperature. Note that this
+                       !  calculation is most appropriate to compare to ISCCP
+                       !  IR only algortihm (i.e. you can compare to nighttime
+                       !  ISCCP data with this option)
+  ISCCP_TOPHEIGHT_DIRECTION=2,   ! direction for finding atmosphere pressure level
+                                 ! with interpolated temperature equal to the radiance
+                                 ! determined cloud-top temperature
+                                 ! 1 = find the *lowest* altitude (highest pressure) level
+                                 ! with interpolated temperature equal to the radiance
+                                 ! determined cloud-top temperature
+                                 ! 2 = find the *highest* altitude (lowest pressure) level
+                                 ! with interpolated temperature equal to the radiance
+                                 ! determined cloud-top temperature. This is the
+                                 ! default value since V4.0 of the ISCCP simulator.
+                                 ! ONLY APPLICABLE IF top_height EQUALS 1 or 3
+  !----------------------------------------------------------------------------------
+  !-------------- RTTOV inputs
+  !----------------------------------------------------------------------------------
+  rttov_Platform=1,    ! satellite platform
+  rttov_Satellite=15,  ! satellite
+  rttov_Instrument=5,  ! instrument
+  rttov_Nchannels=3,   ! Number of channels to be computed
+  rttov_Channels=1,2,3,        ! Channel numbers (please be sure that you supply Nchannels)
+  rttov_Surfem=0.0,0.0,0.0,  ! Surface emissivity (please be sure that you supply Nchannels)
+  rttov_ZenAng=50.0, ! Satellite Zenith Angle
+  CO2=5.241e-04, ! Mixing ratios of trace gases
+  CH4=9.139e-07,
+  N2O=4.665e-07,
+  CO=2.098e-07
+/
+
+&COSP_OUTPUT
+  !- CloudSat
+  Lcfaddbze94=.false.,
+  Ldbze94=.false.,
+  !- CALIPSO
+  Latb532=.false.,
+  LcfadLidarsr532=.false.,
+  Lclcalipso=.false.,
+  Lclhcalipso=.true.,
+  Lcllcalipso=.true.,
+  Lclmcalipso=.true.,
+  Lcltcalipso=.true.,
+  LparasolRefl=.false.,
+  ! CALIPSO phase diagnostics
+  Lclcalipsoliq=.false.,
+  Lclcalipsoice=.false.,
+  Lclcalipsoun=.false.,
+  Lclcalipsotmp=.false.,
+  Lclcalipsotmpliq=.false.,
+  Lclcalipsotmpice=.false.,
+  Lclcalipsotmpun=.false.,
+  Lclhcalipsoliq=.true.,
+  Lcllcalipsoliq=.true.,
+  Lclmcalipsoliq=.true.,
+  Lcltcalipsoliq=.true.,
+  Lclhcalipsoice=.true.,
+  Lcllcalipsoice=.true.,
+  Lclmcalipsoice=.true.,
+  Lcltcalipsoice=.true.,
+  Lclhcalipsoun=.true.,
+  Lcllcalipsoun=.true.,
+  Lclmcalipsoun=.true.,
+  Lcltcalipsoun=.true.,
+  ! CALIPSO OPAQ diagnostics
+  Lclopaquecalipso=.true.,
+  Lclthincalipso=.true., 
+  Lclzopaquecalipso=.true.,
+  Lclcalipsoopaque=.false., 
+  Lclcalipsothin=.false.,  
+  Lclcalipsozopaque=.false.,
+  Lclcalipsoopacity=.false., 
+  Lclopaquetemp=.true., 
+  Lclthintemp=.true., 
+  Lclzopaquetemp=.true., 
+  Lclopaquemeanz=.true., 
+  Lclthinmeanz=.true., 
+  Lclthinemis=.true., 
+  Lclopaquemeanzse=.true.,
+  Lclthinmeanzse=.true., 
+  Lclzopaquecalipsose=.true.,
+  ! GROUND LIDAR diagnostics  
+  LlidarBetaMol532gr=.false.,  
+  LcfadLidarsr532gr=.false.,  
+  Latb532gr=.false.,  
+  LclgrLidar532=.false.,
+  LclhgrLidar532=.false.,  
+  LcllgrLidar532=.false., 
+  LclmgrLidar532=.false.,
+  LcltgrLidar532=.false.,
+  ! ATLID diagnostics
+  LlidarBetaMol355=.false.,
+  LcfadLidarsr355=.false., 
+  Latb355=.false., 
+  Lclatlid=.false., 
+  Lclhatlid=.false., 
+  Lcllatlid=.false.,
+  Lclmatlid=.false.,
+  Lcltatlid=.false.,
+  !- ISCCP
+  Lalbisccp=.false.,
+  Lboxptopisccp=.false.,
+  Lboxtauisccp=.false.,
+  Lpctisccp=.false.,
+  Lclisccp=.false.,
+  Ltauisccp=.false.,
+  Lcltisccp=.false.,
+  Lmeantbisccp=.false.,
+  Lmeantbclrisccp=.false.,
+  !- MISR
+  LclMISR=.false.,
+  !- Use lidar and radar
+  Lclcalipso2=.false.,
+  Lcltlidarradar=.false.,
+  Lcloudsat_tcc=.false.,
+  Lcloudsat_tcc2=.false.,
+  !- These are provided for debugging or special purposes
+  Lfracout=.false.,
+  LlidarBetaMol532=.false.,  
+  !- MODIS
+  Lcltmodis=.true.,
+  Lclwmodis=.true.,
+  Lclimodis=.true.,
+  Lclhmodis=.true.,
+  Lclmmodis=.true.,
+  Lcllmodis=.true.,
+  Ltautmodis=.true.,
+  Ltauwmodis=.true.,
+  Ltauimodis=.true.,
+  Ltautlogmodis=.true.,
+  Ltauwlogmodis=.true.,
+  Ltauilogmodis=.true.,
+  Lreffclwmodis=.true.,
+  Lreffclimodis=.true.,
+  Lpctmodis=.true.,
+  Llwpmodis=.true.,
+  Liwpmodis=.true.,
+  Lclmodis=.false.,
+  !- RTTOV
+  Ltbrttov=.false.,
+  ! -CLOUDSAT precipitation frequency/occurence diagnostics
+  Lptradarflag0=.false.,
+  Lptradarflag1=.false.,
+  Lptradarflag2=.false.,
+  Lptradarflag3=.false.,
+  Lptradarflag4=.false.,
+  Lptradarflag5=.false.,
+  Lptradarflag6=.false.,
+  Lptradarflag7=.false.,
+  Lptradarflag8=.false.,
+  Lptradarflag9=.false.,
+  Lradarpia=.false.,
+  !- CloudSat+MODIS joint diagnostics
+  Lwr_occfreq=.false.,
+  Lcfodd=.false.
 /
 
  &diag_manager_nml 
