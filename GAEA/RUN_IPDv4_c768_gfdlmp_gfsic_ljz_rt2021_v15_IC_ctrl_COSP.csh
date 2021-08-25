@@ -39,9 +39,9 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 #set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
-set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202012/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -77,7 +77,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "127"
+    set ncep_levs = "64"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -181,7 +181,7 @@ cat ${RUN_AREA}/diag_table_6species_cosp >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species_aero field_table
+cp ${RUN_AREA}/field_table_6species field_table
 cp $executable .
 
 mkdir -p INPUT
@@ -192,13 +192,6 @@ ln -sf ${GRID}/* INPUT/
 # Date specific ICs
 ln -sf ${ICS}/* INPUT/
 #ln -sf ${ICS_new}/*sfc_data* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -283,7 +276,7 @@ cat > input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -315,7 +308,6 @@ cat > input.nml <<EOF
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
-       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -413,52 +405,73 @@ cat > input.nml <<EOF
 /
 
  &gfdl_mp_nml
+       sedi_transport = .true.
+       do_sedi_w = .true.
        do_sedi_heat = .false.
+       disp_heat = .true.
+       rad_snow = .true.
+       rad_graupel = .true.
+       rad_rain = .true.
+       const_vi = .false.
+       const_vs = .false.
+       const_vg = .false.
+       const_vr = .false.
+       vi_fac = 1.
+       vs_fac = 1.
+       vg_fac = 1.
+       vr_fac = 1.
        vi_max = 1.
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
+       qi_lim = 1.
+       prog_ccn = .false.
+       do_qa = .true.
+       do_sat_adj = .false.
        tau_l2v = 225.
+       tau_v2l = 150.
+       tau_g2v = 900.
+       rthresh = 10.e-6
        dw_land = 0.16
        dw_ocean = 0.10
+       ql_gen = 1.0e-3
        ql_mlt = 1.0e-3
        qi0_crt = 8.0e-5
+       qs0_crt = 1.0e-3
+       tau_i2s = 1000.
+       c_psaci = 0.05
+       c_pgacs = 0.01
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
        ccn_l = 300.
        ccn_o = 200.
        c_paut = 0.5
-       c_pracw = 0.8				! aero
-       c_psaci = 0.05				! aero
-       !c_pracw = 0.35				! aero_psd
-       !c_psacw = 1.0				! aero_psd
-       !c_pgacw = 1.e-4				! aero_psd
-       !c_praci = 1.0				! aero_psd
-       !c_psaci = 0.35				! aero_psd
-       !c_pgaci = 0.05				! aero_psd
+       c_cracw = 0.8
+       use_ppm = .false.
+       mono_prof = .true.
+       z_slope_liq = .true.
+       z_slope_ice = .true.
+       fix_negative = .true.
+       icloud_f = 0
        do_cld_adj = .true.
-       use_rhc_revap = .true.
        f_dq_p = 3.0
+/
+
+ &cld_eff_rad_nml
+       qmin = 1.0e-12
+       beta = 1.22
+       rewflag = 1
+       reiflag = 5
+       rewmin = 5.0
        rewmax = 10.0
+       reimin = 10.0
+       reimax = 150.0
        rermin = 10.0
-       !do_new_acc_water = .true.	! aero_psd
-       !do_psd_water_fall = .true.	! aero_psd
-       !n0w_sig = 1.2				! aero_psd
-       !n0w_exp = 66				! aero_psd
-       !muw = 11.0					! aero_psd
-       !alinw = 3.e7				! aero_psd
-       !blinw = 2.0					! aero_psd
-       !rewflag = 4					! aero_psd
-       !do_new_acc_ice = .true.		! aero_psd
-       !do_psd_ice_fall = .true.	! aero_psd
-       !n0i_sig = 1.0				! aero_psd
-       !n0i_exp = 10				! aero_psd
-       !mui = 1.0					! aero_psd
-       !alini = 11.72				! aero_psd
-       !blini = 0.41				! aero_psd
-       !reiflag = 7					! aero_psd
+       rermax = 10000.0
+       resmin = 150.0
+       resmax = 10000.0
+       liq_ice_combine = .false.
        snow_grauple_combine = .false.
 /
 

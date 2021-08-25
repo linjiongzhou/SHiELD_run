@@ -10,10 +10,11 @@
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_v15_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2020_v15_aero_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v15_IC_res"
+set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v15_IC_ctrl_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v15_IC_aero_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_res"
-set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP_res"
+#set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP_res"
 
 #set MEMO = "_rt2018_e2_res1"
 #set MEMO = "_20190305mods_rt1_res1"
@@ -49,7 +50,7 @@ set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP_res"
 #set MEMO = "_RT2021_e071_res1"
 #set MEMO = "_RT2021_e072_res1"
 #set MEMO = "_RT2021_e076_res1"
-set MEMO = "_RT2021_e122_res1"
+set MEMO = "_RT2021_e126_res1"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -82,13 +83,13 @@ set MEMO = "_RT2021_e122_res1"
 #set EXE = "RT2021.e071.x"
 #set EXE = "RT2021.e072.x"
 #set EXE = "RT2021.e076.x"
-set EXE = "RT2021.e122.x"
+set EXE = "RT2021.e126.x"
 
 set basescript = "RUN_${title}.csh"
 
 #set DATE = "20160801.00Z"
-#set DATE = "20190801.00Z"
-set DATE = "20210401.00Z"
+set DATE = "20190801.00Z"
+#set DATE = "20210401.00Z"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
