@@ -25,12 +25,12 @@
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v15_fv3gfsic"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2020_v16"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15"
-#set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC"
+set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_aero"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_ctrl"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_COSP"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_aero_COSP"
-set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_ctrl_COSP"
+#set title = "c768_gfdlmp_gfsic_ljz_rt2021_v15_IC_ctrl_COSP"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP"
@@ -419,8 +419,11 @@ set basescript = "RUN_IPDv4_${title}.csh"
 #set MEMO = "_RT2021_e123" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2021_e124" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2021_e125" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
-set MEMO = "_RT2021_e126_ctrl" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e126" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2021_e127" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e128" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e129" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+set MEMO = "_RT2021_e132_remapteT" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -693,8 +696,11 @@ set MEMO = "_RT2021_e126_ctrl" # based on RT2020, update dycore from fv3team, up
 #set EXE = "RT2021.e123.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2021.e124.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2021.e125.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
-set EXE = "RT2021.e126.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e126.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2021.e127.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e128.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e129.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+set EXE = "RT2021.e132.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -744,10 +750,10 @@ if ( $cluster == "c3" ) then
 		set LX = 2
 	endif
 	if ( $reso == "C768" ) then
-		#set nodes = 96
-		#set LX = 16
-		set nodes = 192
-		set LX = 32
+		set nodes = 96
+		set LX = 16
+		#set nodes = 192
+		#set LX = 32
 	endif
 	if ( $reso == "C1152" || $reso == "C1536" ) then
 		set nodes = 216
@@ -768,10 +774,10 @@ if ( $cluster == "c4" ) then
 		set LX = 2
 	endif
 	if ( $reso == "C768" ) then
-		#set nodes = 64
-		#set LX = 12
-		set nodes = 128
-		set LX = 24
+		set nodes = 64
+		set LX = 12
+		#set nodes = 128
+		#set LX = 24
 	endif
 	if ( $reso == "C1152" || $reso == "C1536" ) then
 		set nodes = 192
@@ -1093,27 +1099,27 @@ foreach DATE ( \
 	## ----------------------------------------------------------------------------------------------------- \
 	## monthly cases since 20190625.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
-	20190630.00Z 20190730.00Z 20190829.00Z 20190928.00Z 20191028.00Z 20191127.00Z 20200101.00Z 20200131.00Z \
-	20200302.00Z 20200401.00Z 20200501.00Z 20200531.00Z \
-	20200630.00Z 20200730.00Z 20200829.00Z 20200928.00Z 20201028.00Z 20201127.00Z 20210101.00Z 20210131.00Z \
-	20210302.00Z \
+	#20190630.00Z 20190730.00Z 20190829.00Z 20190928.00Z 20191028.00Z 20191127.00Z 20200101.00Z 20200131.00Z \
+	#20200302.00Z 20200401.00Z 20200501.00Z 20200531.00Z \
+	#20200630.00Z 20200730.00Z 20200829.00Z 20200928.00Z 20201028.00Z 20201127.00Z 20210101.00Z 20210131.00Z \
+	#20210302.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases without monthly cases \
 	## ----------------------------------------------------------------------------------------------------- \
-	20190625.00Z 20190705.00Z 20190710.00Z 20190715.00Z 20190720.00Z 20190725.00Z 20190801.00Z 20190804.00Z \
-	20190809.00Z 20190814.00Z 20190819.00Z 20190824.00Z 20190903.00Z 20190908.00Z 20190913.00Z 20190918.00Z \
-	20190923.00Z 20191003.00Z 20191008.00Z 20191013.00Z 20191018.00Z 20191023.00Z 20191102.00Z 20191107.00Z \
-	20191112.00Z 20191117.00Z 20191122.00Z 20191202.00Z 20191207.00Z 20191212.00Z 20191217.00Z 20191222.00Z \
-	20191227.00Z 20200106.00Z 20200111.00Z 20200116.00Z 20200121.00Z 20200126.00Z 20200205.00Z 20200210.00Z \
-	20200215.00Z 20200220.00Z 20200225.00Z 20200307.00Z 20200312.00Z 20200317.00Z 20200322.00Z 20200327.00Z \
-	20200406.00Z 20200411.00Z 20200416.00Z 20200421.00Z 20200426.00Z 20200506.00Z 20200511.00Z 20200516.00Z \
-	20200521.00Z 20200526.00Z 20200605.00Z 20200610.00Z 20200615.00Z 20200620.00Z \
-	20200625.00Z 20200705.00Z 20200710.00Z 20200715.00Z 20200720.00Z 20200725.00Z 20200801.00Z 20200804.00Z \
-	20200809.00Z 20200814.00Z 20200819.00Z 20200824.00Z 20200903.00Z 20200908.00Z 20200913.00Z 20200918.00Z \
-	20200923.00Z 20201003.00Z 20201008.00Z 20201013.00Z 20201018.00Z 20201023.00Z 20201102.00Z 20201107.00Z \
-	20201112.00Z 20201117.00Z 20201122.00Z 20201202.00Z 20201207.00Z 20201212.00Z 20201217.00Z 20201222.00Z \
-	20201227.00Z 20210106.00Z 20210111.00Z 20210116.00Z 20210121.00Z 20210126.00Z 20210205.00Z 20210210.00Z \
-	20210215.00Z 20210220.00Z 20210225.00Z 20210307.00Z 20210312.00Z 20210317.00Z \
+	#20190625.00Z 20190705.00Z 20190710.00Z 20190715.00Z 20190720.00Z 20190725.00Z 20190801.00Z 20190804.00Z \
+	#20190809.00Z 20190814.00Z 20190819.00Z 20190824.00Z 20190903.00Z 20190908.00Z 20190913.00Z 20190918.00Z \
+	#20190923.00Z 20191003.00Z 20191008.00Z 20191013.00Z 20191018.00Z 20191023.00Z 20191102.00Z 20191107.00Z \
+	#20191112.00Z 20191117.00Z 20191122.00Z 20191202.00Z 20191207.00Z 20191212.00Z 20191217.00Z 20191222.00Z \
+	#20191227.00Z 20200106.00Z 20200111.00Z 20200116.00Z 20200121.00Z 20200126.00Z 20200205.00Z 20200210.00Z \
+	#20200215.00Z 20200220.00Z 20200225.00Z 20200307.00Z 20200312.00Z 20200317.00Z 20200322.00Z 20200327.00Z \
+	#20200406.00Z 20200411.00Z 20200416.00Z 20200421.00Z 20200426.00Z 20200506.00Z 20200511.00Z 20200516.00Z \
+	#20200521.00Z 20200526.00Z 20200605.00Z 20200610.00Z 20200615.00Z 20200620.00Z \
+	#20200625.00Z 20200705.00Z 20200710.00Z 20200715.00Z 20200720.00Z 20200725.00Z 20200801.00Z 20200804.00Z \
+	#20200809.00Z 20200814.00Z 20200819.00Z 20200824.00Z 20200903.00Z 20200908.00Z 20200913.00Z 20200918.00Z \
+	#20200923.00Z 20201003.00Z 20201008.00Z 20201013.00Z 20201018.00Z 20201023.00Z 20201102.00Z 20201107.00Z \
+	#20201112.00Z 20201117.00Z 20201122.00Z 20201202.00Z 20201207.00Z 20201212.00Z 20201217.00Z 20201222.00Z \
+	#20201227.00Z 20210106.00Z 20210111.00Z 20210116.00Z 20210121.00Z 20210126.00Z 20210205.00Z 20210210.00Z \
+	#20210215.00Z 20210220.00Z 20210225.00Z 20210307.00Z 20210312.00Z 20210317.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## IFS ICs \
 	## ----------------------------------------------------------------------------------------------------- \

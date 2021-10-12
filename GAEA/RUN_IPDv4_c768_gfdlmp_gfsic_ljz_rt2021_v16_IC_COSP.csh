@@ -3,7 +3,7 @@
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=05:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cluster=c3
 #SBATCH --nodes=96
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,ALL

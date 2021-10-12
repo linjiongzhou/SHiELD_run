@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C48_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=06:00:00
-#SBATCH --cluster=c3
-#SBATCH --nodes=96
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,ALL
+#SBATCH --time=02:00:00
+#SBATCH --cluster=c4
+#SBATCH --nodes=1
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,20 +25,37 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C48"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "send"    # choices:  send, no_send
+set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 1         # run cycle, 1: no restart
+
+set SCRIPT_AREA = $PWD
+set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
+set RST_COUNT = ${SCRIPT}.rst.count
+if ( -f ${RST_COUNT} ) then
+  set num = `cat ${RST_COUNT}`
+  set RESTART_RUN = "T"
+else
+  set num = 0
+  set RESTART_RUN = "F"
+endif
+if ( $num >= $NUM_TOT ) then
+  echo "Amount of runs already reaches NUM_TOT."
+  exit -1
+endif
+@ num ++
+echo ${num} >! ${RST_COUNT}
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
-#set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
 set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
@@ -52,22 +69,22 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "49"
+    set npy = "49"
     set npz = "91"
-    set layout_x = $LX
-    set layout_y = "16" 
+    set layout_x = "2" 
+    set layout_y = "2" 
     set io_layout = "1,1"
-    set nthreads = "4"
+    set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
-    @ blocksize = ( ${npx} - 1 ) / ${layout_x} * ( ${npy} - 1 ) / ${layout_y}
+    set blocksize = "32"
 
     # run length
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "150"
+    set dt_atmos = "450"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
@@ -96,7 +113,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -106,8 +123,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
-      set n_split = "8"
+      set k_split = "2"
+      set n_split = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -156,14 +173,44 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 # necessary for OpenMP when using Intel
     setenv KMP_STACKSIZE 256m
 
-\rm -rf $WORKDIR/rundir
+if (${RESTART_RUN} == "F") then
 
-mkdir -p $WORKDIR/rundir
-cd $WORKDIR/rundir
+  \rm -rf $WORKDIR/rundir
 
-mkdir -p RESTART
+  mkdir -p $WORKDIR/rundir
+  cd $WORKDIR/rundir
 
-# build the date for curr_date and diag_table from NAME
+  mkdir -p RESTART
+
+  # Date specific ICs
+  mkdir -p INPUT
+  ln -sf ${ICS}/* INPUT/
+
+  # set variables in input.nml for initial run
+  set nggps_ic = ".T."
+  set mountain = ".F."
+  set external_ic = ".T."
+  set warm_start = ".F."
+
+else
+
+  cd $WORKDIR/rundir
+  \rm -rf INPUT/*
+
+  # move the restart data into INPUT/
+  mv RESTART/* INPUT/.
+
+  # reset values in input.nml for restart run
+  set make_nh = ".F."
+  set nggps_ic = ".F."
+  set mountain = ".T."
+  set external_ic = ".F."
+  set warm_start = ".T."
+  set na_init = 0
+
+endif
+
+# build the date for curr_date from NAME
 unset echo
 set y = `echo ${NAME} | cut -c1-4`
 set m = `echo ${NAME} | cut -c5-6`
@@ -173,32 +220,20 @@ set echo
 set curr_date = "${y},${m},${d},${h},0,0"
 
 # build the diag_table with the experiment name and date stamp
-cat > diag_table << EOF
+cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species_cosp >> diag_table
+cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species_aero field_table
+cp ${RUN_AREA}/field_table_6species field_table
 cp $executable .
 
-mkdir -p INPUT
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
-
-# Date specific ICs
-ln -sf ${ICS}/* INPUT/
-#ln -sf ${ICS_new}/*sfc_data* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -215,7 +250,7 @@ foreach file ( $FIX/global_volcanic_aerosols_????-????.txt )
 	ln -sf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
 end
 
-cat > input.nml <<EOF
+cat >! input.nml <<EOF
  &amip_interp_nml
      interp_oi_sst = .true.
      use_ncep_sst = .true.
@@ -283,7 +318,7 @@ cat > input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -293,10 +328,10 @@ cat > input.nml <<EOF
        delt_max = 0.002
        ke_bg = 0.
        do_vort_damp = $do_vort_damp
-       external_ic = .T.
+       external_ic = $external_ic
        gfs_phil = $gfs_phil
-       nggps_ic = .T.
-       mountain = .F.
+       nggps_ic = $nggps_ic
+       mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
        hord_mt = 5
@@ -311,11 +346,10 @@ cat > input.nml <<EOF
        fill = .T.
        dwind_2d = .F.
        print_freq = $print_freq
-       warm_start = .F.
+       warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
-       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -392,7 +426,6 @@ cat > input.nml <<EOF
        do_inline_mp   = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -413,244 +446,73 @@ cat > input.nml <<EOF
 /
 
  &gfdl_mp_nml
+       sedi_transport = .true.
+       do_sedi_w = .true.
        do_sedi_heat = .false.
+       disp_heat = .true.
+       rad_snow = .true.
+       rad_graupel = .true.
+       rad_rain = .true.
+       const_vi = .false.
+       const_vs = .false.
+       const_vg = .false.
+       const_vr = .false.
+       vi_fac = 1.
+       vs_fac = 1.
+       vg_fac = 1.
+       vr_fac = 1.
        vi_max = 1.
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
+       qi_lim = 1.
+       prog_ccn = .false.
+       do_qa = .true.
+       do_sat_adj = .false.
        tau_l2v = 225.
+       tau_v2l = 150.
+       tau_g2v = 900.
+       rthresh = 10.e-6
        dw_land = 0.16
        dw_ocean = 0.10
+       ql_gen = 1.0e-3
        ql_mlt = 1.0e-3
        qi0_crt = 8.0e-5
+       qs0_crt = 1.0e-3
+       tau_i2s = 1000.
+       c_psaci = 0.05
+       c_pgacs = 0.01
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
        ccn_l = 300.
        ccn_o = 200.
        c_paut = 0.5
-       c_pracw = 0.8				! aero
-       c_psaci = 0.05				! aero
-       !c_pracw = 0.35				! aero_psd
-       !c_psacw = 1.0				! aero_psd
-       !c_pgacw = 1.e-4				! aero_psd
-       !c_praci = 1.0				! aero_psd
-       !c_psaci = 0.35				! aero_psd
-       !c_pgaci = 0.05				! aero_psd
+       c_cracw = 0.8
+       use_ppm = .false.
+       mono_prof = .true.
+       z_slope_liq = .true.
+       z_slope_ice = .true.
+       fix_negative = .true.
+       icloud_f = 0
        do_cld_adj = .true.
-       use_rhc_revap = .true.
        f_dq_p = 3.0
+/
+
+ &cld_eff_rad_nml
+       qmin = 1.0e-12
+       beta = 1.22
+       rewflag = 1
+       reiflag = 5
+       rewmin = 5.0
        rewmax = 10.0
+       reimin = 10.0
+       reimax = 150.0
        rermin = 10.0
-       !do_new_acc_water = .true.	! aero_psd
-       !do_psd_water_fall = .true.	! aero_psd
-       !n0w_sig = 1.2				! aero_psd
-       !n0w_exp = 66				! aero_psd
-       !muw = 11.0					! aero_psd
-       !alinw = 3.e7				! aero_psd
-       !blinw = 2.0					! aero_psd
-       !rewflag = 4					! aero_psd
-       !do_new_acc_ice = .true.		! aero_psd
-       !do_psd_ice_fall = .true.	! aero_psd
-       !n0i_sig = 1.0				! aero_psd
-       !n0i_exp = 10				! aero_psd
-       !mui = 1.0					! aero_psd
-       !alini = 11.72				! aero_psd
-       !blini = 0.41				! aero_psd
-       !reiflag = 7					! aero_psd
-       snow_grauple_combine = .false.
-/
-
-&COSP_INPUT
-  NPOINTS_IT=0,! Max number of gridpoints to be processed in one iteration
-  NCOLUMNS=20,  ! Number of subcolumns
-  USE_VGRID=.true., ! Use fixed vertical grid for outputs? (if .true. then you need to define number of levels with Nlr)
-  NLVGRID=40,       ! Number of levels in statistical outputs (only used if USE_VGRID=.true.)
-  CSAT_VGRID=.true., ! CloudSat vertical grid? (if .true. then the CloudSat standard grid is used for the outputs.
-                     !  USE_VGRID needs also be .true.)
-  !----------------------------------------------------------------------------------
-  !--------------- Inputs related to radar simulations
-  !----------------------------------------------------------------------------------
-  cloudsat_RADAR_FREQ=94.0, ! CloudSat radar frequency (GHz)
-  SURFACE_RADAR=0, ! surface=1, spaceborne=0
-  cloudsat_use_gas_abs=1,   ! include gaseous absorption? yes=1,no=0
-  cloudsat_do_ray=0,        ! calculate/output Rayleigh refl=1, not=0
-  cloudsat_k2=-1,           ! |K|^2, -1=use frequency dependent default
-  use_precipitation_fluxes=.true.,  ! True if precipitation fluxes are input to the algorithm
-  cloudsat_micro_scheme='MMF_v3_single_moment', !'MMF_v3.5_two_moment'
-  !----------------------------------------------------------------------------------
-  !---------------- Inputs related to lidar simulations
-  !----------------------------------------------------------------------------------
-  lidar_ice_type=0,    ! Ice particle shape in lidar calculations (0=ice-spheres ; 1=ice-non-spherical)
-  OVERLAP=3,           !  overlap assumption used by scops: 1=max, 2=rand, 3=max/rand
-  !----------------------------------------------------------------------------------
-  !---------------- Inputs related to ISCCP simulator
-  !----------------------------------------------------------------------------------
-  ISCCP_TOPHEIGHT=1,  !  1 = adjust top height using both a computed
-                       !  infrared brightness temperature and the visible
-                       !  optical depth to adjust cloud top pressure. Note
-                       !  that this calculation is most appropriate to compare
-                       !  to ISCCP data during sunlit hours.
-                      !  2 = do not adjust top height, that is cloud top
-                       !  pressure is the actual cloud top pressure
-                       !  in the model
-                      !  3 = adjust top height using only the computed
-                       !  infrared brightness temperature. Note that this
-                       !  calculation is most appropriate to compare to ISCCP
-                       !  IR only algortihm (i.e. you can compare to nighttime
-                       !  ISCCP data with this option)
-  ISCCP_TOPHEIGHT_DIRECTION=2,   ! direction for finding atmosphere pressure level
-                                 ! with interpolated temperature equal to the radiance
-                                 ! determined cloud-top temperature
-                                 ! 1 = find the *lowest* altitude (highest pressure) level
-                                 ! with interpolated temperature equal to the radiance
-                                 ! determined cloud-top temperature
-                                 ! 2 = find the *highest* altitude (lowest pressure) level
-                                 ! with interpolated temperature equal to the radiance
-                                 ! determined cloud-top temperature. This is the
-                                 ! default value since V4.0 of the ISCCP simulator.
-                                 ! ONLY APPLICABLE IF top_height EQUALS 1 or 3
-  !----------------------------------------------------------------------------------
-  !-------------- RTTOV inputs
-  !----------------------------------------------------------------------------------
-  rttov_Platform=1,    ! satellite platform
-  rttov_Satellite=15,  ! satellite
-  rttov_Instrument=5,  ! instrument
-  rttov_Nchannels=3,   ! Number of channels to be computed
-  rttov_Channels=1,2,3,        ! Channel numbers (please be sure that you supply Nchannels)
-  rttov_Surfem=0.0,0.0,0.0,  ! Surface emissivity (please be sure that you supply Nchannels)
-  rttov_ZenAng=50.0, ! Satellite Zenith Angle
-  CO2=5.241e-04, ! Mixing ratios of trace gases
-  CH4=9.139e-07,
-  N2O=4.665e-07,
-  CO=2.098e-07
-/
-
-&COSP_OUTPUT
-  !- CloudSat
-  Lcfaddbze94=.false.,
-  Ldbze94=.false.,
-  !- CALIPSO
-  Latb532=.false.,
-  LcfadLidarsr532=.false.,
-  Lclcalipso=.false.,
-  Lclhcalipso=.true.,
-  Lcllcalipso=.true.,
-  Lclmcalipso=.true.,
-  Lcltcalipso=.true.,
-  LparasolRefl=.false.,
-  ! CALIPSO phase diagnostics
-  Lclcalipsoliq=.false.,
-  Lclcalipsoice=.false.,
-  Lclcalipsoun=.false.,
-  Lclcalipsotmp=.false.,
-  Lclcalipsotmpliq=.false.,
-  Lclcalipsotmpice=.false.,
-  Lclcalipsotmpun=.false.,
-  Lclhcalipsoliq=.true.,
-  Lcllcalipsoliq=.true.,
-  Lclmcalipsoliq=.true.,
-  Lcltcalipsoliq=.true.,
-  Lclhcalipsoice=.true.,
-  Lcllcalipsoice=.true.,
-  Lclmcalipsoice=.true.,
-  Lcltcalipsoice=.true.,
-  Lclhcalipsoun=.true.,
-  Lcllcalipsoun=.true.,
-  Lclmcalipsoun=.true.,
-  Lcltcalipsoun=.true.,
-  ! CALIPSO OPAQ diagnostics
-  Lclopaquecalipso=.true.,
-  Lclthincalipso=.true., 
-  Lclzopaquecalipso=.true.,
-  Lclcalipsoopaque=.false., 
-  Lclcalipsothin=.false.,  
-  Lclcalipsozopaque=.false.,
-  Lclcalipsoopacity=.false., 
-  Lclopaquetemp=.true., 
-  Lclthintemp=.true., 
-  Lclzopaquetemp=.true., 
-  Lclopaquemeanz=.true., 
-  Lclthinmeanz=.true., 
-  Lclthinemis=.true., 
-  Lclopaquemeanzse=.true.,
-  Lclthinmeanzse=.true., 
-  Lclzopaquecalipsose=.true.,
-  ! GROUND LIDAR diagnostics  
-  LlidarBetaMol532gr=.false.,  
-  LcfadLidarsr532gr=.false.,  
-  Latb532gr=.false.,  
-  LclgrLidar532=.false.,
-  LclhgrLidar532=.false.,  
-  LcllgrLidar532=.false., 
-  LclmgrLidar532=.false.,
-  LcltgrLidar532=.false.,
-  ! ATLID diagnostics
-  LlidarBetaMol355=.false.,
-  LcfadLidarsr355=.false., 
-  Latb355=.false., 
-  Lclatlid=.false., 
-  Lclhatlid=.false., 
-  Lcllatlid=.false.,
-  Lclmatlid=.false.,
-  Lcltatlid=.false.,
-  !- ISCCP
-  Lalbisccp=.false.,
-  Lboxptopisccp=.false.,
-  Lboxtauisccp=.false.,
-  Lpctisccp=.false.,
-  Lclisccp=.false.,
-  Ltauisccp=.false.,
-  Lcltisccp=.false.,
-  Lmeantbisccp=.false.,
-  Lmeantbclrisccp=.false.,
-  !- MISR
-  LclMISR=.false.,
-  !- Use lidar and radar
-  Lclcalipso2=.false.,
-  Lcltlidarradar=.false.,
-  Lcloudsat_tcc=.false.,
-  Lcloudsat_tcc2=.false.,
-  !- These are provided for debugging or special purposes
-  Lfracout=.false.,
-  LlidarBetaMol532=.false.,  
-  !- MODIS
-  Lcltmodis=.true.,
-  Lclwmodis=.true.,
-  Lclimodis=.true.,
-  Lclhmodis=.true.,
-  Lclmmodis=.true.,
-  Lcllmodis=.true.,
-  Ltautmodis=.true.,
-  Ltauwmodis=.true.,
-  Ltauimodis=.true.,
-  Ltautlogmodis=.true.,
-  Ltauwlogmodis=.true.,
-  Ltauilogmodis=.true.,
-  Lreffclwmodis=.true.,
-  Lreffclimodis=.true.,
-  Lpctmodis=.true.,
-  Llwpmodis=.true.,
-  Liwpmodis=.true.,
-  Lclmodis=.false.,
-  !- RTTOV
-  Ltbrttov=.false.,
-  ! -CLOUDSAT precipitation frequency/occurence diagnostics
-  Lptradarflag0=.false.,
-  Lptradarflag1=.false.,
-  Lptradarflag2=.false.,
-  Lptradarflag3=.false.,
-  Lptradarflag4=.false.,
-  Lptradarflag5=.false.,
-  Lptradarflag6=.false.,
-  Lptradarflag7=.false.,
-  Lptradarflag8=.false.,
-  Lptradarflag9=.false.,
-  Lradarpia=.false.,
-  !- CloudSat+MODIS joint diagnostics
-  Lwr_occfreq=.false.,
-  Lcfodd=.false.
+       rermax = 10000.0
+       resmin = 150.0
+       resmax = 10000.0
+       liq_ice_combine = .false.
 /
 
  &diag_manager_nml 
@@ -706,14 +568,21 @@ cat > input.nml <<EOF
 EOF
 
 # run the executable
-   ${run_cmd} | tee fms.out
-   if ( $? != 0 ) then
-     exit
-   endif
-
-if ($NO_SEND == "no_send") then
+${run_cmd} | tee fms.out
+if ( $? != 0 || `grep Main fms.out | wc -l ` != 1 ) then
+  if ( ${num} == 1 ) then
+    rm -f ${RST_COUNT}
+  else
+    mv ./INPUT/*.res* ./RESTART/
+    mv ./INPUT/phy_data* ./RESTART/
+    mv ./INPUT/sfc_data* ./RESTART/
+    @ num = $num - 1
+    echo ${num} >! ${RST_COUNT}
+  endif
   exit
 endif
+
+if ($NO_SEND == "send") then
 
 #########################################################################
 # generate date for file names
@@ -739,10 +608,12 @@ endif
      exit 1
     endif
 
+	mkdir -p $WORKDIR/ascii/$begindate
     foreach out (`ls *.out *.results input*.nml *_table`)
-      mv $out $begindate.$out
+      mv $out $WORKDIR/ascii/$begindate/
     end
 
+    cd $WORKDIR/ascii/$begindate
     tar cvf - *\.out *\.results | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
@@ -787,6 +658,8 @@ endif
       foreach index ($list)
         mv $WORKDIR/rundir/RESTART/$index $restart_file/$index
       end
+
+      ln -sf $restart_file/* $WORKDIR/rundir/RESTART/
 
       sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -836,3 +709,30 @@ endif
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+
+else
+
+    cd $WORKDIR/rundir
+
+    set begindate = `$TIME_STAMP -bhf digital`
+    if ( $begindate == "" ) set begindate = tmp`date '+%j%H%M%S'`
+    set enddate = `$TIME_STAMP -ehf digital`
+    if ( $enddate == "" ) set enddate = tmp`date '+%j%H%M%S'`
+
+    mkdir -p $WORKDIR/ascii/$begindate
+	mv *.out *.results *.nml *_table $WORKDIR/ascii/$begindate
+
+    mkdir -p $WORKDIR/history/$begindate
+    mv *.nc $WORKDIR/history/$begindate
+
+    mkdir -p $WORKDIR/restart/$enddate
+    mv RESTART/* $WORKDIR/restart/$enddate
+	ln -sf $WORKDIR/restart/$enddate/* RESTART/
+
+endif
+
+if ($num < $NUM_TOT) then
+  echo "resubmitting... "
+  cd $SCRIPT_AREA
+  sbatch --job-name=$SLURM_JOB_NAME --account=$SLURM_JOB_ACCOUNT --qos=$SLURM_JOB_QOS --cluster=$SLURM_CLUSTER_NAME --nodes=$SLURM_JOB_NUM_NODES --export=NAME=${NAME},MEMO=${MEMO},EXE=${EXE},ALL $SCRIPT:t.csh
+endif
