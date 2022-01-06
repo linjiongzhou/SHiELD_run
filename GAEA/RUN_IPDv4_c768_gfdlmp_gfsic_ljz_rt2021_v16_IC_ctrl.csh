@@ -39,9 +39,9 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 #set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
-set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -77,7 +77,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "127"
+    set ncep_levs = "128"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -370,7 +370,8 @@ cat > input.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 1
+       isatmedmf      = 0
+       rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5

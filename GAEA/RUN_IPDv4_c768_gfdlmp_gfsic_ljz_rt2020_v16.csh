@@ -39,9 +39,9 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 #set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
-set ICS  = /lustre/f2/pdata/gfdl/gfdl_W/Linjiong.Zhou/GFSv16_ICs/${CASE}/${NAME}_IC
-set FIX  = ${INPUT_DATA}/fix.v201912
-set GRID = ${INPUT_DATA}/global.v201903/${CASE}/GRID
+set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set FIX  = ${INPUT_DATA}/fix.v202104
+set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -53,7 +53,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # dycore definitions
     set npx = "769"
     set npy = "769"
-    set npz = "127"
+    set npz = "91"
     set layout_x = $LX
     set layout_y = "16" 
     set io_layout = "1,1"
@@ -76,7 +76,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "127"
+    set ncep_levs = "128"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -253,9 +253,9 @@ cat > input.nml <<EOF
        fv_debug = .F.
        range_warn = .T.
        reset_eta = .F.
-       n_sponge = 42
+       n_sponge = 30
        nudge_qv = .T.
-       rf_fast = .T.
+       rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
        d2_bg_k1 = 0.15
@@ -307,7 +307,6 @@ cat > input.nml <<EOF
        no_dycore = $no_dycore
        z_tracer = .T.
        do_inline_mp = .T.
-       npz_type = 'gfs'
 /
 
  &coupler_nml

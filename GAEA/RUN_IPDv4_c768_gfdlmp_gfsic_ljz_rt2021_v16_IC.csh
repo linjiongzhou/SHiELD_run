@@ -39,9 +39,9 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.${EXE}
 
 # input filesets
 #set ICS_new = ${INPUT_DATA}/FV3GFS_ICs.v20190701/data/${NAME}_IC
-set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -77,7 +77,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "127"
+    set ncep_levs = "128"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -370,7 +370,8 @@ cat > input.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 1
+       isatmedmf      = 0
+       rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5
@@ -420,35 +421,35 @@ cat > input.nml <<EOF
        ccn_l = 300.
        ccn_o = 200.
        c_paut = 0.5
-       c_pracw = 0.8				! e122_ctrl
-       c_psaci = 0.05				! e122_ctrl
-       !c_pracw = 0.35				! e122_psd
-       !c_psacw = 1.0				! e122_psd
-       !c_pgacw = 1.e-4				! e122_psd
-       !c_praci = 1.0				! e122_psd
-       !c_psaci = 0.35				! e122_psd
-       !c_pgaci = 0.05				! e122_psd
+       c_pracw = 0.8				! ctrl
+       c_psaci = 0.05				! ctrl
+       !c_pracw = 0.35				! cpsd
+       !c_psacw = 1.0				! cpsd
+       !c_pgacw = 1.e-4				! cpsd
+       !c_praci = 1.0				! cpsd
+       !c_psaci = 0.35				! cpsd
+       !c_pgaci = 0.05				! cpsd
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
        rewmax = 10.0
        rermin = 10.0
-       !do_new_acc_water = .true.	! e122_psd
-       !do_psd_water_fall = .true.	! e122_psd
-       !n0w_sig = 1.2				! e122_psd
-       !n0w_exp = 66				! e122_psd
-       !muw = 11.0					! e122_psd
-       !alinw = 3.e7				! e122_psd
-       !blinw = 2.0					! e122_psd
-       !rewflag = 4					! e122_psd
-       !do_new_acc_ice = .true.		! e122_psd
-       !do_psd_ice_fall = .true.	! e122_psd
-       !n0i_sig = 1.0				! e122_psd
-       !n0i_exp = 10				! e122_psd
-       !mui = 1.0					! e122_psd
-       !alini = 11.72				! e122_psd
-       !blini = 0.41				! e122_psd
-       !reiflag = 7					! e122_psd
+       !do_new_acc_water = .true.	! cpsd
+       !do_psd_water_fall = .true.	! cpsd
+       !n0w_sig = 1.2				! cpsd
+       !n0w_exp = 66				! cpsd
+       !muw = 11.0					! cpsd
+       !alinw = 3.e7				! cpsd
+       !blinw = 2.0					! cpsd
+       !rewflag = 4					! cpsd
+       !do_new_acc_ice = .true.		! cpsd
+       !do_psd_ice_fall = .true.	! cpsd
+       !n0i_sig = 1.0				! cpsd
+       !n0i_exp = 10				! cpsd
+       !mui = 1.0					! cpsd
+       !alini = 11.72				! cpsd
+       !blini = 0.41				! cpsd
+       !reiflag = 7					! cpsd
 /
 
  &diag_manager_nml 
