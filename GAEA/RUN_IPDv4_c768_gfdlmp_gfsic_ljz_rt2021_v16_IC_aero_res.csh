@@ -4,9 +4,9 @@
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=03:00:00
-#SBATCH --cluster=c4
-#SBATCH --nodes=128
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
+#SBATCH --cluster=c3
+#SBATCH --nodes=96
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -32,7 +32,7 @@ set CASE = "C768"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
 set NO_SEND = "send"    # choices:  send, no_send
-set NUM_TOT = 1         # run cycle, 1: no restart
+#set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -73,7 +73,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npx = "769"
     set npy = "769"
     set npz = "91"
-    set layout_x = "24"
+    set layout_x = $LX
     set layout_y = "16" 
     set io_layout = "1,1"
     set nthreads = "4"
@@ -114,7 +114,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "-1"
+    set print_freq = "6"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -422,6 +422,7 @@ cat >! input.nml <<EOF
        ysupbl         = .false.
        satmedmf       = .true.
        isatmedmf      = 0
+       rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5
@@ -472,6 +473,7 @@ cat >! input.nml <<EOF
        ccn_l = 300.
        ccn_o = 200.
        c_paut = 0.5
+       rthresh = 8.0e-6
        !c_pracw = 0.8				! aero
        !c_psaci = 0.05				! aero
        c_pracw = 0.35				! aero_cpsd
@@ -487,19 +489,21 @@ cat >! input.nml <<EOF
        rermin = 10.0
        do_new_acc_water = .true.	! aero_cpsd
        do_psd_water_fall = .true.	! aero_cpsd
+       do_psd_water_num = .true.	! aero_cpsd
        n0w_sig = 1.2				! aero_cpsd
-       n0w_exp = 66				! aero_cpsd
+       n0w_exp = 66					! aero_cpsd
        muw = 11.0					! aero_cpsd
-       alinw = 3.e7				! aero_cpsd
+       alinw = 3.e7					! aero_cpsd
        blinw = 2.0					! aero_cpsd
        rewflag = 4					! aero_cpsd
        do_new_acc_ice = .true.		! aero_cpsd
-       do_psd_ice_fall = .true.	! aero_cpsd
+       do_psd_ice_fall = .true.		! aero_cpsd
+       do_psd_ice_num = .true.		! aero_cpsd
        n0i_sig = 1.0				! aero_cpsd
-       n0i_exp = 10				! aero_cpsd
+       n0i_exp = 10					! aero_cpsd
        mui = 1.0					! aero_cpsd
        alini = 11.72				! aero_cpsd
-       blini = 0.41				! aero_cpsd
+       blini = 0.41					! aero_cpsd
        reiflag = 7					! aero_cpsd
 /
 

@@ -368,7 +368,8 @@ cat > input.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 1
+       isatmedmf      = 0
+       rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5

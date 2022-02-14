@@ -448,19 +448,19 @@ cat > input.nml <<EOF
        do_psd_water_fall = .true.	! aero_cpsd
        do_psd_water_num = .true.	! aero_cpsd
        n0w_sig = 1.2				! aero_cpsd
-       n0w_exp = 66				! aero_cpsd
+       n0w_exp = 66					! aero_cpsd
        muw = 11.0					! aero_cpsd
-       alinw = 3.e7				! aero_cpsd
+       alinw = 3.e7					! aero_cpsd
        blinw = 2.0					! aero_cpsd
        rewflag = 4					! aero_cpsd
        do_new_acc_ice = .true.		! aero_cpsd
-       do_psd_ice_fall = .true.	! aero_cpsd
-       do_psd_ice_num = .true.	! aero_cpsd
+       do_psd_ice_fall = .true.		! aero_cpsd
+       do_psd_ice_num = .true.		! aero_cpsd
        n0i_sig = 1.0				! aero_cpsd
-       n0i_exp = 10				! aero_cpsd
+       n0i_exp = 10					! aero_cpsd
        mui = 1.0					! aero_cpsd
        alini = 11.72				! aero_cpsd
-       blini = 0.41				! aero_cpsd
+       blini = 0.41					! aero_cpsd
        reiflag = 7					! aero_cpsd
 /
 
