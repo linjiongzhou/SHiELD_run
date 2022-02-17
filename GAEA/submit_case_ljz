@@ -11,7 +11,7 @@
 #set title = "c48_gfdlmp_gfsic_ljz_rt2021_v15_IC"
 #set title = "c48_gfdlmp_gfsic_ljz_rt2021_v15_IC_COSP"
 #set title = "c48_gfdlmp_gfsic_ljz_rt2021_v16_IC"
-#set title = "c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero"
+set title = "c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero"
 #set title = "c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2018"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2019"
@@ -37,7 +37,7 @@
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_COSP"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_COSP"
-set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_res"
+#set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_res"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c1152_gfdlmp_ifsic_jhc_rt2020"
@@ -436,7 +436,8 @@ set basescript = "RUN_IPDv4_${title}.csh"
 #set MEMO = "_RT2021_e139" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2021_e140" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2021_e141" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
-set MEMO = "_RT2021_e142" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2021_e142" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+set MEMO = "_RT2021_e143" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -723,7 +724,8 @@ set MEMO = "_RT2021_e142" # based on RT2020, update dycore from fv3team, update 
 #set EXE = "RT2021.e139.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2021.e140.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2021.e141.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
-set EXE = "RT2021.e142.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2021.e142.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+set EXE = "RT2021.e143.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -744,11 +746,11 @@ set EXE = "RT2021.e142.x" # based on RT2020.e082.x, update dycore based on fv3te
 #set EXE = "20190512mods.rt1.x" # revise gfdl mp
 
 #set reso = "DP"
-#set reso = "C48"
+set reso = "C48"
 #set reso = "C96"
 #set reso = "C192"
 #set reso = "C384"
-set reso = "C768"
+#set reso = "C768"
 #set reso = "C1152"
 #set reso = "C1536"
 #set reso = "C3072"
@@ -759,8 +761,8 @@ set cluster = "c4"
 set account = "gfdl_w"
 #set account = "nggps_gfdl"
 
-set qos = "normal"
-#set qos = "urgent"
+#set qos = "normal"
+set qos = "urgent"
 
 set NUM_TOT = 1
 
