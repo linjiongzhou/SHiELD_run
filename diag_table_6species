@@ -11,6 +11,7 @@
 "nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
 "tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
+#"cloud3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 #"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
 
 #
@@ -234,6 +235,34 @@
  "dynamics",  "cld_amt",       "cld_amt",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "o3mr",          "o3mr",         "tracer3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "aerosol",       "aerosol",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+###
+# cloud
+###
+# "dynamics",  "pcw",         "pcw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edw",         "edw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oew",         "oew",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrw",         "rrw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvw",         "tvw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pci",         "pci",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edi",         "edi",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oei",         "oei",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rri",         "rri",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvi",         "tvi",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcr",         "pcr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edr",         "edr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oer",         "oer",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrr",         "rrr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvr",         "tvr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcs",         "pcs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "eds",         "eds",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oes",         "oes",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrs",         "rrs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvs",         "tvs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcg",         "pcg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edg",         "edg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oeg",         "oeg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrg",         "rrg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvg",         "tvg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 #############################################################################################
 ###
 # FV3 variabls needed for NGGPS evaluation

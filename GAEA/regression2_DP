@@ -2,15 +2,18 @@
 
 #set echo
 
-set title = "IPDv4_DP_gfdlmp_ljz_rt2020_fsbm_res"
+#set title = "IPDv4_DP_gfdlmp_gfsic_ljz_rt2022_v16_IC_ctrl_res"
+set title = "IPDv4_DP_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
 
-set MEMO = "_RT2020_e032_res2"
+#set MEMO = "_RT2022_e001_res2"
+set MEMO = "_RT2022_e002_res2"
 
-set EXE = "RT2020.e032.x"
+#set EXE = "RT2022.e001.x"
+set EXE = "RT2022.e002.x"
 
 set basescript = "RUN_${title}.csh"
 
-set DATE = "20160801.00Z"
+set DATE = "20210401.00Z"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
@@ -33,3 +36,5 @@ $basescript >! ${runname}.csh
 chmod 755 ${runname}.csh
 sbatch --job-name=${runname} ${runname}.csh
 #rm -f ${runname}.csh
+
+exit 0

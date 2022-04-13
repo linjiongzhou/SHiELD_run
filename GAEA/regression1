@@ -18,7 +18,7 @@
 #set title = "IPDv4_c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2021_v16_IC_ctrl_res"
 #set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2022_v16_IC_ctrl_res"
-set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_res"
+set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
 
 #set MEMO = "_rt2018_e2_res1"
 #set MEMO = "_20190305mods_rt1_res1"
@@ -56,7 +56,8 @@ set title = "IPDv4_c48_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_res"
 #set MEMO = "_RT2021_e076_res1"
 #set MEMO = "_RT2021_e143_res1"
 #set MEMO = "_RT2022_e001_res1"
-set MEMO = "_RT2022_e002_res3"
+#set MEMO = "_RT2022_e002_res1"
+set MEMO = "_RT2022_e007_res1"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -91,7 +92,8 @@ set MEMO = "_RT2022_e002_res3"
 #set EXE = "RT2021.e076.x"
 #set EXE = "RT2021.e143.x"
 #set EXE = "RT2022.e001.x"
-set EXE = "RT2022.e002.x"
+#set EXE = "RT2022.e002.x"
+set EXE = "RT2022.e007.x"
 
 set basescript = "RUN_${title}.csh"
 
