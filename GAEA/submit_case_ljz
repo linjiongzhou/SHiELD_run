@@ -777,8 +777,8 @@ set reso = "C768"
 #set reso = "C1536"
 #set reso = "C3072"
 
-set cluster = "c3"
-#set cluster = "c4"
+#set cluster = "c3"
+set cluster = "c4"
 
 set account = "gfdl_w"
 #set account = "nggps_gfdl"
@@ -786,7 +786,7 @@ set account = "gfdl_w"
 set qos = "normal"
 #set qos = "urgent"
 
-set NUM_TOT = 120
+set NUM_TOT = 1
 
 set LX = 0
 if ( $cluster == "c3" ) then
