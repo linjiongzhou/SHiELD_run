@@ -635,6 +635,7 @@ if ($NO_SEND == "send") then
     find $WORKDIR/rundir/RESTART -iname '*.res*' > $WORKDIR/rundir/file.restart.list.txt
     find $WORKDIR/rundir/RESTART -iname '*_data*' >> $WORKDIR/rundir/file.restart.list.txt
     set resfiles     = `wc -l $WORKDIR/rundir/file.restart.list.txt | awk '{print $1}'`
+    rm -f $WORKDIR/rundir/file.restart.list.txt
 
    if ( $resfiles > 0 ) then
 

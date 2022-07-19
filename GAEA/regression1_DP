@@ -6,14 +6,16 @@
 set title = "IPDv4_DP_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
 
 #set MEMO = "_RT2022_e001_res1"
-set MEMO = "_RT2022_e002_res1"
+#set MEMO = "_RT2022_e002_res1"
+set MEMO = "_RT2022_e019_res1"
 
 #set EXE = "RT2022.e001.x"
-set EXE = "RT2022.e002.x"
+#set EXE = "RT2022.e002.x"
+set EXE = "RT2022.e019.x"
 
 set basescript = "RUN_${title}.csh"
 
-set DATE = "20210401.00Z"
+set DATE = "20210321.12Z"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
@@ -22,10 +24,11 @@ sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
      s#MEMO=_RT2018#MEMO='$MEMO'#g \
      s#EXE=x#EXE='$EXE'#g \
      s#set COMP = "prod"#set COMP = "debug"#g \
+     s#SBATCH --nodes=1#SBATCH --nodes=5#g \
      s#set days = "1"#set days = "0"#g \
      s#set hours = "0"#set hours = "2"#g \
-     s#set layout_x = "6"#set layout_x = "6"#g \
-     s#set layout_y = "6"#set layout_y = "3"#g \
+     s#set layout_x = "18"#set layout_x = "18"#g \
+     s#set layout_y = "18"#set layout_y = "9"#g \
      s#set nthreads = "2"#set nthreads = "2"#g \
      s#set HYPT = "on"#set HYPT = "on"#g \
      s#set NUM_TOT = 1#set NUM_TOT = 1#g \

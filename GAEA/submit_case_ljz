@@ -42,6 +42,8 @@
 #set title = "c768_gfdlmp_gfsic_ljz_rt2021_v16_IC_aero_res"
 #set title = "c768_gfdlmp_gfsic_ljz_rt2022_v16_IC_ctrl_res"
 set title = "c768_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
+#set title = "c768_gfdlmp_gfsic_ljz_rt2022_v15_cpsd_res"
+#set title = "c768n5r10_gfdlmp_gfsic_ljz_rt2022_v15_cpsd_res"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2019"
 #set title = "c1152_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c1152_gfdlmp_ifsic_jhc_rt2020"
@@ -452,7 +454,24 @@ set basescript = "RUN_IPDv4_${title}.csh"
 #set MEMO = "_RT2022_e004" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2022_e005" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
 #set MEMO = "_RT2022_e006" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
-set MEMO = "_RT2022_e007" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e007" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e008" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e009" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e010" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e011" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e012" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e013" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e014" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e015" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e016" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e017" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e018" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e019" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EDMF, update SA-SAS
+#set MEMO = "_RT2022_e020" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
+#set MEMO = "_RT2022_e021" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
+#set MEMO = "_RT2022_e022" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
+#set MEMO = "_RT2022_e025" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
+set MEMO = "_RT2022_e026" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -747,7 +766,24 @@ set MEMO = "_RT2022_e007" # based on RT2020, update dycore from fv3team, update 
 #set EXE = "RT2022.e004.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2022.e005.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2022.e006.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
-set EXE = "RT2022.e007.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e007.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e008.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e009.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e010.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e011.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e012.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e013.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e014.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e015.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e016.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e017.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e018.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e019.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e020.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e021.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e022.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e025.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+set EXE = "RT2022.e026.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -773,6 +809,7 @@ set EXE = "RT2022.e007.x" # based on RT2020.e082.x, update dycore based on fv3te
 #set reso = "C192"
 #set reso = "C384"
 set reso = "C768"
+#set reso = "C768n5r10"
 #set reso = "C1152"
 #set reso = "C1536"
 #set reso = "C3072"
@@ -804,6 +841,10 @@ if ( $cluster == "c3" ) then
 		#set nodes = 192
 		#set LX = 32
 	endif
+	if ( $reso == "C768n5r10" ) then
+		set nodes = 164
+		set LX = 16
+	endif
 	if ( $reso == "C1152" || $reso == "C1536" ) then
 		set nodes = 216
 		set LX = 24
@@ -827,6 +868,10 @@ if ( $cluster == "c4" ) then
 		set LX = 12
 		#set nodes = 128
 		#set LX = 24
+	endif
+	if ( $reso == "C768n5r10" ) then
+		set nodes = 124
+		set LX = 12
 	endif
 	if ( $reso == "C1152" || $reso == "C1536" ) then
 		set nodes = 192
@@ -902,8 +947,9 @@ foreach DATE ( \
 	#20200903.06Z \
 	#20200630.00Z \
 	#20210401.00Z \
-	20210827.00Z \
+	#20210827.00Z \
 	#20210321.12Z \
+	#20190501.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases since 20150101.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
@@ -1298,7 +1344,9 @@ foreach DATE ( \
 	## monthly cases since 20210327.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	#20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z 20210630.00Z 20210730.00Z 20210829.00Z 20210928.00Z \
-	#20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z 20220302.00Z  \
+	#20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z \
+	#20220302.00Z 20220401.00Z 20220501.00Z 20220531.00Z 20220630.00Z 20220730.00Z 20220829.00Z 20220928.00Z \
+	#20221028.00Z 20221127.00Z 20230101.00Z 20230131.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases without monthly cases \
 	## ----------------------------------------------------------------------------------------------------- \
@@ -1309,8 +1357,15 @@ foreach DATE ( \
 	#20210908.00Z 20210913.00Z 20210918.00Z 20210923.00Z 20211003.00Z 20211008.00Z 20211013.00Z 20211018.00Z \
 	#20211023.00Z 20211102.00Z 20211107.00Z 20211112.00Z 20211117.00Z 20211122.00Z 20211202.00Z 20211207.00Z \
 	#20211212.00Z 20211217.00Z 20211222.00Z 20211227.00Z 20220106.00Z 20220111.00Z 20220116.00Z 20220121.00Z \
-	#20220126.00Z 20220205.00Z 20220210.00Z 20220215.00Z 20220220.00Z 20220225.00Z 20220307.00Z 20220312.00Z \
-	#20220317.00Z 20220322.00Z 20220327.00Z \
+	#20220126.00Z 20220205.00Z 20220210.00Z 20220215.00Z 20220220.00Z 20220225.00Z \
+	#20220307.00Z 20220312.00Z 20220317.00Z 20220322.00Z 20220327.00Z 20220406.00Z 20220411.00Z 20220416.00Z \
+	#20220421.00Z 20220426.00Z 20220506.00Z 20220511.00Z 20220516.00Z 20220521.00Z 20220526.00Z 20220605.00Z \
+	#20220610.00Z 20220615.00Z 20220620.00Z 20220625.00Z 20220705.00Z 20220710.00Z 20220715.00Z 20220720.00Z \
+	#20220725.00Z 20220801.00Z 20220804.00Z 20220809.00Z 20220814.00Z 20220819.00Z 20220824.00Z 20220903.00Z \
+	#20220908.00Z 20220913.00Z 20220918.00Z 20220923.00Z 20221003.00Z 20221008.00Z 20221013.00Z 20221018.00Z \
+	#20221023.00Z 20221102.00Z 20221107.00Z 20221112.00Z 20221117.00Z 20221122.00Z 20221202.00Z 20221207.00Z \
+	#20221212.00Z 20221217.00Z 20221222.00Z 20221227.00Z 20230106.00Z 20230111.00Z 20230116.00Z 20230121.00Z \
+	#20230126.00Z 20230205.00Z 20230210.00Z 20230215.00Z 20230220.00Z 20230225.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## daily cases without every 5 days cases \
 	## ----------------------------------------------------------------------------------------------------- \

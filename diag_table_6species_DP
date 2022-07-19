@@ -523,6 +523,10 @@
  "gfs_phys",  "v10m"           "VGRD10m"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "weasd"          "WEASDsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "snowd"          "SNODsfc"    "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "acond"          "CMMsfc"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "sfexc"          "CHHsfc"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "ffmm"           "FFMMsfc"    "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "ffhh"           "FFHHsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "ZORLsfc"        "ZORLsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "VFRACsfc"       "VFRACsfc"   "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_sfc",   "f10m"           "F10Msfc"    "nggps2d",         "all",  .false.,  "none",  2

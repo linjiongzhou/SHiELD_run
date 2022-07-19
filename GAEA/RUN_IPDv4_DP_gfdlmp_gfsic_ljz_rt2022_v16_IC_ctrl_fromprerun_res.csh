@@ -335,7 +335,7 @@ cat >! input.nml <<EOF
        do_vort_damp = $do_vort_damp
        external_ic = .F.
        gfs_phil = $gfs_phil
-       nggps_ic = .T.
+       nggps_ic = .F.
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -627,7 +627,7 @@ if ($NO_SEND == "send") then
     end
 
     cd $WORKDIR/ascii/$begindate
-    tar cvf - *\.out *\.results | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
+    tar cvf - *\.out *\.results input*\.nml *_table | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -647,6 +647,7 @@ if ($NO_SEND == "send") then
     find $WORKDIR/rundir/RESTART -iname '*.res*' > $WORKDIR/rundir/file.restart.list.txt
     find $WORKDIR/rundir/RESTART -iname '*_data*' >> $WORKDIR/rundir/file.restart.list.txt
     set resfiles     = `wc -l $WORKDIR/rundir/file.restart.list.txt | awk '{print $1}'`
+    rm -f $WORKDIR/rundir/file.restart.list.txt
 
    if ( $resfiles > 0 ) then
 

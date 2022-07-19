@@ -1,6 +1,6 @@
 #output files
 "grid_spec",              -1,  "hours",    1, "hours",  "time"
-"atmos_4xdaily",           6,  "hours",    1, "hours",  "time"
+"atmos_4xdaily",           1,  "hours",    1, "hours",  "time"
 #"atmos_daily",            24,  "hours",    1, "hours",  "time"
 "atmos_static",           -1,  "hours",    1, "hours",  "time"
 "atmos_sos",               1,  "hours",    1, "hours",  "time"
@@ -8,11 +8,11 @@
 #"gfs_physics",             0,  "hours",    1, "hours",  "time"
 #"gfs_surface",             0,  "hours",    1, "hours",  "time"
 # files needed for NGGPS evaluation (only at end of simulation, here)
-"nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
+"nggps3d_4xdaily",         1,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
-"tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
-#"cloud3d_4xdaily",         6,  "hours",    1, "hours",  "time"
-#"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
+"tracer3d_4xdaily",        1,  "hours",    1, "hours",  "time"
+#"cloud3d_4xdaily",         1,  "hours",    1, "hours",  "time"
+#"nggps3d_dt",              1,  "hours",    1, "hours",  "time"
 
 #
 #output variables

@@ -335,7 +335,7 @@ cat >! input.nml <<EOF
        do_vort_damp = $do_vort_damp
        external_ic = .F.
        gfs_phil = $gfs_phil
-       nggps_ic = .T.
+       nggps_ic = .F.
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -354,7 +354,9 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
-       do_inline_mp = .T.
+       do_fast_phys   = .F.
+       do_inline_mp   = .T.
+       do_inline_edmf = .F.
 /
 
  &coupler_nml
@@ -433,6 +435,7 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
+       do_inline_edmf = .false.
        do_ocean       = .false.
        do_z0_hwrf17_hwonly = .true.
        debug          = .false.
@@ -485,6 +488,7 @@ cat >! input.nml <<EOF
        f_dq_p = 3.0
        rewmax = 10.0
        rermin = 10.0
+       vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
        do_psd_water_num = .true.
@@ -494,15 +498,41 @@ cat >! input.nml <<EOF
        alinw = 3.e7
        blinw = 2.0
        rewflag = 4
+       rewfac = 1.0
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
        do_psd_ice_num = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
+       n0i_sig = 1.1
+       n0i_exp = 18
+       mui = 3.445
+       alini = 7.e2
+       blini = 1.0
        reiflag = 7
+       reifac = 0.8
+/
+
+ &sa_sas_nml
+/
+
+ &sa_tke_edmf_nml
+       dspheat        = .true.
+       do_dk_hb19     = .false.
+       xkzinv         = 0.0
+	   xkzm_mo        = 0.5
+       xkzm_ho        = 0.5
+	   xkzm_ml        = 0.5
+       xkzm_hl        = 0.5
+	   xkzm_mi        = 0.5
+       xkzm_hi        = 0.5
+       cap_k0_land    = .false.
+       rlmx           = 500.0
+       redrag         = .true.
+       do_z0_hwrf17_hwonly = .true.
+       ivegsrc        = 1
+/
+
+ &sa_gwd_nml
+       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 
@@ -604,7 +634,7 @@ if ($NO_SEND == "send") then
     end
 
     cd $WORKDIR/ascii/$begindate
-    tar cvf - *\.out *\.results | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
+    tar cvf - *\.out *\.results input*\.nml *_table | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -624,6 +654,7 @@ if ($NO_SEND == "send") then
     find $WORKDIR/rundir/RESTART -iname '*.res*' > $WORKDIR/rundir/file.restart.list.txt
     find $WORKDIR/rundir/RESTART -iname '*_data*' >> $WORKDIR/rundir/file.restart.list.txt
     set resfiles     = `wc -l $WORKDIR/rundir/file.restart.list.txt | awk '{print $1}'`
+    rm -f $WORKDIR/rundir/file.restart.list.txt
 
    if ( $resfiles > 0 ) then
 
