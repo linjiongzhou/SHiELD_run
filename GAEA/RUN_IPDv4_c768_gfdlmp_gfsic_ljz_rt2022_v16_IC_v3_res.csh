@@ -8,7 +8,7 @@
 #SBATCH --nodes=96
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,NUM_TOT=1,ALL
 
-# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
+# This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
 
 set echo
@@ -56,7 +56,6 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set EC_data = /lustre/f2/pdata/gfdl/gfdl_W/Jan-Huey.Chen/EC_data/IFS_AN0_${NAME}.nc
 set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
@@ -91,7 +90,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 1
+    set na_init = 0
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -118,7 +117,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".T."
+      set make_nh = ".F."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
@@ -188,7 +187,7 @@ if (${RESTART_RUN} == "F") then
   ln -sf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".F."
+  set nggps_ic = ".T."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -237,7 +236,6 @@ cp $executable .
 ln -sf ${GRID}/* INPUT/
 
 # GFS FIX data
-ln -sf $EC_data INPUT/gk03_CF0.nc
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
 ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
 ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
@@ -299,7 +297,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .F.
+       nudge_qv = .T.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -333,8 +331,6 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
-       ecmwf_ic = .T.
-       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -473,38 +469,11 @@ cat >! input.nml <<EOF
        rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.0e-6
-       c_pracw = 0.35
-       c_psacw = 1.0
-       c_pgacw = 1.e-4
-       c_praci = 1.0
-       c_psaci = 0.35
-       c_pgaci = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
        rewmax = 10.0
        rermin = 10.0
-       vdiffflag = 2
-       do_new_acc_water = .true.
-       do_psd_water_fall = .true.
-       do_psd_water_num = .true.
-       n0w_sig = 1.2
-       n0w_exp = 66
-       muw = 11.0
-       alinw = 3.e7
-       blinw = 2.0
-       rewflag = 4
-       rewfac = 1.0
-       do_new_acc_ice = .true.
-       do_psd_ice_fall = .true.
-       do_psd_ice_num = .true.
-       n0i_sig = 1.1
-       n0i_exp = 18
-       mui = 3.445
-       alini = 7.e2
-       blini = 1.0
-       reiflag = 7
-       reifac = 0.8
 /
 
  &sa_sas_nml

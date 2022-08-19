@@ -349,11 +349,16 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
-       do_fast_phys   = .F.
+       !do_fast_phys   = .T.
        do_inline_mp   = .T.
-       do_inline_edmf = .F.
-       do_inline_sas  = .F.
-       do_inline_gwd  = .F.
+       !do_inline_edmf = .T.
+       !do_inline_sas  = .T.
+       !do_inline_gwd  = .T.
+       !consv_checker = .T.
+       !te_err = 1.e-16
+       !tw_err = 1.e-16
+       !!te_err = 1.e-9
+       !!tw_err = 1.e-9
 /
 
  &coupler_nml
@@ -429,9 +434,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       do_inline_edmf = .false.
-       do_inline_sas  = .false.
-       do_inline_gwd  = .false.
+       !do_inline_edmf = .true.
+       !do_inline_sas  = .true.
+       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /

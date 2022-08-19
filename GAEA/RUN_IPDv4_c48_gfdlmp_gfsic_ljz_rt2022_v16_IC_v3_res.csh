@@ -1,14 +1,14 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C48_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=03:00:00
-#SBATCH --cluster=c3
-#SBATCH --nodes=96
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,NUM_TOT=1,ALL
+#SBATCH --time=02:00:00
+#SBATCH --cluster=c4
+#SBATCH --nodes=1
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
-# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
+# This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
 
 set echo
@@ -25,14 +25,14 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C48"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "send"    # choices:  send, no_send
-#set NUM_TOT = 1         # run cycle, 1: no restart
+set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -56,10 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set EC_data = /lustre/f2/pdata/gfdl/gfdl_W/Jan-Huey.Chen/EC_data/IFS_AN0_${NAME}.nc
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -70,13 +69,13 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "49"
+    set npy = "49"
     set npz = "91"
-    set layout_x = $LX
-    set layout_y = "16" 
+    set layout_x = "2" 
+    set layout_y = "2" 
     set io_layout = "1,1"
-    set nthreads = "4"
+    set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
     set blocksize = "32"
@@ -85,17 +84,17 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "150"
+    set dt_atmos = "450"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 1
+    set na_init = 0
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "128"
+    set ncep_levs = "127"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -114,18 +113,18 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".T."
+      set make_nh = ".F."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
-      set n_split = "8"
+      set k_split = "2"
+      set n_split = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -188,7 +187,7 @@ if (${RESTART_RUN} == "F") then
   ln -sf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".F."
+  set nggps_ic = ".T."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -237,7 +236,6 @@ cp $executable .
 ln -sf ${GRID}/* INPUT/
 
 # GFS FIX data
-ln -sf $EC_data INPUT/gk03_CF0.nc
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
 ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
 ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
@@ -299,7 +297,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .F.
+       nudge_qv = .T.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -333,8 +331,6 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
-       ecmwf_ic = .T.
-       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -358,6 +354,11 @@ cat >! input.nml <<EOF
        !do_inline_edmf = .T.
        !do_inline_sas  = .T.
        !do_inline_gwd  = .T.
+       !consv_checker = .T.
+       !te_err = 1.e-16
+       !tw_err = 1.e-16
+       !!te_err = 1.e-9
+       !!tw_err = 1.e-9
 /
 
  &coupler_nml
@@ -473,38 +474,11 @@ cat >! input.nml <<EOF
        rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.0e-6
-       c_pracw = 0.35
-       c_psacw = 1.0
-       c_pgacw = 1.e-4
-       c_praci = 1.0
-       c_psaci = 0.35
-       c_pgaci = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
        rewmax = 10.0
        rermin = 10.0
-       vdiffflag = 2
-       do_new_acc_water = .true.
-       do_psd_water_fall = .true.
-       do_psd_water_num = .true.
-       n0w_sig = 1.2
-       n0w_exp = 66
-       muw = 11.0
-       alinw = 3.e7
-       blinw = 2.0
-       rewflag = 4
-       rewfac = 1.0
-       do_new_acc_ice = .true.
-       do_psd_ice_fall = .true.
-       do_psd_ice_num = .true.
-       n0i_sig = 1.1
-       n0i_exp = 18
-       mui = 3.445
-       alini = 7.e2
-       blini = 1.0
-       reiflag = 7
-       reifac = 0.8
 /
 
  &sa_sas_nml
