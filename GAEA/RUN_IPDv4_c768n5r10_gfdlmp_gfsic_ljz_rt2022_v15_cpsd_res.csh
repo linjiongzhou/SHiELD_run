@@ -4,9 +4,9 @@
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=03:00:00
-#SBATCH --cluster=c3
-#SBATCH --nodes=96
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=16,NUM_TOT=1,ALL
+#SBATCH --cluster=c4
+#SBATCH --nodes=64
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
 
 # This script is designed to run C-SHiELD copied from Kai-Yuan Cheng
 # This script is optimized for GFDL MP runs using GFS ICs
@@ -241,10 +241,10 @@ EOF
 cat ${RUN_AREA}/diag_table_6species_hourly >> diag_table
 
 # copy over the other tables and executable
-cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species field_table
-cp $executable .
-
+cp -f ${RUN_AREA}/data_table data_table
+cp -f ${RUN_AREA}/field_table_6species field_table
+cp -f $executable .
+cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
@@ -360,7 +360,6 @@ cat >! input.nml <<EOF
        hord_tr = -5
        adjust_dry_mass = .F.
        consv_te = $consv_te
-       do_sat_adj = .F.
        consv_am = .F.
        fill = .T.
        dwind_2d = .F.
@@ -368,15 +367,15 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
-       do_fast_phys   = .F.
-       do_inline_mp   = .T.
-       do_inline_edmf = .F.
-       do_inline_sas  = .F.
-       do_inline_gwd  = .F.
        do_schmidt = .true.
        target_lat = 39.5
        target_lon = -97.5
        stretch_fac = 1.0
+/
+
+ &integ_phys_nml
+       do_sat_adj = .F.
+       do_inline_mp = .T.
 /
 
 &fv_nest_nml
@@ -462,9 +461,6 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       do_inline_edmf = .false.
-       do_inline_sas  = .false.
-       do_inline_gwd  = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -501,13 +497,14 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        rh_ins = 0.30
        c_paut = 0.5
-       rthresh = 8.0e-6
+       rthresh = 8.5e-6
        c_pracw = 0.35
        c_psacw = 1.0
        c_pgacw = 1.e-4
        c_praci = 1.0
        c_psaci = 0.35
        c_pgaci = 0.05
+       fi2s_fac = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -534,30 +531,6 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
-/
-
- &sa_sas_nml
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 0.5
-       xkzm_hl        = 0.5
-	   xkzm_mi        = 0.5
-       xkzm_hi        = 0.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 
@@ -704,7 +677,6 @@ cat >! input_nest02.nml <<EOF
        hord_tr = -5
        adjust_dry_mass = .F.
        consv_te = 0.
-       do_sat_adj = .F.
        consv_am = .F.
        fill = .T.
        dwind_2d = .F.
@@ -712,13 +684,13 @@ cat >! input_nest02.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
-       !do_fast_phys   = .T.
-       do_inline_mp   = .T.
-       !do_inline_edmf = .T.
-       !do_inline_sas  = .T.
-       !do_inline_gwd  = .T.
        twowaynest = .t.
        nestupdate = 7
+/
+
+ &integ_phys_nml
+       do_sat_adj = .F.
+       do_inline_mp = .T.
 /
 
  &coupler_nml
@@ -794,9 +766,6 @@ cat >! input_nest02.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_edmf = .true.
-       !do_inline_sas  = .true.
-       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -993,12 +962,12 @@ if ($NO_SEND == "send") then
     endif
 
 	mkdir -p $WORKDIR/ascii/$begindate
-    foreach out (`ls *.out *.results input*.nml *_table`)
+    foreach out (`ls *.out *.results input*.nml *_table *.x *.csh`)
       mv $out $WORKDIR/ascii/$begindate/
     end
 
     cd $WORKDIR/ascii/$begindate
-    tar cvf - *\.out *\.results input*\.nml *_table | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
+    tar cvf - *\.out *\.results input*\.nml *_table *\.x *\.csh | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -1029,7 +998,7 @@ if ($NO_SEND == "send") then
 #      if ( $irun < $segmentsPerJob ) then
 #        rm -r $workDir/INPUT/*.res*
 #        foreach index ($list)
-#          cp $workDir/RESTART/$index $workDir/INPUT/$index
+#          cp -f $workDir/RESTART/$index $workDir/INPUT/$index
 #        end
 #      endif
 
@@ -1105,7 +1074,7 @@ else
     if ( $enddate == "" ) set enddate = tmp`date '+%j%H%M%S'`
 
     mkdir -p $WORKDIR/ascii/$begindate
-	mv *.out *.results *.nml *_table $WORKDIR/ascii/$begindate
+	mv *.out *.results *.nml *_table *.x *.csh $WORKDIR/ascii/$begindate
 
     mkdir -p $WORKDIR/history/$begindate
     mv *.nc $WORKDIR/history/$begindate

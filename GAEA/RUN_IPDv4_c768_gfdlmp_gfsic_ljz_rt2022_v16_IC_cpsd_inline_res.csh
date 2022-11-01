@@ -3,7 +3,7 @@
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=03:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=64
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
@@ -352,7 +352,16 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
+       !do_fast_phys = .T.
        do_inline_mp = .T.
+       !do_inline_edmf = .T.
+       !do_inline_sas = .T.
+       !do_inline_gwd = .T.
+       !consv_checker = .T.
+       !te_err = 1.e-16
+       !tw_err = 1.e-16
+       !!te_err = 1.e-9
+       !!tw_err = 1.e-9
 /
 
  &coupler_nml
@@ -428,6 +437,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
+       !do_inline_edmf = .true.
+       !do_inline_sas  = .true.
+       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -498,6 +510,30 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
+/
+
+ &sa_sas_nml
+/
+
+ &sa_tke_edmf_nml
+       dspheat        = .true.
+       do_dk_hb19     = .false.
+       xkzinv         = 0.0
+	   xkzm_mo        = 0.5
+       xkzm_ho        = 0.5
+	   xkzm_ml        = 0.5
+       xkzm_hl        = 0.5
+	   xkzm_mi        = 0.5
+       xkzm_hi        = 0.5
+       cap_k0_land    = .false.
+       rlmx           = 500.0
+       redrag         = .true.
+       do_z0_hwrf17_hwonly = .true.
+       ivegsrc        = 1
+/
+
+ &sa_gwd_nml
+       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 

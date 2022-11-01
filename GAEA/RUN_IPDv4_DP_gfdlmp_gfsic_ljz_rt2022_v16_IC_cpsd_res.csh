@@ -222,9 +222,10 @@ EOF
 cat ${RUN_AREA}/diag_table_6species_DP >> diag_table
 
 # copy over the other tables and executable
-cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species field_table
-cp $executable .
+cp -f ${RUN_AREA}/data_table data_table
+cp -f ${RUN_AREA}/field_table_6species field_table
+cp -f $executable .
+cp -f ${SCRIPT}.csh .
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -290,6 +291,7 @@ cat >! input.nml <<EOF
        ntiles   = 1
        npz    = $npz
        grid_type = 4
+       is_ideal_case = .T.
        make_nh = $make_nh
        fv_debug = .F.
        range_warn = .F.
@@ -339,7 +341,6 @@ cat >! input.nml <<EOF
        hord_tr = -5
        adjust_dry_mass = .F.
        consv_te = $consv_te
-       do_sat_adj = .F.
        consv_am = .F.
        fill = .T.
        dwind_2d = .F.
@@ -347,9 +348,11 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
-       !do_fast_phys   = .T.
-       do_inline_mp   = .T.
-       !do_inline_edmf = .T.
+/
+
+ &integ_phys_nml
+       do_sat_adj = .F.
+       do_inline_mp = .T.
 /
 
  &coupler_nml
@@ -428,12 +431,13 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_edmf = .true.
        do_ocean       = .false.
        do_z0_hwrf17_hwonly = .true.
        debug          = .false.
        fixed_date     = .true.
        fixed_solhr    = .true.
+       fixed_sollat   = .true.
+       sollat         = 0.0
        daily_mean     = .true.
 /
 
@@ -469,13 +473,14 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        rh_ins = 0.30
        c_paut = 0.5
-       rthresh = 8.0e-6
+       rthresh = 8.5e-6
        c_pracw = 0.35
        c_psacw = 1.0
        c_pgacw = 1.e-4
        c_praci = 1.0
        c_psaci = 0.35
        c_pgaci = 0.05
+       fi2s_fac = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -502,30 +507,6 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
-/
-
- &sa_sas_nml
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 0.5
-       xkzm_hl        = 0.5
-	   xkzm_mi        = 0.5
-       xkzm_hi        = 0.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 
@@ -622,12 +603,12 @@ if ($NO_SEND == "send") then
     endif
 
 	mkdir -p $WORKDIR/ascii/$begindate
-    foreach out (`ls *.out *.results input*.nml *_table`)
+    foreach out (`ls *.out *.results input*.nml *_table *.x *.csh`)
       mv $out $WORKDIR/ascii/$begindate/
     end
 
     cd $WORKDIR/ascii/$begindate
-    tar cvf - *\.out *\.results input*\.nml *_table | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
+    tar cvf - *\.out *\.results input*\.nml *_table *\.x *\.csh | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -658,7 +639,7 @@ if ($NO_SEND == "send") then
 #      if ( $irun < $segmentsPerJob ) then
 #        rm -r $workDir/INPUT/*.res*
 #        foreach index ($list)
-#          cp $workDir/RESTART/$index $workDir/INPUT/$index
+#          cp -f $workDir/RESTART/$index $workDir/INPUT/$index
 #        end
 #      endif
 
@@ -734,7 +715,7 @@ else
     if ( $enddate == "" ) set enddate = tmp`date '+%j%H%M%S'`
 
     mkdir -p $WORKDIR/ascii/$begindate
-	mv *.out *.results *.nml *_table $WORKDIR/ascii/$begindate
+	mv *.out *.results *.nml *_table *.x *.csh $WORKDIR/ascii/$begindate
 
     mkdir -p $WORKDIR/history/$begindate
     mv *.nc $WORKDIR/history/$begindate

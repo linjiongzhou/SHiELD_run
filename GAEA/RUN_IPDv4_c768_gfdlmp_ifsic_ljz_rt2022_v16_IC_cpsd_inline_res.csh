@@ -3,12 +3,12 @@
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=03:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=64
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
 
-# This script is optimized for GFDL MP runs using GFS ICs
+# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
 # Linjiong.Zhou@noaa.gov
 
 set echo
@@ -56,6 +56,7 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+set EC_data = /lustre/f2/pdata/gfdl/gfdl_W/Jan-Huey.Chen/EC_data/IFS_AN0_${NAME}.nc
 set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
@@ -90,7 +91,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -117,7 +118,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".F."
+      set make_nh = ".T."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
@@ -187,7 +188,7 @@ if (${RESTART_RUN} == "F") then
   ln -sf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".T."
+  set nggps_ic = ".F."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -236,6 +237,7 @@ cp -f ${SCRIPT}.csh .
 ln -sf ${GRID}/* INPUT/
 
 # GFS FIX data
+ln -sf $EC_data INPUT/gk03_CF0.nc
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
 ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
 ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
@@ -297,7 +299,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .T.
+       nudge_qv = .F.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -331,6 +333,8 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
+       ecmwf_ic = .T.
+       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -352,7 +356,16 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
+       !do_fast_phys = .T.
        do_inline_mp = .T.
+       !do_inline_edmf = .T.
+       !do_inline_sas = .T.
+       !do_inline_gwd = .T.
+       !consv_checker = .T.
+       !te_err = 1.e-16
+       !tw_err = 1.e-16
+       !!te_err = 1.e-9
+       !!tw_err = 1.e-9
 /
 
  &coupler_nml
@@ -428,6 +441,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
+       !do_inline_edmf = .true.
+       !do_inline_sas  = .true.
+       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -498,6 +514,30 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
+/
+
+ &sa_sas_nml
+/
+
+ &sa_tke_edmf_nml
+       dspheat        = .true.
+       do_dk_hb19     = .false.
+       xkzinv         = 0.0
+	   xkzm_mo        = 0.5
+       xkzm_ho        = 0.5
+	   xkzm_ml        = 0.5
+       xkzm_hl        = 0.5
+	   xkzm_mi        = 0.5
+       xkzm_hi        = 0.5
+       cap_k0_land    = .false.
+       rlmx           = 500.0
+       redrag         = .true.
+       do_z0_hwrf17_hwonly = .true.
+       ivegsrc        = 1
+/
+
+ &sa_gwd_nml
+       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 

@@ -8,7 +8,7 @@
 #SBATCH --nodes=64
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
 
-# This script is optimized for GFDL MP runs using GFS ICs
+# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
 # Linjiong.Zhou@noaa.gov
 
 set echo
@@ -56,6 +56,7 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+set EC_data = /lustre/f2/pdata/gfdl/gfdl_W/Jan-Huey.Chen/EC_data/IFS_AN0_${NAME}.nc
 set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
@@ -90,7 +91,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -117,7 +118,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".F."
+      set make_nh = ".T."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
@@ -187,7 +188,7 @@ if (${RESTART_RUN} == "F") then
   ln -sf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".T."
+  set nggps_ic = ".F."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -236,6 +237,7 @@ cp -f ${SCRIPT}.csh .
 ln -sf ${GRID}/* INPUT/
 
 # GFS FIX data
+ln -sf $EC_data INPUT/gk03_CF0.nc
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
 ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
 ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
@@ -297,7 +299,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .T.
+       nudge_qv = .F.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -331,6 +333,8 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
+       ecmwf_ic = .T.
+       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -450,54 +454,73 @@ cat >! input.nml <<EOF
 /
 
  &gfdl_mp_nml
+       sedi_transport = .true.
+       do_sedi_w = .true.
        do_sedi_heat = .false.
+       disp_heat = .true.
+       rad_snow = .true.
+       rad_graupel = .true.
+       rad_rain = .true.
+       const_vi = .false.
+       const_vs = .false.
+       const_vg = .false.
+       const_vr = .false.
+       vi_fac = 1.
+       vs_fac = 1.
+       vg_fac = 1.
+       vr_fac = 1.
        vi_max = 1.
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
+       qi_lim = 1.
+       prog_ccn = .false.
+       do_qa = .true.
+       do_sat_adj = .false.
        tau_l2v = 225.
+       tau_v2l = 150.
+       tau_g2v = 900.
+       rthresh = 10.e-6
        dw_land = 0.16
        dw_ocean = 0.10
+       ql_gen = 1.0e-3
        ql_mlt = 1.0e-3
        qi0_crt = 8.0e-5
+       qs0_crt = 1.0e-3
+       tau_i2s = 1000.
+       c_psaci = 0.05
+       c_pgacs = 0.01
        rh_inc = 0.30
        rh_inr = 0.30
        rh_ins = 0.30
+       ccn_l = 300.
+       ccn_o = 200.
        c_paut = 0.5
-       rthresh = 8.5e-6
-       c_pracw = 0.35
-       c_psacw = 1.0
-       c_pgacw = 1.e-4
-       c_praci = 1.0
-       c_psaci = 0.35
-       c_pgaci = 0.05
-       fi2s_fac = 0.05
+       c_cracw = 0.8
+       use_ppm = .false.
+       mono_prof = .true.
+       z_slope_liq = .true.
+       z_slope_ice = .true.
+       fix_negative = .true.
+       icloud_f = 0
        do_cld_adj = .true.
-       use_rhc_revap = .true.
        f_dq_p = 3.0
+/
+
+ &cld_eff_rad_nml
+       qmin = 1.0e-12
+       beta = 1.22
+       rewflag = 1
+       reiflag = 5
+       rewmin = 5.0
        rewmax = 10.0
+       reimin = 10.0
+       reimax = 150.0
        rermin = 10.0
-       vdiffflag = 2
-       do_new_acc_water = .true.
-       do_psd_water_fall = .true.
-       do_psd_water_num = .true.
-       n0w_sig = 1.2
-       n0w_exp = 66
-       muw = 11.0
-       alinw = 3.e7
-       blinw = 2.0
-       rewflag = 4
-       rewfac = 1.0
-       do_new_acc_ice = .true.
-       do_psd_ice_fall = .true.
-       do_psd_ice_num = .true.
-       n0i_sig = 1.1
-       n0i_exp = 18
-       mui = 3.445
-       alini = 7.e2
-       blini = 1.0
-       reiflag = 7
-       reifac = 0.8
+       rermax = 10000.0
+       resmin = 150.0
+       resmax = 10000.0
+       liq_ice_combine = .false.
 /
 
  &diag_manager_nml 

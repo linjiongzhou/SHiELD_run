@@ -1,12 +1,13 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=DP_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=03:00:00
+#SBATCH --time=16:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=64
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
+#SBATCH --nodes=1
+#SBATCH --qos=normal
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,14 +26,14 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "DP"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "send"    # choices:  send, no_send
-#set NUM_TOT = 1         # run cycle, 1: no restart
+set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 365         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -56,11 +57,8 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
-set FIX_sfc = ${GRID}/fix_sfc
 
 # sending file to gfdl
 set gfdl_archive = /archive/${USER}/SHiELD/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
@@ -69,22 +67,24 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
-    set npz = "91"
-    set layout_x = $LX
-    set layout_y = "16" 
+    set npx = "145"
+    set npy = "145"
+    set npz = "50"
+    set layout_x = "18" 
+    set layout_y = "18" 
     set io_layout = "1,1"
-    set nthreads = "4"
+    set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
     set blocksize = "32"
 
     # run length
     set months = "0"
-    set days = "10"
+    set days = "1"
     set hours = "0"
-    set dt_atmos = "150"
+    set minutes = "0"
+    set seconds = "0"
+    set dt_atmos = "5"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
@@ -99,9 +99,9 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
 #    set fdiag = "6.,12.,18.,24.,30.,36.,42.,48.,54.,60.,66.,72.,78.,84.,90.,96.,102.,108.,114.,120.,126.,132.,138.,144.,150.,156.,162.,168.,174.,180.,186.,192.,198.,204.,210.,216.,222.,228.,234.,240."
-    set fdiag = "6."
-    set fhzer = "6."
-    set fhcyc = "24."
+    set fdiag = "0.0125"
+    set fhzer = "0.0125"
+    set fhcyc = "0."
 
     # determines whether FV3 or GFS physics calculate geopotential
     set gfs_phil = ".false."
@@ -113,7 +113,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -123,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
+      set k_split = "2"
       set n_split = "8"
     else
       # hydrostatic options
@@ -159,7 +159,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     endif
 
 # when running with threads, need to use the following command
-    @ npes = ${layout_x} * ${layout_y} * 6
+    @ npes = ${layout_x} * ${layout_y}
 	@ skip = ${nthreads} / ${div}
 	set run_cmd = "srun --ntasks=$npes --cpus-per-task=$skip ./$executable:t"
 
@@ -184,12 +184,9 @@ if (${RESTART_RUN} == "F") then
 
   # Date specific ICs
   mkdir -p INPUT
-  ln -sf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".T."
   set mountain = ".F."
-  set external_ic = ".T."
   set warm_start = ".F."
 
 else
@@ -202,15 +199,13 @@ else
 
   # reset values in input.nml for restart run
   set make_nh = ".F."
-  set nggps_ic = ".F."
   set mountain = ".T."
-  set external_ic = ".F."
   set warm_start = ".T."
   set na_init = 0
 
 endif
 
-# build the date for curr_date from NAME
+# build the date for curr_date and diag_table from NAME
 unset echo
 set y = `echo ${NAME} | cut -c1-4`
 set m = `echo ${NAME} | cut -c5-6`
@@ -224,16 +219,13 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_DP >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
 cp -f ${RUN_AREA}/field_table_6species field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
-
-# Grid and orography data
-ln -sf ${GRID}/* INPUT/
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -266,6 +258,7 @@ cat >! input.nml <<EOF
      dycore_only = $dycore_only
      fdiag = $fdiag
      first_time_step = .false.
+     fprint = .false.
 /
 
  &fms_io_nml
@@ -276,12 +269,15 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 3000000,
+       domains_stack_size = 30000000,
        print_memory_usage = .false.
 /
 
- &fv_grid_nml
-       grid_file = 'INPUT/grid_spec.nc'
+ &test_case_nml
+       test_case = 19
+       no_wind = .true.
+       dt_amp = 0.0
+       gaussian_dt = .true.
 /
 
  &fv_core_nml
@@ -289,15 +285,19 @@ cat >! input.nml <<EOF
        io_layout = $io_layout
        npx      = $npx
        npy      = $npy
-       ntiles   = 6
+	   dx_const = 500.
+	   dy_const = 500.
+       deglat = 0.0
+       ntiles   = 1
        npz    = $npz
-       grid_type = -1
+       grid_type = 4
+       is_ideal_case = .T.
        make_nh = $make_nh
        fv_debug = .F.
-       range_warn = .T.
+       range_warn = .F.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .T.
+       nudge_qv = .F.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -321,16 +321,16 @@ cat >! input.nml <<EOF
        dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
-       nord =  3
+       nord =  2
        dddmp = 0.2
        d4_bg = 0.15
-       vtdm4 = 0.03
+       vtdm4 = 0.01
        delt_max = 0.002
        ke_bg = 0.
        do_vort_damp = $do_vort_damp
-       external_ic = $external_ic
+       external_ic = .F.
        gfs_phil = $gfs_phil
-       nggps_ic = $nggps_ic
+       nggps_ic = .F.
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -352,13 +352,24 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
+       !do_fast_phys = .T.
        do_inline_mp = .T.
+       !do_inline_edmf = .T.
+       !do_inline_sas = .T.
+       !do_inline_gwd = .T.
+       !consv_checker = .T.
+       !te_err = 1.e-16
+       !tw_err = 1.e-16
+       !!te_err = 1.e-9
+       !!tw_err = 1.e-9
 /
 
  &coupler_nml
        months = $months
        days  = $days
        hours = $hours
+       minutes = $minutes
+       seconds = $seconds
        dt_atmos = $dt_atmos
        dt_ocean = $dt_atmos
        current_date =  $curr_date
@@ -397,9 +408,10 @@ cat >! input.nml <<EOF
        isol           = 2
        lwhtr          = .true.
        swhtr          = .true.
-       cnvgwd         = .true.
-       do_deep        = .true.
-       shal_cnv       = .true.
+       orogwd         = .false.
+       cnvgwd         = .false.
+       do_deep        = .false.
+       shal_cnv       = .false.
        cal_pre        = .false.
        redrag         = .true.
        dspheat        = .true.
@@ -428,8 +440,15 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       do_ocean       = .true.
+       !do_inline_edmf = .true.
+       do_ocean       = .false.
        do_z0_hwrf17_hwonly = .true.
+       debug          = .false.
+       fixed_date     = .true.
+       fixed_solhr    = .true.
+       fixed_sollat   = .true.
+       sollat         = 0.0
+       daily_mean     = .true.
 /
 
  &ocean_nml
@@ -500,6 +519,30 @@ cat >! input.nml <<EOF
        reifac = 0.8
 /
 
+ &sa_sas_nml
+/
+
+ &sa_tke_edmf_nml
+       dspheat        = .true.
+       do_dk_hb19     = .false.
+       xkzinv         = 0.0
+	   xkzm_mo        = 0.5
+       xkzm_ho        = 0.5
+	   xkzm_ml        = 0.5
+       xkzm_hl        = 0.5
+	   xkzm_mi        = 0.5
+       xkzm_hi        = 0.5
+       cap_k0_land    = .false.
+       rlmx           = 500.0
+       redrag         = .true.
+       do_z0_hwrf17_hwonly = .true.
+       ivegsrc        = 1
+/
+
+ &sa_gwd_nml
+       cdmbgwd        = 3.5, 0.25
+/
+
  &diag_manager_nml 
        prepend_date = .F.
 /
@@ -515,22 +558,22 @@ cat >! input.nml <<EOF
        FNMLDC   = "$FIX_bqx/mld/mld_DR003_c1m_reg2.0.grb"
        FNSNOC   = "$FIX/global_snoclim.1.875.grb",
        FNZORC   = "igbp",
-       FNALBC   = "$FIX_sfc/${CASE}.snowfree_albedo.tileX.nc",
-       FNALBC2  = "$FIX_sfc/${CASE}.facsf.tileX.nc",
+       FNALBC   = "$FIX/global_snowfree_albedo.bosu.t1534.3072.1536.rg.grb",
+       FNALBC2  = "$FIX/global_albedo4.1x1.grb",
        FNAISC   = "$FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb",
-       FNTG3C   = "$FIX_sfc/${CASE}.substrate_temperature.tileX.nc",
-       FNVEGC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNVETC   = "$FIX_sfc/${CASE}.vegetation_type.tileX.nc",
-       FNSOTC   = "$FIX_sfc/${CASE}.soil_type.tileX.nc",
+       FNTG3C   = "$FIX/global_tg3clim.2.6x1.5.grb",
+       FNVEGC   = "$FIX/global_vegfrac.0.144.decpercent.grb",
+       FNVETC   = "$FIX/global_vegtype.igbp.t1534.3072.1536.rg.grb",
+       FNSOTC   = "$FIX/global_soiltype.statsgo.t1534.3072.1536.rg.grb",
        FNSMCC   = "$FIX/global_soilmgldas.t1534.3072.1536.grb",
-       FNMSKH   = "$FIX/global_slmask.t1534.3072.1536.grb",
+       FNMSKH   = "$FIX/seaice_newland.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",
-       FNVMNC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNVMXC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNSLPC   = "$FIX_sfc/${CASE}.slope_type.tileX.nc",
-       FNABSC   = "$FIX_sfc/${CASE}.maximum_snow_albedo.tileX.nc",
+       FNVMNC   = "$FIX/global_shdmin.0.144x0.144.grb",
+       FNVMXC   = "$FIX/global_shdmax.0.144x0.144.grb",
+       FNSLPC   = "$FIX/global_slope.1x1.grb",
+       FNABSC   = "$FIX/global_mxsnoalb.uariz.t1534.3072.1536.rg.grb",
        LDEBUG   =.false.,
        FSMCL(2) = 99999
        FSMCL(3) = 99999

@@ -222,9 +222,10 @@ EOF
 cat ${RUN_AREA}/diag_table_6species_DP >> diag_table
 
 # copy over the other tables and executable
-cp ${RUN_AREA}/data_table data_table
-cp ${RUN_AREA}/field_table_6species field_table
-cp $executable .
+cp -f ${RUN_AREA}/data_table data_table
+cp -f ${RUN_AREA}/field_table_6species field_table
+cp -f $executable .
+cp -f ${SCRIPT}.csh .
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -290,6 +291,7 @@ cat >! input.nml <<EOF
        ntiles   = 1
        npz    = $npz
        grid_type = 4
+       is_ideal_case = .T.
        make_nh = $make_nh
        fv_debug = .F.
        range_warn = .F.
@@ -339,7 +341,6 @@ cat >! input.nml <<EOF
        hord_tr = -5
        adjust_dry_mass = .F.
        consv_te = $consv_te
-       do_sat_adj = .F.
        consv_am = .F.
        fill = .T.
        dwind_2d = .F.
@@ -347,6 +348,10 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
+/
+
+ &integ_phys_nml
+       do_sat_adj = .F.
        do_inline_mp = .T.
 /
 
@@ -431,6 +436,8 @@ cat >! input.nml <<EOF
        debug          = .false.
        fixed_date     = .true.
        fixed_solhr    = .true.
+       fixed_sollat   = .true.
+       sollat         = 0.0
        daily_mean     = .true.
 /
 
@@ -615,12 +622,12 @@ if ($NO_SEND == "send") then
     endif
 
 	mkdir -p $WORKDIR/ascii/$begindate
-    foreach out (`ls *.out *.results input*.nml *_table`)
+    foreach out (`ls *.out *.results input*.nml *_table *.x *.csh`)
       mv $out $WORKDIR/ascii/$begindate/
     end
 
     cd $WORKDIR/ascii/$begindate
-    tar cvf - *\.out *\.results input*\.nml *_table | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
+    tar cvf - *\.out *\.results input*\.nml *_table *\.x *\.csh | gzip -c > $WORKDIR/ascii/$begindate.ascii_out.tgz
 
     sbatch --export=source=$WORKDIR/ascii/$begindate.ascii_out.tgz,destination=gfdl:$gfdl_archive/ascii/$begindate.ascii_out.tgz,extension=null,type=ascii --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
@@ -651,7 +658,7 @@ if ($NO_SEND == "send") then
 #      if ( $irun < $segmentsPerJob ) then
 #        rm -r $workDir/INPUT/*.res*
 #        foreach index ($list)
-#          cp $workDir/RESTART/$index $workDir/INPUT/$index
+#          cp -f $workDir/RESTART/$index $workDir/INPUT/$index
 #        end
 #      endif
 
@@ -727,7 +734,7 @@ else
     if ( $enddate == "" ) set enddate = tmp`date '+%j%H%M%S'`
 
     mkdir -p $WORKDIR/ascii/$begindate
-	mv *.out *.results *.nml *_table $WORKDIR/ascii/$begindate
+	mv *.out *.results *.nml *_table *.x *.csh $WORKDIR/ascii/$begindate
 
     mkdir -p $WORKDIR/history/$begindate
     mv *.nc $WORKDIR/history/$begindate
