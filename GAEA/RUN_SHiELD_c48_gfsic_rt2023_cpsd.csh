@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C48_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=06:00:00
+#SBATCH --time=02:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=64
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
+#SBATCH --nodes=1
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,14 +25,14 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C48"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "send"    # choices:  send, no_send
-#set NUM_TOT = 1         # run cycle, 1: no restart
+set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -69,13 +69,13 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "49"
+    set npy = "49"
     set npz = "91"
-    set layout_x = $LX
-    set layout_y = "16" 
+    set layout_x = "2" 
+    set layout_y = "2" 
     set io_layout = "1,1"
-    set nthreads = "4"
+    set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
     set blocksize = "32"
@@ -84,7 +84,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "150"
+    set dt_atmos = "450"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "128"
+    set ncep_levs = "127"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -113,7 +113,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -123,8 +123,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
-      set n_split = "8"
+      set k_split = "2"
+      set n_split = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -228,19 +228,12 @@ cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
-cp -f ${RUN_AREA}/field_table_6species_aero field_table
+cp -f ${RUN_AREA}/field_table_6species field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -325,7 +318,7 @@ cat >! input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -359,18 +352,7 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
-       !do_fast_phys = .T.
        do_inline_mp = .T.
-       !do_inline_pbl = .T.
-       !do_inline_cnv = .T.
-       !do_inline_gwd = .T.
-       !inline_cnv_flag = 1
-       !consv_checker = .T.
-       !te_err = 1.e-16
-       !tw_err = 1.e-16
-       !!te_err = 1.e-9
-       !!tw_err = 1.e-9
-       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -446,9 +428,6 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_pbl  = .true.
-       !do_inline_cnv  = .true.
-       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -476,7 +455,6 @@ cat >! input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -486,13 +464,14 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        rh_ins = 0.30
        c_paut = 0.5
-       rthresh = 8.0e-6
+       rthresh = 8.5e-6
        c_pracw = 0.35
        c_psacw = 1.0
        c_pgacw = 1.e-4
        c_praci = 1.0
        c_psaci = 0.35
        c_pgaci = 0.05
+       fi2s_fac = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -501,44 +480,24 @@ cat >! input.nml <<EOF
        vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
+       do_psd_water_num = .true.
        n0w_sig = 1.2
        n0w_exp = 66
        muw = 11.0
        alinw = 3.e7
        blinw = 2.0
        rewflag = 4
+       rewfac = 1.0
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
+       do_psd_ice_num = .true.
+       n0i_sig = 1.1
+       n0i_exp = 18
+       mui = 3.445
+       alini = 7.e2
+       blini = 1.0
        reiflag = 7
-/
-
- &sa_sas_nml
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 0.5
-       xkzm_hl        = 0.5
-	   xkzm_mi        = 0.5
-       xkzm_hi        = 0.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 3.5, 0.25
+       reifac = 0.8
 /
 
  &diag_manager_nml 

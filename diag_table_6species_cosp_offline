@@ -11,7 +11,7 @@
 "nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
 "cosp2d",                  0,  "hours",    1, "hours",  "time"
-#"cosp3d",                  0,  "hours",    1, "hours",  "time"
+"cosp3d",                  0,  "hours",    1, "hours",  "time"
 "tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
 #"cloud3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 #"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
@@ -364,121 +364,121 @@
 ###
 # COSP variables
 ###
-#"cosp",  "cltisccp"              "cltisccp"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "meantbisccp"           "meantbisccp"         "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "meantbclrisccp"        "meantbclrisccp"      "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "pctisccp"              "pctisccp"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "tauisccp"              "tauisccp"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "albisccp"              "albisccp"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "misr_meanztop"         "misr_meanztop"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "misr_cldarea"          "misr_cldarea"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cltmodis"              "cltmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clwmodis"              "clwmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "climodis"              "climodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clhmodis"              "clhmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clmmodis"              "clmmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cllmodis"              "cllmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tautmodis"             "tautmodis"           "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tauwmodis"             "tauwmodis"           "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tauimodis"             "tauimodis"           "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tautlogmodis"          "tautlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tauwlogmodis"          "tauwlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "tauilogmodis"          "tauilogmodis"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "reffclwmodis"          "reffclwmodis"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "reffclimodis"          "reffclimodis"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "pctmodis"              "pctmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "lwpmodis"              "lwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "iwpmodis"              "iwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cltlidarradar"         "cltlidarradar"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cllcalipsoice"         "cllcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clmcalipsoice"         "clmcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clhcalipsoice"         "clhcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cltcalipsoice"         "cltcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cllcalipsoliq"         "cllcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clmcalipsoliq"         "clmcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clhcalipsoliq"         "clhcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cltcalipsoliq"         "cltcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cllcalipsoun"          "cllcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clmcalipsoun"          "clmcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clhcalipsoun"          "clhcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cltcalipsoun"          "cltcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cllcalipso"            "cllcalipso"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clmcalipso"            "clmcalipso"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clhcalipso"            "clhcalipso"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "cltcalipso"            "cltcalipso"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clopaquecalipso"       "clopaquecalipso"     "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clthincalipso"         "clthincalipso"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clzopaquecalipso"      "clzopaquecalipso"    "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clopaquetemp"          "clopaquetemp"        "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clthintemp"            "clthintemp"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clzopaquetemp"         "clzopaquetemp"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clopaquemeanz"         "clopaquemeanz"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clthinmeanz"           "clthinmeanz"         "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clthinemis"            "clthinemis"          "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clopaquemeanzse"       "clopaquemeanzse"     "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clthinmeanzse"         "clthinmeanzse"       "cosp2d",         "all",  .false.,  "none",  2
- "cosp",  "clzopaquecalipsose"    "clzopaquecalipsose"  "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cllgrLidar532"         "cllgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "clmgrLidar532"         "clmgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "clhgrLidar532"         "clhgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cltgrLidar532"         "cltgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cllatlid"              "cllatlid"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "clmatlid"              "clmatlid"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "clhatlid"              "clhatlid"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cltatlid"              "cltatlid"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag0"       "ptcloudsatflag0"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag1"       "ptcloudsatflag1"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag2"       "ptcloudsatflag2"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag3"       "ptcloudsatflag3"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag4"       "ptcloudsatflag4"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag5"       "ptcloudsatflag5"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag6"       "ptcloudsatflag6"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag7"       "ptcloudsatflag7"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag8"       "ptcloudsatflag8"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "ptcloudsatflag9"       "ptcloudsatflag9"     "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cloudsatpia"           "cloudsatpia"         "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cloudsat_tcc"          "cloudsat_tcc"        "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "cloudsat_tcc2"         "cloudsat_tcc2"       "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "npdfcld"               "npdfcld"             "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "npdfdrz"               "npdfdrz"             "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "npdfrain"              "npdfrain"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltisccp"              "cltisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "meantbisccp"           "meantbisccp"         "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "meantbclrisccp"        "meantbclrisccp"      "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "pctisccp"              "pctisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "tauisccp"              "tauisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "albisccp"              "albisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "misr_meanztop"         "misr_meanztop"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "misr_cldarea"          "misr_cldarea"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltmodis"              "cltmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clwmodis"              "clwmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "climodis"              "climodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhmodis"              "clhmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmmodis"              "clmmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllmodis"              "cllmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tautmodis"             "tautmodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauwmodis"             "tauwmodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauimodis"             "tauimodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tautlogmodis"          "tautlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauwlogmodis"          "tauwlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauilogmodis"          "tauilogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "reffclwmodis"          "reffclwmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "reffclimodis"          "reffclimodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "pctmodis"              "pctmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "lwpmodis"              "lwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "iwpmodis"              "iwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltlidarradar"         "cltlidarradar"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoice"         "cllcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoice"         "clmcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoice"         "clhcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoice"         "cltcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoliq"         "cllcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoliq"         "clmcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoliq"         "clhcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoliq"         "cltcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoun"          "cllcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoun"          "clmcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoun"          "clhcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoun"          "cltcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipso"            "cllcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipso"            "clmcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipso"            "clhcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipso"            "cltcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquecalipso"       "clopaquecalipso"     "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthincalipso"         "clthincalipso"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquecalipso"      "clzopaquecalipso"    "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquetemp"          "clopaquetemp"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthintemp"            "clthintemp"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquetemp"         "clzopaquetemp"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquemeanz"         "clopaquemeanz"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinmeanz"           "clthinmeanz"         "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinemis"            "clthinemis"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquemeanzse"       "clopaquemeanzse"     "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinmeanzse"         "clthinmeanzse"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquecalipsose"    "clzopaquecalipsose"  "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cllgrLidar532"         "cllgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clmgrLidar532"         "clmgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clhgrLidar532"         "clhgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltgrLidar532"         "cltgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cllatlid"              "cllatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clmatlid"              "clmatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clhatlid"              "clhatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltatlid"              "cltatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag0"       "ptcloudsatflag0"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag1"       "ptcloudsatflag1"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag2"       "ptcloudsatflag2"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag3"       "ptcloudsatflag3"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag4"       "ptcloudsatflag4"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag5"       "ptcloudsatflag5"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag6"       "ptcloudsatflag6"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag7"       "ptcloudsatflag7"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag8"       "ptcloudsatflag8"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag9"       "ptcloudsatflag9"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsatpia"           "cloudsatpia"         "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsat_tcc"          "cloudsat_tcc"        "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsat_tcc2"         "cloudsat_tcc2"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfcld"               "npdfcld"             "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfdrz"               "npdfdrz"             "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfrain"              "npdfrain"            "cosp2d",         "all",  .false.,  "none",  2
 #############################################################################################
 ###
 # COSP Offline variables
 ###
-#"cosp",  "skt"                   "skt"                 "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "surfelev"              "surfelev"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "landmask"              "landmask"            "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "sunlit"                "sunlit"              "cosp2d",         "all",  .false.,  "none",  2
-#"cosp",  "p"                     "p"                   "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "ph"                    "ph"                  "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "zlev"                  "zlev"                "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "zlev_half"             "zlev_half"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "T"                     "T"                   "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "sh"                    "sh"                  "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "tca"                   "tca"                 "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "cca"                   "cca"                 "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "u_wind"                "u_wind"              "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "v_wind"                "v_wind"              "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "mr_lsliq"              "mr_lsliq"            "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "mr_lsice"              "mr_lsice"            "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "mr_ccliq"              "mr_ccliq"            "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "mr_ccice"              "mr_ccice"            "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "mr_ozone"              "mr_ozone"            "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "fl_lsrain"             "fl_lsrain"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "fl_lssnow"             "fl_lssnow"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "fl_lsgrpl"             "fl_lsgrpl"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "fl_ccrain"             "fl_ccrain"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "fl_ccsnow"             "fl_ccsnow"           "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "dtau_s"                "dtau_s"              "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "dtau_c"                "dtau_c"              "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "dem_s"                 "dem_s"               "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "dem_c"                 "dem_c"               "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "Reff_LSCLIQ"           "Reff_LSCLIQ"         "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "Reff_LSCICE"           "Reff_LSCICE"         "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "Reff_LSRAIN"           "Reff_LSRAIN"         "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "Reff_LSSNOW"           "Reff_LSSNOW"         "cosp3d",         "all",  .false.,  "none",  2
-#"cosp",  "Reff_LSGRPL"           "Reff_LSGRPL"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "skt"                   "skt"                 "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "surfelev"              "surfelev"            "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "landmask"              "landmask"            "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "sunlit"                "sunlit"              "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "p"                     "p"                   "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "ph"                    "ph"                  "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "zlev"                  "zlev"                "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "zlev_half"             "zlev_half"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "T"                     "T"                   "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "sh"                    "sh"                  "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "tca"                   "tca"                 "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "cca"                   "cca"                 "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "u_wind"                "u_wind"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "v_wind"                "v_wind"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_lsliq"              "mr_lsliq"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_lsice"              "mr_lsice"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ccliq"              "mr_ccliq"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ccice"              "mr_ccice"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ozone"              "mr_ozone"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lsrain"             "fl_lsrain"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lssnow"             "fl_lssnow"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lsgrpl"             "fl_lsgrpl"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_ccrain"             "fl_ccrain"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_ccsnow"             "fl_ccsnow"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dtau_s"                "dtau_s"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dtau_c"                "dtau_c"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dem_s"                 "dem_s"               "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dem_c"                 "dem_c"               "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSCLIQ"           "Reff_LSCLIQ"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSCICE"           "Reff_LSCICE"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSRAIN"           "Reff_LSRAIN"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSSNOW"           "Reff_LSSNOW"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSGRPL"           "Reff_LSGRPL"         "cosp3d",         "all",  .false.,  "none",  2
 #############################################################################################
 ###
 ###

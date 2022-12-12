@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C1536_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=06:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=64
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
+#SBATCH --nodes=192
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=24,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,7 +25,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C1536"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -69,12 +69,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "1537"
+    set npy = "1537"
     set npz = "91"
     set layout_x = $LX
-    set layout_y = "16" 
-    set io_layout = "1,1"
+    set layout_y = "24" 
+    set io_layout = "2,2"
     set nthreads = "4"
 
     # blocking factor used for threading and general physics performance
@@ -123,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
+      set k_split = "2"
       set n_split = "8"
     else
       # hydrostatic options
@@ -224,7 +224,7 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_cosp_offline >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
@@ -283,7 +283,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 3000000,
+       domains_stack_size = 12000000,
        print_memory_usage = .false.
 /
 
@@ -359,18 +359,9 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
-       !do_fast_phys = .T.
        do_inline_mp = .T.
-       !do_inline_pbl = .T.
-       !do_inline_cnv = .T.
-       !do_inline_gwd = .T.
-       !inline_cnv_flag = 1
-       !consv_checker = .T.
-       !te_err = 1.e-16
-       !tw_err = 1.e-16
-       !!te_err = 1.e-9
-       !!tw_err = 1.e-9
        do_aerosol = .T.
+       do_cosp = .true.
 /
 
  &coupler_nml
@@ -425,9 +416,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
-       imfdeepcnv     = 2
-       cdmbgwd        = 3.5, 0.25
+       imfshalcnv     = 3
+       imfdeepcnv     = 3
+       cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -446,11 +437,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_pbl  = .true.
-       !do_inline_cnv  = .true.
-       !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -515,30 +504,7 @@ cat >! input.nml <<EOF
        alini = 11.72
        blini = 0.41
        reiflag = 7
-/
-
- &sa_sas_nml
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 0.5
-       xkzm_hl        = 0.5
-	   xkzm_mi        = 0.5
-       xkzm_hi        = 0.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 3.5, 0.25
+       snow_grauple_combine = .false.
 /
 
  &diag_manager_nml 
@@ -728,6 +694,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_cloud3d ) mkdir -p ${begindate}_cloud3d
       mv cloud3d*.nc* ${begindate}_cloud3d
       mv ${begindate}_cloud3d ../.
+      if ( ! -d ${begindate}_cosp3d ) mkdir -p ${begindate}_cosp3d
+      mv cosp3d*.nc* ${begindate}_cosp3d
+      mv ${begindate}_cosp3d ../.
 
     cd $WORKDIR/rundir
 
@@ -736,6 +705,7 @@ if ($NO_SEND == "send") then
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_cosp3d,destination=gfdl:$gfdl_archive/history/${begindate}_cosp3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
 else
 

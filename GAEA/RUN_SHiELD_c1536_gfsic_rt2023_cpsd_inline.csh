@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C1536_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=06:00:00
+#SBATCH --time=16:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=64
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,NUM_TOT=1,ALL
+#SBATCH --nodes=192
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=24,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,7 +25,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C1536"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 set FIX_sfc = ${GRID}/fix_sfc
 
@@ -69,12 +69,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "1537"
+    set npy = "1537"
     set npz = "91"
     set layout_x = $LX
-    set layout_y = "16" 
-    set io_layout = "1,1"
+    set layout_y = "24" 
+    set io_layout = "2,2"
     set nthreads = "4"
 
     # blocking factor used for threading and general physics performance
@@ -123,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
+      set k_split = "2"
       set n_split = "8"
     else
       # hydrostatic options
@@ -228,19 +228,12 @@ cat ${RUN_AREA}/diag_table_6species >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
-cp -f ${RUN_AREA}/field_table_6species_aero field_table
+cp -f ${RUN_AREA}/field_table_6species field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -283,7 +276,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 3000000,
+       domains_stack_size = 12000000,
        print_memory_usage = .false.
 /
 
@@ -325,7 +318,7 @@ cat >! input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -359,18 +352,17 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
-       !do_fast_phys = .T.
+       do_fast_phys = .T.
        do_inline_mp = .T.
-       !do_inline_pbl = .T.
-       !do_inline_cnv = .T.
-       !do_inline_gwd = .T.
-       !inline_cnv_flag = 1
+       do_inline_pbl = .T.
+       do_inline_cnv = .T.
+       do_inline_gwd = .T.
+       inline_cnv_flag = 2
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
        !!te_err = 1.e-9
        !!tw_err = 1.e-9
-       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -425,9 +417,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
-       imfdeepcnv     = 2
-       cdmbgwd        = 3.5, 0.25
+       imfshalcnv     = 3
+       imfdeepcnv     = 3
+       cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -446,9 +438,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_pbl  = .true.
-       !do_inline_cnv  = .true.
-       !do_inline_gwd  = .true.
+       do_inline_pbl  = .true.
+       do_inline_cnv  = .true.
+       do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
 /
@@ -476,7 +468,6 @@ cat >! input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -486,13 +477,14 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        rh_ins = 0.30
        c_paut = 0.5
-       rthresh = 8.0e-6
+       rthresh = 8.5e-6
        c_pracw = 0.35
        c_psacw = 1.0
        c_pgacw = 1.e-4
        c_praci = 1.0
        c_psaci = 0.35
        c_pgaci = 0.05
+       fi2s_fac = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -501,20 +493,24 @@ cat >! input.nml <<EOF
        vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
+       do_psd_water_num = .true.
        n0w_sig = 1.2
        n0w_exp = 66
        muw = 11.0
        alinw = 3.e7
        blinw = 2.0
        rewflag = 4
+       rewfac = 1.0
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
+       do_psd_ice_num = .true.
+       n0i_sig = 1.1
+       n0i_exp = 18
+       mui = 3.445
+       alini = 7.e2
+       blini = 1.0
        reiflag = 7
+       reifac = 0.8
 /
 
  &sa_sas_nml
@@ -538,7 +534,7 @@ cat >! input.nml <<EOF
 /
 
  &sa_gwd_nml
-       cdmbgwd        = 3.5, 0.25
+       cdmbgwd        = 5.0, 0.25
 /
 
  &diag_manager_nml 

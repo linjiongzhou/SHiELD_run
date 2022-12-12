@@ -361,9 +361,10 @@ cat >! input.nml <<EOF
        do_sat_adj = .F.
        !do_fast_phys = .T.
        do_inline_mp = .T.
-       !do_inline_edmf = .T.
-       !do_inline_sas = .T.
+       !do_inline_pbl = .T.
+       !do_inline_cnv = .T.
        !do_inline_gwd = .T.
+       !inline_cnv_flag = 1
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
@@ -445,8 +446,8 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       !do_inline_edmf = .true.
-       !do_inline_sas  = .true.
+       !do_inline_pbl  = .true.
+       !do_inline_cnv  = .true.
        !do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
