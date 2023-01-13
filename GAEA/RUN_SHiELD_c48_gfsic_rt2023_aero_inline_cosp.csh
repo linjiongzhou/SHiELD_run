@@ -224,7 +224,7 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_cosp_offline_inline >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
@@ -365,12 +365,13 @@ cat >! input.nml <<EOF
        do_inline_cnv = .T.
        do_inline_gwd = .T.
        inline_cnv_flag = 2
-       !consv_checker = .T.
+       consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
        !!te_err = 1.e-9
        !!tw_err = 1.e-9
        do_aerosol = .T.
+       do_cosp = .true.
 /
 
  &coupler_nml
@@ -450,6 +451,7 @@ cat >! input.nml <<EOF
        do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -514,6 +516,7 @@ cat >! input.nml <<EOF
        alini = 11.72
        blini = 0.41
        reiflag = 7
+       snow_grauple_combine = .false.
 /
 
  &sa_sas_nml
@@ -727,6 +730,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_cloud3d ) mkdir -p ${begindate}_cloud3d
       mv cloud3d*.nc* ${begindate}_cloud3d
       mv ${begindate}_cloud3d ../.
+      if ( ! -d ${begindate}_cosp3d ) mkdir -p ${begindate}_cosp3d
+      mv cosp3d*.nc* ${begindate}_cosp3d
+      mv ${begindate}_cosp3d ../.
 
     cd $WORKDIR/rundir
 
@@ -735,6 +741,7 @@ if ($NO_SEND == "send") then
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_cosp3d,destination=gfdl:$gfdl_archive/history/${begindate}_cosp3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
 else
 

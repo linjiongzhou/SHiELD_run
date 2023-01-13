@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C48_20150801.00Z
+#SBATCH --job-name=C1536_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=04:00:00
+#SBATCH --time=16:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=1
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
+#SBATCH --nodes=192
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,14 +25,14 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C48"
+set CASE = "C1536"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
 set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "no_send"    # choices:  send, no_send
-set NUM_TOT = 1         # run cycle, 1: no restart
+set NO_SEND = "send"    # choices:  send, no_send
+#set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -69,13 +69,13 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "49"
-    set npy = "49"
+    set npx = "1537"
+    set npy = "1537"
     set npz = "91"
-    set layout_x = "2" 
-    set layout_y = "2" 
-    set io_layout = "1,1"
-    set nthreads = "2"
+    set layout_x = $LX
+    set layout_y = "32" 
+    set io_layout = "2,2"
+    set nthreads = "4"
 
     # blocking factor used for threading and general physics performance
     set blocksize = "32"
@@ -84,7 +84,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "450"
+    set dt_atmos = "150"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "127"
+    set ncep_levs = "128"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -113,7 +113,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "-1"
+    set print_freq = "6"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -124,7 +124,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set consv_te = "1."
         # time step parameters in FV3
       set k_split = "2"
-      set n_split = "6"
+      set n_split = "8"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -224,7 +224,7 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_cosp_offline_inline >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
@@ -283,7 +283,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 3000000,
+       domains_stack_size = 12000000,
        print_memory_usage = .false.
 /
 
@@ -365,12 +365,13 @@ cat >! input.nml <<EOF
        do_inline_cnv = .T.
        do_inline_gwd = .T.
        inline_cnv_flag = 2
-       !consv_checker = .T.
+       consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
        !!te_err = 1.e-9
        !!tw_err = 1.e-9
        do_aerosol = .T.
+       do_cosp = .true.
 /
 
  &coupler_nml
@@ -450,6 +451,7 @@ cat >! input.nml <<EOF
        do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -514,6 +516,7 @@ cat >! input.nml <<EOF
        alini = 11.72
        blini = 0.41
        reiflag = 7
+       snow_grauple_combine = .false.
 /
 
  &sa_sas_nml
@@ -727,6 +730,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_cloud3d ) mkdir -p ${begindate}_cloud3d
       mv cloud3d*.nc* ${begindate}_cloud3d
       mv ${begindate}_cloud3d ../.
+      if ( ! -d ${begindate}_cosp3d ) mkdir -p ${begindate}_cosp3d
+      mv cosp3d*.nc* ${begindate}_cosp3d
+      mv ${begindate}_cosp3d ../.
 
     cd $WORKDIR/rundir
 
@@ -735,6 +741,7 @@ if ($NO_SEND == "send") then
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_cosp3d,destination=gfdl:$gfdl_archive/history/${begindate}_cosp3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
 else
 

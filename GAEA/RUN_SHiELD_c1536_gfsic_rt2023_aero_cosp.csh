@@ -6,7 +6,7 @@
 #SBATCH --time=06:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=192
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=24,NUM_TOT=1,ALL
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -73,7 +73,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npy = "1537"
     set npz = "91"
     set layout_x = $LX
-    set layout_y = "24" 
+    set layout_y = "32" 
     set io_layout = "2,2"
     set nthreads = "4"
 
@@ -372,7 +372,6 @@ cat >! input.nml <<EOF
        dt_ocean = $dt_atmos
        current_date =  $curr_date
        calendar = 'julian'
-       memuse_verbose = .false.
        atmos_nthreads = $nthreads
        use_hyper_thread = $hyperthread
 /
@@ -451,7 +450,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.2
+     Gam              = 0.1
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
