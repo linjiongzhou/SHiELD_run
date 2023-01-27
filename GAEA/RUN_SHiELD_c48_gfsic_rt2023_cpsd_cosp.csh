@@ -3,7 +3,7 @@
 #SBATCH --job-name=C48_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=04:00:00
+#SBATCH --time=02:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=1
 #SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
@@ -224,23 +224,16 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species >> diag_table
+cat ${RUN_AREA}/diag_table_6species_cosp_offline >> diag_table
 
 # copy over the other tables and executable
 cp -f ${RUN_AREA}/data_table data_table
-cp -f ${RUN_AREA}/field_table_6species_aero field_table
+cp -f ${RUN_AREA}/field_table_6species field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
 ln -sf ${GRID}/* INPUT/
-
-# aerosol data
-if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc INPUT/
-else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc.* INPUT/
-endif
 
 # GFS FIX data
 ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -325,7 +318,7 @@ cat >! input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = 1
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -359,18 +352,8 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
-       do_fast_phys = .T.
        do_inline_mp = .T.
-       do_inline_pbl = .T.
-       do_inline_cnv = .T.
-       do_inline_gwd = .T.
-       inline_cnv_flag = 2
-       !consv_checker = .T.
-       !te_err = 1.e-16
-       !tw_err = 1.e-16
-       !!te_err = 1.e-9
-       !!tw_err = 1.e-9
-       do_aerosol = .T.
+       do_cosp = .true.
 /
 
  &coupler_nml
@@ -445,11 +428,9 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_inline_mp   = .true.
-       do_inline_pbl  = .true.
-       do_inline_cnv  = .true.
-       do_inline_gwd  = .true.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -475,7 +456,6 @@ cat >! input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -485,13 +465,14 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        rh_ins = 0.30
        c_paut = 0.5
-       rthresh = 8.0e-6
+       rthresh = 8.5e-6
        c_pracw = 0.35
        c_psacw = 1.0
        c_pgacw = 1.e-4
        c_praci = 1.0
        c_psaci = 0.35
        c_pgaci = 0.05
+       fi2s_fac = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -500,44 +481,25 @@ cat >! input.nml <<EOF
        vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
+       do_psd_water_num = .true.
        n0w_sig = 1.2
        n0w_exp = 66
        muw = 11.0
        alinw = 3.e7
        blinw = 2.0
        rewflag = 4
+       rewfac = 1.0
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
+       do_psd_ice_num = .true.
+       n0i_sig = 1.1
+       n0i_exp = 18
+       mui = 3.445
+       alini = 7.e2
+       blini = 1.0
        reiflag = 7
-/
-
- &sa_sas_nml
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 0.5
-       xkzm_hl        = 0.5
-	   xkzm_mi        = 0.5
-       xkzm_hi        = 0.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 5.0, 0.25
+       reifac = 0.8
+       snow_grauple_combine = .false.
 /
 
  &diag_manager_nml 
@@ -727,9 +689,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_cloud3d ) mkdir -p ${begindate}_cloud3d
       mv cloud3d*.nc* ${begindate}_cloud3d
       mv ${begindate}_cloud3d ../.
-      if ( ! -d ${begindate}_energy2d ) mkdir -p ${begindate}_energy2d
-      mv energy2d*.nc* ${begindate}_energy2d
-      mv ${begindate}_energy2d ../.
+      if ( ! -d ${begindate}_cosp3d ) mkdir -p ${begindate}_cosp3d
+      mv cosp3d*.nc* ${begindate}_cosp3d
+      mv ${begindate}_cosp3d ../.
 
     cd $WORKDIR/rundir
 
@@ -738,7 +700,7 @@ if ($NO_SEND == "send") then
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
-    #sbatch --export=source=$WORKDIR/history/${begindate}_energy2d,destination=gfdl:$gfdl_archive/history/${begindate}_energy2d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_cosp3d,destination=gfdl:$gfdl_archive/history/${begindate}_cosp3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
 else
 

@@ -371,7 +371,6 @@ cat >! input.nml <<EOF
        dt_ocean = $dt_atmos
        current_date =  $curr_date
        calendar = 'julian'
-       memuse_verbose = .false.
        atmos_nthreads = $nthreads
        use_hyper_thread = $hyperthread
 /
@@ -415,9 +414,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
-       imfdeepcnv     = 2
-       cdmbgwd        = 3.5, 0.25
+       imfshalcnv     = 3
+       imfdeepcnv     = 3
+       cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -449,7 +448,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.2
+     Gam              = 0.1
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.

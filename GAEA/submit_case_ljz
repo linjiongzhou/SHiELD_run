@@ -79,7 +79,7 @@
 #set title = "c1536_gfdlmp_ifsic_ljz_rt2022_v16_IC_aero_res"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
 #set title = "c1536_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_inline_res"
-set title = "c1536_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_cosp_offline_res"
+#set title = "c1536_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_cosp_offline_res"
 #set title = "c3072_gfdlmp_gfsic_ljz_rt2020"
 #set title = "c3072_gfdlmp_gfsic_ljz_rt2020_v15"
 #set title = "DP_gfdlmp_ljz_rt2020"
@@ -98,15 +98,18 @@ set title = "c1536_gfdlmp_gfsic_ljz_rt2022_v16_IC_aero_cosp_offline_res"
 #set title = "c1536_gfsic_rt2021_v15_IC"
 #set title = "c3072_gfsic_rt2021_v15_IC"
 
+#set title = "c48_gfsic_rt2023_aero_cosp"
+#set title = "c48_gfsic_rt2023_cpsd_cosp"
+#set title = "c48_gfsic_rt2023_aero_inline_cosp"
+#set title = "c48_gfsic_rt2023_cpsd_inline_cosp"
 #set title = "c1536_gfsic_rt2023_aero_cosp"
-#set title = "c1536_gfsic_rt2023_aero"
-#set title = "c1536_gfsic_rt2023_aero_inline"
-#set title = "c1536_gfsic_rt2023_cpsd"
-#set title = "c1536_gfsic_rt2023_cpsd_inline"
+#set title = "c1536_gfsic_rt2023_cpsd_cosp"
+#set title = "c1536_gfsic_rt2023_aero_inline_cosp"
+set title = "c1536_gfsic_rt2023_cpsd_inline_cosp"
 
-set basescript = "RUN_IPDv4_${title}.csh"
+#set basescript = "RUN_IPDv4_${title}.csh"
 #set basescript = "Z_RUN_${title}.csh"
-#set basescript = "RUN_SHiELD_${title}.csh"
+set basescript = "RUN_SHiELD_${title}.csh"
 
 #set MEMO = "_RT2018" # 2018RT
 #set MEMO = "_RT2018_kn24" # 2018RT
@@ -511,8 +514,12 @@ set basescript = "RUN_IPDv4_${title}.csh"
 #set MEMO = "_RT2022_e054" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
 #set MEMO = "_RT2022_e063" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
 #set MEMO = "_RT2022_e105" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
-set MEMO = "_RT2022_e116" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
+#set MEMO = "_RT2022_e116" # based on RT2020, update dycore from fv3team, update SAS new, new sfcsub, update TKE-EEDMF, update SA-SAS
 #set MEMO = "_RT2023_e001" # SHiELD 2023
+#set MEMO = "_RT2023_e002" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set MEMO = "_RT2023_e003" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e004" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+set MEMO = "_RT2023_e005" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -836,8 +843,12 @@ set MEMO = "_RT2022_e116" # based on RT2020, update dycore from fv3team, update 
 #set EXE = "RT2022.e054.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2022.e063.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2022.e105.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
-set EXE = "RT2022.e116.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
+#set EXE = "RT2022.e116.x" # based on RT2020.e082.x, update dycore based on fv3team, update SAS new, new sfcsub, update TKE-EDMF
 #set EXE = "RT2023.e001.x" # SHiELD 2023
+#set EXE = "RT2023.e002.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e003.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e004.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+set EXE = "RT2023.e005.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -876,66 +887,111 @@ set account = "gfdl_w"
 
 set qos = "normal"
 #set qos = "urgent"
+#set qos = "windfall"
 
 set NUM_TOT = 1
 
+# node request should not exceed 299 for c3, 454 for c3, and 512 for c5.
+# 32 cores per node on c3, 36 cores per node on c4, 128 cores per node on c5
 set LX = 0
+set LY = 0
+set NT = 0
 if ( $cluster == "c3" ) then
 	if ( $reso == "DP" ) then
 		set nodes = 11
 		set LX = 18
+		set LY = 18
+		set NT = 2
 	endif
 	if ( $reso == "C48" ) then
 		set nodes = 1
 		set LX = 2
+		set LY = 2
+		set NT = 2
 	endif
 	if ( $reso == "C768" ) then
 		set nodes = 96
 		set LX = 16
+		set LY = 16
+		set NT = 4
 		# COSP
 		#set nodes = 192
 		#set LX = 32
+		#set LY = 16
+		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
 		set nodes = 164
 		set LX = 16
+		set LY = 16
+		set NT = 4
 	endif
-	if ( $reso == "C1152" || $reso == "C1536" ) then
+	if ( $reso == "C1152" ) then
 		set nodes = 216
 		set LX = 24
+		set LY = 24
+		set NT = 4
+	endif
+	if ( $reso == "C1536" ) then
+		set nodes = 288
+		set LX = 24
+		set LY = 32
+		set NT = 4
 	endif
 	if ( $reso == "C3072" ) then
 		set nodes = 288
 		set LX = 24
+		set LY = 32
+		set NT = 4
 	endif
 endif
 if ( $cluster == "c4" ) then
 	if ( $reso == "DP" ) then
 		set nodes = 9
 		set LX = 18
+		set LY = 18
+		set NT = 2
 	endif
 	if ( $reso == "C48" ) then
 		set nodes = 1
 		set LX = 2
+		set LY = 2
+		set NT = 2
 	endif
 	if ( $reso == "C768" ) then
 		set nodes = 64
 		set LX = 12
+		set LY = 16
+		set NT = 4
 		# COSP
 		#set nodes = 128
 		#set LX = 24
+		#set LY = 16
+		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
 		set nodes = 124
 		set LX = 12
+		set LY = 16
+		set NT = 4
 	endif
-	if ( $reso == "C1152" || $reso == "C1536" ) then
+	if ( $reso == "C1152" ) then
 		set nodes = 192
 		set LX = 24
+		set LY = 24
+		set NT = 4
+	endif
+	if ( $reso == "C1536" ) then
+		set nodes = 384
+		set LX = 48
+		set LY = 48
+		set NT = 2
 	endif
 	if ( $reso == "C3072" ) then
-		set nodes = 256
-		set LX = 24
+		set nodes = 384
+		set LX = 48
+		set LY = 48
+		set NT = 2
 	endif
 endif
 
@@ -1004,8 +1060,6 @@ foreach DATE ( \
 	#20200630.00Z \
 	20210401.00Z \
 	#20210827.00Z \
-	#20210321.12Z \
-	## every 5 days cases since 20150101.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	#20150101.00Z 20150106.00Z 20150111.00Z 20150116.00Z 20150121.00Z 20150126.00Z 20150131.00Z 20150205.00Z \
 	#20150210.00Z 20150215.00Z 20150220.00Z 20150225.00Z 20150302.00Z 20150307.00Z 20150312.00Z 20150317.00Z \
@@ -1484,6 +1538,6 @@ foreach DATE ( \
 	set runname = SHiELD_${title}${MEMO}.${DATE}
 	echo $runname
 	cp -f $basescript ${runname}.csh
-	sbatch --job-name=${runname} --account=${account} --qos=${qos} --cluster=${cluster} --nodes=${nodes} --export=NAME=${DATE},MEMO=${MEMO},EXE=${EXE},LX=${LX},NUM_TOT=${NUM_TOT},ALL ${runname}.csh
+	sbatch --job-name=${runname} --account=${account} --qos=${qos} --cluster=${cluster} --nodes=${nodes} --export=NAME=${DATE},MEMO=${MEMO},EXE=${EXE},LX=${LX},LY=${LY},NT=${NT},NUM_TOT=${NUM_TOT},ALL ${runname}.csh
 end
 

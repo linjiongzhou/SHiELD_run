@@ -1,7 +1,7 @@
 #output files
 "grid_spec",              -1,  "hours",    1, "hours",  "time"
 "atmos_4xdaily",           6,  "hours",    1, "hours",  "time"
-"atmos_daily",            24,  "hours",    1, "hours",  "time"
+#"atmos_daily",            24,  "hours",    1, "hours",  "time"
 "atmos_static",           -1,  "hours",    1, "hours",  "time"
 "atmos_sos",               1,  "hours",    1, "hours",  "time"
 #NOTE: Using multiple gfs output files appears to cause OOM errors.
@@ -10,8 +10,12 @@
 # files needed for NGGPS evaluation (only at end of simulation, here)
 "nggps3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 "nggps2d",                 0,  "hours",    1, "hours",  "time"
+"cosp2d",                  0,  "hours",    1, "hours",  "time"
+"cosp3d",                  0,  "hours",    1, "hours",  "time"
 "tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
+#"cloud3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 #"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
+"energy2d",                0,  "hours",    1, "hours",  "time"
 
 #
 #output variables
@@ -39,47 +43,35 @@
 ###
  "dynamics",  "us",          "us",         "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u1000",       "u1000",      "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "u925",        "u925",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u850",        "u850",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u700",        "u700",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "u600",        "u600",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u500",        "u500",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "u400",        "u400",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "u300",        "u300",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u250",        "u250",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u200",        "u200",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "u100",        "u100",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "u50",         "u50",        "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "u50",         "u50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "u10",         "u10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ###
  "dynamics",  "vs",          "vs",         "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v1000",       "v1000",      "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "v925",        "v925",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v850",        "v850",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v700",        "v700",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "v600",        "v600",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v500",        "v500",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "v400",        "v400",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "v300",        "v300",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v250",        "v250",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v200",        "v200",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "v100",        "v100",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "v50",         "v50",        "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "v50",         "v50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "v10",         "v10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
  "dynamics",  "tm",          "tm",         "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t1000",       "t1000",      "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "t925",        "t925",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t850",        "t850",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t700",        "t700",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "t600",        "t600",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t500",        "t500",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "t400",        "t400",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "t300",        "t300",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t250",        "t250",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t200",        "t200",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "t100",        "t100",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "t50",         "t50",        "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "t50",         "t50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "t10",         "t10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
  "dynamics",  "z1000",       "h1000",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -93,17 +85,13 @@
 # "dynamics",  "z10",         "h10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
  "dynamics",  "w1000",       "w1000",      "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "w925",        "w925",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w850",        "w850",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w700",        "w700",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "w600",        "w600",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w500",        "w500",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "w400",        "w400",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "w300",        "w300",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w250",        "w250",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w200",        "w200",       "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "w100",        "w100",       "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "w50",         "w50",        "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "w50",         "w50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "w10",         "w10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
  "dynamics",  "q1000",       "q1000",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -116,6 +104,66 @@
 # "dynamics",  "q50",         "q50",        "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "q10",         "q10",        "atmos_4xdaily", "all", .false.,  "none", 2
 ####
+ "dynamics",  "ql1000",      "ql1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql850",       "ql850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql700",       "ql700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql500",       "ql500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql250",       "ql250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql200",       "ql200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "ql100",       "ql100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "ql50",        "ql50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "ql10",        "ql10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qi1000",      "qi1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi850",       "qi850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi700",       "qi700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi500",       "qi500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi250",       "qi250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi200",       "qi200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qi100",       "qi100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qi50",        "qi50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qi10",        "qi10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qr1000",      "qr1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr850",       "qr850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr700",       "qr700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr500",       "qr500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr250",       "qr250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr200",       "qr200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qr100",       "qr100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qr50",        "qr50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qr10",        "qr10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qs1000",      "qs1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs850",       "qs850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs700",       "qs700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs500",       "qs500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs250",       "qs250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs200",       "qs200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qs100",       "qs100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qs50",        "qs50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qs10",        "qs10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "qg1000",      "qg1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg850",       "qg850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg700",       "qg700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg500",       "qg500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg250",       "qg250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg200",       "qg200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "qg100",       "qg100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qg50",        "qg50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "qg10",        "qg10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
+ "dynamics",  "cf1000",      "cf1000",     "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf850",       "cf850",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf700",       "cf700",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf500",       "cf500",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf250",       "cf250",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf200",       "cf200",      "atmos_4xdaily", "all", .false.,  "none", 2
+ "dynamics",  "cf100",       "cf100",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "cf50",        "cf50",       "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "cf10",        "cf10",       "atmos_4xdaily", "all", .false.,  "none", 2
+####
  "dynamics",  "rh1000",      "rh1000",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "rh850",       "rh850",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "rh700",       "rh700",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -127,17 +175,13 @@
 # "dynamics",  "rh10",        "rh10",       "atmos_4xdaily", "all", .false.,  "none", 2
 ####
  "dynamics",  "omg1000",     "omg1000",    "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "omg925",      "omg925",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg850",      "omg850",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg700",      "omg700",     "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "omg600",      "omg600",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg500",      "omg500",     "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "omg400",      "omg400",     "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "omg300",      "omg300",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg250",      "omg250",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg200",      "omg200",     "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "omg100",      "omg100",     "atmos_4xdaily", "all", .false.,  "none", 2
- "dynamics",  "omg50",       "omg50",      "atmos_4xdaily", "all", .false.,  "none", 2
+# "dynamics",  "omg50",       "omg50",      "atmos_4xdaily", "all", .false.,  "none", 2
 # "dynamics",  "omg10",       "omg10",      "atmos_4xdaily", "all", .false.,  "none", 2
 ###
  "dynamics", "max_reflectivity",  "REFC",    "atmos_4xdaily","all",.false., "none", 2
@@ -152,6 +196,7 @@
  "dynamics",  "intqs",     "intqs",    "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "intqg",     "intqg",    "atmos_4xdaily", "all", .false.,  "none", 2
 ####
+ "dynamics",  "prew",       "prew",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "prer",       "prer",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "prei",       "prei",      "atmos_4xdaily", "all", .false.,  "none", 2
  "dynamics",  "pres",       "pres",      "atmos_4xdaily", "all", .false.,  "none", 2
@@ -172,12 +217,6 @@
 # "dynamics",      "t200",        "t200",        "atmos_daily", "all", .true.,  "none", 2
 # "dynamics",      "t100",        "t100",        "atmos_daily", "all", .true.,  "none", 2
 # "dynamics",      "slp",         "slp",         "atmos_daily", "all", .true.,  "none", 2
- "dynamics",      "T_dt_gfdlmp", "T_dt_gfdlmp", "atmos_daily", "all", .true.,  "none", 2
- "dynamics",      "T_dt_phys",   "T_dt_phys",   "atmos_daily", "all", .true.,  "none", 2
- "dynamics",      "delp",        "delp",        "atmos_daily", "all", .true.,  "none", 2
- "dynamics", "t_dt_gfdlmp_plev_ave", "t_dt_gfdlmp_plev_ave", "atmos_daily", "all", .true., "none", 2
- "dynamics", "t_dt_phys_plev_ave",   "t_dt_phys_plev_ave",   "atmos_daily", "all", .true., "none", 2
- "dynamics", "t_plev_ave",           "t_plev_ave",           "atmos_daily", "all", .true., "none", 2
 ###
 # gfs static data
 ###
@@ -199,6 +238,33 @@
  "dynamics",  "cld_amt",       "cld_amt",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "o3mr",          "o3mr",         "tracer3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "aerosol",       "aerosol",      "tracer3d_4xdaily",  "all",  .false.,  "none",  2
+###
+# cloud
+###
+# "dynamics",  "pcw",         "pcw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edw",         "edw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oew",         "oew",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrw",         "rrw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvw",         "tvw",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pci",         "pci",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edi",         "edi",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oei",         "oei",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rri",         "rri",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvi",         "tvi",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcr",         "pcr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edr",         "edr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oer",         "oer",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrr",         "rrr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvr",         "tvr",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcs",         "pcs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "eds",         "eds",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oes",         "oes",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrs",         "rrs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvs",         "tvs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2 # "dynamics",  "pcg",         "pcg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "edg",         "edg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "oeg",         "oeg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "rrg",         "rrg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvg",         "tvg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 #############################################################################################
 ###
 # FV3 variabls needed for NGGPS evaluation
@@ -217,6 +283,12 @@
 # "dynamics",  "t_plev",       "t_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "h_plev",       "h_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "q_plev",       "q_plev",      "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "ql_plev",      "ql_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qi_plev",      "qi_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qr_plev",      "qr_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qs_plev",      "qs_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "qg_plev",      "qg_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "cf_plev",      "cf_plev",     "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "omg_plev",     "omg_plev",    "nggps3d_4xdaily",  "all",  .false.,  "none",  2
 ###
 # tendencies
@@ -229,11 +301,42 @@
 # "dynamics", "qs_dt_gfdlmp", "qs_dt_gfdlmp", "nggps3d_dt", "all", .false., "none", 2
 # "dynamics", "T_dt_gfdlmp",  "T_dt_gfdlmp",  "nggps3d_dt", "all", .false., "none", 2
 ###
+# 2D energy
+###
+ "dynamics", "inline_mp_fast_te_a_chg",  "inline_mp_fast_te_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_te_b_chg",  "inline_mp_fast_te_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_tw_a_chg",  "inline_mp_fast_tw_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_tw_b_chg",  "inline_mp_fast_tw_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_te_a_chg",  "inline_mp_intm_te_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_te_b_chg",  "inline_mp_intm_te_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_tw_a_chg",  "inline_mp_intm_tw_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_tw_b_chg",  "inline_mp_intm_tw_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_te_a_chg", "inline_pbl_fast_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_te_b_chg", "inline_pbl_fast_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_tw_a_chg", "inline_pbl_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_tw_b_chg", "inline_pbl_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_te_a_chg", "inline_pbl_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_te_b_chg", "inline_pbl_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_tw_a_chg", "inline_pbl_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_tw_b_chg", "inline_pbl_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_te_a_chg", "inline_cnv_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_te_b_chg", "inline_cnv_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_tw_a_chg", "inline_cnv_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_tw_b_chg", "inline_cnv_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_te_a_chg", "inline_gwd_fast_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_te_b_chg", "inline_gwd_fast_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_tw_a_chg", "inline_gwd_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_tw_b_chg", "inline_gwd_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_te_a_chg", "inline_gwd_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_te_b_chg", "inline_gwd_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_tw_a_chg", "inline_gwd_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_tw_b_chg", "inline_gwd_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+###
 # GFS variabls needed for NGGPS evaluation
 ###
 # "gfs_phys",  "ALBDOsfc"       "ALBDOsfc"   "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "cnvprcp"        "CPRATsfc"   "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "totprcp"        "PRATEsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "cnvprcpb_ave"   "CPRATsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totprcpb_ave"   "PRATEsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "DLWRFsfc"       "DLWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "ULWRFsfc"       "ULWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "DSWRFsfc"       "DSWRFsfc"   "nggps2d",         "all",  .false.,  "none",  2
@@ -241,13 +344,13 @@
  "gfs_phys",  "DSWRFtoa"       "DSWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "USWRFtoa"       "USWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "ULWRFtoa"       "ULWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
-# "gfs_phys",  "gflux"          "GFLUXsfc"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "gflux_ave"      "GFLUXsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "HGTsfc"         "HGTsfc"     "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "hpbl"           "HPBLsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "fice"           "ICECsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "SLMSKsfc"       "SLMSKsfc"   "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "dqsfc"          "LHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "dtsfc"          "SHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "lhtfl_ave"      "LHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "shtfl_ave"      "SHTFLsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "psurf"          "PRESsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "pwat"           "PWATclm"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "soilm"          "SOILM"      "nggps2d",         "all",  .false.,  "none",  2
@@ -266,26 +369,149 @@
 # "gfs_sfc",   "SOILT4"         "SOILT4"     "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "t2m"            "TMP2m"      "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "tsfc"           "TMPsfc"     "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "dugwd"          "UGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "dvgwd"          "VGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "u-gwd_ave"      "UGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "v-gwd_ave"      "VGWDsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "dusfc"          "UFLXsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "dvsfc"          "VFLXsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "u10m"           "UGRD10m"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "v10m"           "VGRD10m"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "weasd"          "WEASDsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "snowd"          "SNODsfc"    "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "acond"          "CMMsfc"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "sfexc"          "CHHsfc"     "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "ffmm"           "FFMMsfc"    "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_sfc",   "ffhh"           "FFHHsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "ZORLsfc"        "ZORLsfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "VFRACsfc"       "VFRACsfc"   "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_sfc",   "f10m"           "F10Msfc"    "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "vtype"          "VTYPEsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "stype"          "STYPEsfc"   "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "totice"         "ICEsfc"     "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "totsnw"         "SNOWsfc"    "nggps2d",         "all",  .false.,  "none",  2
- "gfs_phys",  "totgrp"         "GRAUPELsfc" "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "toticeb_ave"     "ICEsfc"     "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totsnwb_ave"     "SNOWsfc"    "nggps2d",         "all",  .false.,  "none",  2
+ "gfs_phys",  "totgrpb_ave"     "GRAUPELsfc" "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_phys",  "netflxsfc"      "netflxsfc"  "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_phys",  "tclim_iano"     "tclim_iano" "nggps2d",         "all",  .false.,  "none",  2
-
+#
+###
+# COSP variables
+###
+##"cosp",  "cltisccp"              "cltisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "meantbisccp"           "meantbisccp"         "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "meantbclrisccp"        "meantbclrisccp"      "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "pctisccp"              "pctisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "tauisccp"              "tauisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "albisccp"              "albisccp"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "misr_meanztop"         "misr_meanztop"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "misr_cldarea"          "misr_cldarea"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltmodis"              "cltmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clwmodis"              "clwmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "climodis"              "climodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhmodis"              "clhmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmmodis"              "clmmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllmodis"              "cllmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tautmodis"             "tautmodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauwmodis"             "tauwmodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauimodis"             "tauimodis"           "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tautlogmodis"          "tautlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauwlogmodis"          "tauwlogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "tauilogmodis"          "tauilogmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "reffclwmodis"          "reffclwmodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "reffclimodis"          "reffclimodis"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "pctmodis"              "pctmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "lwpmodis"              "lwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "iwpmodis"              "iwpmodis"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltlidarradar"         "cltlidarradar"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoice"         "cllcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoice"         "clmcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoice"         "clhcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoice"         "cltcalipsoice"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoliq"         "cllcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoliq"         "clmcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoliq"         "clhcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoliq"         "cltcalipsoliq"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipsoun"          "cllcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipsoun"          "clmcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipsoun"          "clhcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipsoun"          "cltcalipsoun"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cllcalipso"            "cllcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clmcalipso"            "clmcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clhcalipso"            "clhcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "cltcalipso"            "cltcalipso"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquecalipso"       "clopaquecalipso"     "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthincalipso"         "clthincalipso"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquecalipso"      "clzopaquecalipso"    "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquetemp"          "clopaquetemp"        "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthintemp"            "clthintemp"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquetemp"         "clzopaquetemp"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquemeanz"         "clopaquemeanz"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinmeanz"           "clthinmeanz"         "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinemis"            "clthinemis"          "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clopaquemeanzse"       "clopaquemeanzse"     "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clthinmeanzse"         "clthinmeanzse"       "cosp2d",         "all",  .false.,  "none",  2
+# "cosp",  "clzopaquecalipsose"    "clzopaquecalipsose"  "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cllgrLidar532"         "cllgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clmgrLidar532"         "clmgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clhgrLidar532"         "clhgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltgrLidar532"         "cltgrLidar532"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cllatlid"              "cllatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clmatlid"              "clmatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "clhatlid"              "clhatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cltatlid"              "cltatlid"            "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag0"       "ptcloudsatflag0"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag1"       "ptcloudsatflag1"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag2"       "ptcloudsatflag2"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag3"       "ptcloudsatflag3"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag4"       "ptcloudsatflag4"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag5"       "ptcloudsatflag5"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag6"       "ptcloudsatflag6"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag7"       "ptcloudsatflag7"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag8"       "ptcloudsatflag8"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "ptcloudsatflag9"       "ptcloudsatflag9"     "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsatpia"           "cloudsatpia"         "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsat_tcc"          "cloudsat_tcc"        "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "cloudsat_tcc2"         "cloudsat_tcc2"       "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfcld"               "npdfcld"             "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfdrz"               "npdfdrz"             "cosp2d",         "all",  .false.,  "none",  2
+##"cosp",  "npdfrain"              "npdfrain"            "cosp2d",         "all",  .false.,  "none",  2
 #############################################################################################
+###
+# COSP Offline variables
+###
+"cosp",  "skt"                   "skt"                 "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "surfelev"              "surfelev"            "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "landmask"              "landmask"            "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "sunlit"                "sunlit"              "cosp2d",         "all",  .false.,  "none",  2
+"cosp",  "p"                     "p"                   "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "ph"                    "ph"                  "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "zlev"                  "zlev"                "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "zlev_half"             "zlev_half"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "T"                     "T"                   "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "sh"                    "sh"                  "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "tca"                   "tca"                 "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "cca"                   "cca"                 "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "u_wind"                "u_wind"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "v_wind"                "v_wind"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_lsliq"              "mr_lsliq"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_lsice"              "mr_lsice"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ccliq"              "mr_ccliq"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ccice"              "mr_ccice"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "mr_ozone"              "mr_ozone"            "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lsrain"             "fl_lsrain"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lssnow"             "fl_lssnow"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_lsgrpl"             "fl_lsgrpl"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_ccrain"             "fl_ccrain"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "fl_ccsnow"             "fl_ccsnow"           "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dtau_s"                "dtau_s"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dtau_c"                "dtau_c"              "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dem_s"                 "dem_s"               "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "dem_c"                 "dem_c"               "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSCLIQ"           "Reff_LSCLIQ"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSCICE"           "Reff_LSCICE"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSRAIN"           "Reff_LSRAIN"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSSNOW"           "Reff_LSSNOW"         "cosp3d",         "all",  .false.,  "none",  2
+"cosp",  "Reff_LSGRPL"           "Reff_LSGRPL"         "cosp3d",         "all",  .false.,  "none",  2
+#############################################################################################
+###
 ###
 # gfs physics data
 ###

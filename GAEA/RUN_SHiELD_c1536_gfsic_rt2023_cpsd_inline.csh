@@ -373,7 +373,6 @@ cat >! input.nml <<EOF
        dt_ocean = $dt_atmos
        current_date =  $curr_date
        calendar = 'julian'
-       memuse_verbose = .false.
        atmos_nthreads = $nthreads
        use_hyper_thread = $hyperthread
 /
@@ -454,7 +453,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.2
+     Gam              = 0.1
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
@@ -724,6 +723,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_cloud3d ) mkdir -p ${begindate}_cloud3d
       mv cloud3d*.nc* ${begindate}_cloud3d
       mv ${begindate}_cloud3d ../.
+      if ( ! -d ${begindate}_energy2d ) mkdir -p ${begindate}_energy2d
+      mv energy2d*.nc* ${begindate}_energy2d
+      mv ${begindate}_energy2d ../.
 
     cd $WORKDIR/rundir
 
@@ -732,6 +734,7 @@ if ($NO_SEND == "send") then
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_energy2d,destination=gfdl:$gfdl_archive/history/${begindate}_energy2d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
 else
 
