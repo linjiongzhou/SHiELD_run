@@ -60,7 +60,6 @@ set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
 set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
-set FIX_sfc = ${GRID}/fix_sfc
 
 # sending file to gfdl
 set gfdl_archive = /archive/${USER}/SHiELD/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
@@ -184,7 +183,7 @@ if (${RESTART_RUN} == "F") then
 
   # Date specific ICs
   mkdir -p INPUT
-  ln -sf ${ICS}/* INPUT/
+  cp -rf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
   set nggps_ic = ".T."
@@ -233,29 +232,37 @@ cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
-ln -sf ${GRID}/* INPUT/
+cp -rf ${GRID}/* INPUT/
 
 # aerosol data
 if ( $io_layout == "1,1" ) then
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc INPUT/
+	cp -rf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2022/$CASE/*.nc INPUT/
 else
-	ln -sf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2021/$CASE/*.nc.* INPUT/
+	cp -rf /lustre/f2/dev/gfdl/Linjiong.Zhou/fvGFS_INPUT_DATA/MERRA2_2015_2022/$CASE/*.nc.* INPUT/
 endif
 
 # GFS FIX data
-ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
-ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
-ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
-ln -sf $FIX/global_sfc_emissivity_idx.txt INPUT/sfc_emissivity_idx.txt
-ln -sf $FIX/global_co2historicaldata_glob.txt INPUT/co2historicaldata_glob.txt
-ln -sf $FIX/co2monthlycyc.txt INPUT/co2monthlycyc.txt
+cp -rf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
+cp -rf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
+cp -rf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
+cp -rf $FIX/global_sfc_emissivity_idx.txt INPUT/sfc_emissivity_idx.txt
+cp -rf $FIX/global_co2historicaldata_glob.txt INPUT/co2historicaldata_glob.txt
+cp -rf $FIX/co2monthlycyc.txt INPUT/co2monthlycyc.txt
 foreach file ( $FIX/fix_co2_proj/global_co2historicaldata_????.txt )
-	ln -sf $file INPUT/`echo $file:t | sed s/global_co2historicaldata/co2historicaldata/g`
+	cp -rf $file INPUT/`echo $file:t | sed s/global_co2historicaldata/co2historicaldata/g`
 end
-ln -sf $FIX/global_climaeropac_global.txt INPUT/aerosol.dat
+cp -rf $FIX/global_climaeropac_global.txt INPUT/aerosol.dat
 foreach file ( $FIX/global_volcanic_aerosols_????-????.txt )
-	ln -sf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
+	cp -rf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
 end
+cp -rf $FIX_bqx/mld/mld_DR003_c1m_reg2.0.grb INPUT/
+cp -rf $FIX/global_glacier.2x2.grb INPUT/
+cp -rf $FIX/global_maxice.2x2.grb INPUT/
+cp -rf $FIX/RTGSST.1982.2012.monthly.clim.grb INPUT/
+cp -rf $FIX/global_snoclim.1.875.grb INPUT/
+cp -rf $FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb INPUT/
+cp -rf $FIX/global_soilmgldas.t1534.3072.1536.grb INPUT/
+cp -rf $FIX/global_slmask.t1534.3072.1536.grb INPUT/
 
 cat >! input.nml <<EOF
  &amip_interp_nml
@@ -417,7 +424,7 @@ cat >! input.nml <<EOF
        cnvcld         = .false.
        imfshalcnv     = 3
        imfdeepcnv     = 3
-       cdmbgwd        = 5.0, 0.25
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -435,7 +442,7 @@ cat >! input.nml <<EOF
        xkzm_hi        = 1.5
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
-       do_inline_mp   = .true.
+       do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
        do_cosp        = .true.
@@ -503,7 +510,7 @@ cat >! input.nml <<EOF
        alini = 11.72
        blini = 0.41
        reiflag = 7
-       snow_grauple_combine = .false.
+       snow_grauple_combine = .true.
 /
 
  &diag_manager_nml 
@@ -515,28 +522,28 @@ cat >! input.nml <<EOF
 /
 
 &namsfc
-       FNGLAC   = "$FIX/global_glacier.2x2.grb",
-       FNMXIC   = "$FIX/global_maxice.2x2.grb",
-       FNTSFC   = "$FIX/RTGSST.1982.2012.monthly.clim.grb",
-       FNMLDC   = "$FIX_bqx/mld/mld_DR003_c1m_reg2.0.grb"
-       FNSNOC   = "$FIX/global_snoclim.1.875.grb",
+       FNGLAC   = "INPUT/global_glacier.2x2.grb",
+       FNMXIC   = "INPUT/global_maxice.2x2.grb",
+       FNTSFC   = "INPUT/RTGSST.1982.2012.monthly.clim.grb",
+       FNMLDC   = "INPUT/mld_DR003_c1m_reg2.0.grb"
+       FNSNOC   = "INPUT/global_snoclim.1.875.grb",
        FNZORC   = "igbp",
-       FNALBC   = "$FIX_sfc/${CASE}.snowfree_albedo.tileX.nc",
-       FNALBC2  = "$FIX_sfc/${CASE}.facsf.tileX.nc",
-       FNAISC   = "$FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb",
-       FNTG3C   = "$FIX_sfc/${CASE}.substrate_temperature.tileX.nc",
-       FNVEGC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNVETC   = "$FIX_sfc/${CASE}.vegetation_type.tileX.nc",
-       FNSOTC   = "$FIX_sfc/${CASE}.soil_type.tileX.nc",
-       FNSMCC   = "$FIX/global_soilmgldas.t1534.3072.1536.grb",
-       FNMSKH   = "$FIX/global_slmask.t1534.3072.1536.grb",
+       FNALBC   = "INPUT/fix_sfc/${CASE}.snowfree_albedo.tileX.nc",
+       FNALBC2  = "INPUT/fix_sfc/${CASE}.facsf.tileX.nc",
+       FNAISC   = "INPUT/CFSR.SEAICE.1982.2012.monthly.clim.grb",
+       FNTG3C   = "INPUT/fix_sfc/${CASE}.substrate_temperature.tileX.nc",
+       FNVEGC   = "INPUT/fix_sfc/${CASE}.vegetation_greenness.tileX.nc",
+       FNVETC   = "INPUT/fix_sfc/${CASE}.vegetation_type.tileX.nc",
+       FNSOTC   = "INPUT/fix_sfc/${CASE}.soil_type.tileX.nc",
+       FNSMCC   = "INPUT/global_soilmgldas.t1534.3072.1536.grb",
+       FNMSKH   = "INPUT/global_slmask.t1534.3072.1536.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",
-       FNVMNC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNVMXC   = "$FIX_sfc/${CASE}.vegetation_greenness.tileX.nc",
-       FNSLPC   = "$FIX_sfc/${CASE}.slope_type.tileX.nc",
-       FNABSC   = "$FIX_sfc/${CASE}.maximum_snow_albedo.tileX.nc",
+       FNVMNC   = "INPUT/fix_sfc/${CASE}.vegetation_greenness.tileX.nc",
+       FNVMXC   = "INPUT/fix_sfc/${CASE}.vegetation_greenness.tileX.nc",
+       FNSLPC   = "INPUT/fix_sfc/${CASE}.slope_type.tileX.nc",
+       FNABSC   = "INPUT/fix_sfc/${CASE}.maximum_snow_albedo.tileX.nc",
        LDEBUG   =.false.,
        FSMCL(2) = 99999
        FSMCL(3) = 99999

@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/lustre/f2/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C1536_20150801.00Z
+#SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=16:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=192
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
+#SBATCH --nodes=64
+#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,LY=16,NT=4,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -25,7 +25,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C1536"
+set CASE = "C768"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -56,9 +56,9 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -68,12 +68,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "1537"
-    set npy = "1537"
+    set npx = "769"
+    set npy = "769"
     set npz = "91"
     set layout_x = $LX
     set layout_y = $LY
-    set io_layout = "2,2"
+    set io_layout = "1,1"
     set nthreads = $NT
 
     # blocking factor used for threading and general physics performance
@@ -122,7 +122,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "2"
+      set k_split = "1"
       set n_split = "8"
     else
       # hydrostatic options
@@ -290,7 +290,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 12000000,
+       domains_stack_size = 3000000,
        print_memory_usage = .false.
 /
 
@@ -433,7 +433,7 @@ cat >! input.nml <<EOF
        cnvcld         = .false.
        imfshalcnv     = 3
        imfdeepcnv     = 3
-       cdmbgwd        = 5.0, 0.25
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -443,8 +443,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 0.5
-       xkzm_h         = 0.5
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -527,8 +527,8 @@ cat >! input.nml <<EOF
        dspheat        = .true.
        do_dk_hb19     = .false.
        xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
+	   xkzm_mo        = 1.5
+       xkzm_ho        = 1.5
 	   xkzm_ml        = 0.5
        xkzm_hl        = 0.5
 	   xkzm_mi        = 0.5
@@ -541,7 +541,7 @@ cat >! input.nml <<EOF
 /
 
  &sa_gwd_nml
-       cdmbgwd        = 5.0, 0.25
+       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 

@@ -15,7 +15,7 @@
 "tracer3d_4xdaily",        6,  "hours",    1, "hours",  "time"
 #"cloud3d_4xdaily",         6,  "hours",    1, "hours",  "time"
 #"nggps3d_dt",              6,  "hours",    1, "hours",  "time"
-#"energy2d",                0,  "hours",    1, "hours",  "time"
+"energy2d",                0,  "hours",    1, "hours",  "time"
 
 #
 #output variables
@@ -303,34 +303,34 @@
 ###
 # 2D energy
 ###
-# "dynamics", "inline_mp_fast_te_a_chg",  "inline_mp_fast_te_a_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_fast_te_b_chg",  "inline_mp_fast_te_b_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_fast_tw_a_chg",  "inline_mp_fast_tw_a_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_fast_tw_b_chg",  "inline_mp_fast_tw_b_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_intm_te_a_chg",  "inline_mp_intm_te_a_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_intm_te_b_chg",  "inline_mp_intm_te_b_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_intm_tw_a_chg",  "inline_mp_intm_tw_a_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_mp_intm_tw_b_chg",  "inline_mp_intm_tw_b_chg",  "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_fast_te_a_chg", "inline_pbl_fast_te_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_fast_te_b_chg", "inline_pbl_fast_te_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_fast_tw_a_chg", "inline_pbl_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_fast_tw_b_chg", "inline_pbl_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_intm_te_a_chg", "inline_pbl_intm_te_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_intm_te_b_chg", "inline_pbl_intm_te_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_intm_tw_a_chg", "inline_pbl_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_pbl_intm_tw_b_chg", "inline_pbl_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_cnv_intm_te_a_chg", "inline_cnv_intm_te_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_cnv_intm_te_b_chg", "inline_cnv_intm_te_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_cnv_intm_tw_a_chg", "inline_cnv_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_cnv_intm_tw_b_chg", "inline_cnv_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_fast_te_a_chg", "inline_gwd_fast_te_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_fast_te_b_chg", "inline_gwd_fast_te_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_fast_tw_a_chg", "inline_gwd_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_fast_tw_b_chg", "inline_gwd_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_intm_te_a_chg", "inline_gwd_intm_te_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_intm_te_b_chg", "inline_gwd_intm_te_b_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_intm_tw_a_chg", "inline_gwd_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
-# "dynamics", "inline_gwd_intm_tw_b_chg", "inline_gwd_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_te_a_chg",  "inline_mp_fast_te_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_te_b_chg",  "inline_mp_fast_te_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_tw_a_chg",  "inline_mp_fast_tw_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_fast_tw_b_chg",  "inline_mp_fast_tw_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_te_a_chg",  "inline_mp_intm_te_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_te_b_chg",  "inline_mp_intm_te_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_tw_a_chg",  "inline_mp_intm_tw_a_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_mp_intm_tw_b_chg",  "inline_mp_intm_tw_b_chg",  "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_te_a_chg", "inline_pbl_fast_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_te_b_chg", "inline_pbl_fast_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_tw_a_chg", "inline_pbl_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_fast_tw_b_chg", "inline_pbl_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_te_a_chg", "inline_pbl_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_te_b_chg", "inline_pbl_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_tw_a_chg", "inline_pbl_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_pbl_intm_tw_b_chg", "inline_pbl_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_te_a_chg", "inline_cnv_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_te_b_chg", "inline_cnv_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_tw_a_chg", "inline_cnv_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_cnv_intm_tw_b_chg", "inline_cnv_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_te_a_chg", "inline_gwd_fast_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_te_b_chg", "inline_gwd_fast_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_tw_a_chg", "inline_gwd_fast_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_fast_tw_b_chg", "inline_gwd_fast_tw_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_te_a_chg", "inline_gwd_intm_te_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_te_b_chg", "inline_gwd_intm_te_b_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_tw_a_chg", "inline_gwd_intm_tw_a_chg", "energy2d", "all", .false., "none", 2
+ "dynamics", "inline_gwd_intm_tw_b_chg", "inline_gwd_intm_tw_b_chg", "energy2d", "all", .false., "none", 2
 ###
 # GFS variabls needed for NGGPS evaluation
 ###

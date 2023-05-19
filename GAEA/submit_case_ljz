@@ -98,14 +98,31 @@
 #set title = "c1536_gfsic_rt2021_v15_IC"
 #set title = "c3072_gfsic_rt2021_v15_IC"
 
+#set title = "c48_gfsic_rt2023_aero"
+#set title = "c48_gfsic_rt2023_cpsd"
+#set title = "c48_gfsic_rt2023_aero_inline"
+#set title = "c48_gfsic_rt2023_cpsd_inline"
+set title = "c768_gfsic_rt2023_aero"
+#set title = "c768_gfsic_rt2023_cpsd"
+#set title = "c768_gfsic_rt2023_aero_inline"
+#set title = "c768_gfsic_rt2023_cpsd_inline"
+#set title = "c1536_gfsic_rt2023_aero"
+#set title = "c1536_gfsic_rt2023_cpsd"
+#set title = "c1536_gfsic_rt2023_aero_inline"
+#set title = "c1536_gfsic_rt2023_cpsd_inline"
+
 #set title = "c48_gfsic_rt2023_aero_cosp"
 #set title = "c48_gfsic_rt2023_cpsd_cosp"
 #set title = "c48_gfsic_rt2023_aero_inline_cosp"
 #set title = "c48_gfsic_rt2023_cpsd_inline_cosp"
+#set title = "c768_gfsic_rt2023_aero_cosp"
+#set title = "c768_gfsic_rt2023_cpsd_cosp"
+#set title = "c768_gfsic_rt2023_aero_inline_cosp"
+#set title = "c768_gfsic_rt2023_cpsd_inline_cosp"
 #set title = "c1536_gfsic_rt2023_aero_cosp"
 #set title = "c1536_gfsic_rt2023_cpsd_cosp"
 #set title = "c1536_gfsic_rt2023_aero_inline_cosp"
-set title = "c1536_gfsic_rt2023_cpsd_inline_cosp"
+#set title = "c1536_gfsic_rt2023_cpsd_inline_cosp"
 
 #set basescript = "RUN_IPDv4_${title}.csh"
 #set basescript = "Z_RUN_${title}.csh"
@@ -519,7 +536,18 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2023_e002" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set MEMO = "_RT2023_e003" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_RT2023_e004" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
-set MEMO = "_RT2023_e005" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e005" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e008" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e009" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e010" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e011" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e012" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e013" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e014" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e015" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e016" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e017" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+set MEMO = "_RT2023_e021" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -848,7 +876,18 @@ set MEMO = "_RT2023_e005" # SHiELD 2023, fixed atmos_driver and FMS coupler, ene
 #set EXE = "RT2023.e002.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e003.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e004.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
-set EXE = "RT2023.e005.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e005.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e008.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e009.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e010.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e011.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e012.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e013.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e014.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e015.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e016.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e017.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+set EXE = "RT2023.e021.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -873,10 +912,10 @@ set EXE = "RT2023.e005.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set reso = "C96"
 #set reso = "C192"
 #set reso = "C384"
-#set reso = "C768"
+set reso = "C768"
 #set reso = "C768n5r10"
 #set reso = "C1152"
-set reso = "C1536"
+#set reso = "C1536"
 #set reso = "C3072"
 
 #set cluster = "c3"
@@ -891,7 +930,7 @@ set qos = "normal"
 
 set NUM_TOT = 1
 
-# node request should not exceed 299 for c3, 454 for c3, and 512 for c5.
+# node request should not exceed 299 for c3, 454 for c4, and 512 for c5.
 # 32 cores per node on c3, 36 cores per node on c4, 128 cores per node on c5
 set LX = 0
 set LY = 0
@@ -1455,6 +1494,8 @@ foreach DATE ( \
 	#20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z \
 	#20220302.00Z 20220401.00Z 20220501.00Z 20220531.00Z 20220630.00Z 20220730.00Z 20220829.00Z 20220928.00Z \
 	#20221028.00Z 20221127.00Z 20230101.00Z 20230131.00Z \
+	#20230302.00Z 20230401.00Z 20230501.00Z 20230531.00Z 20230630.00Z 20230730.00Z 20230829.00Z 20230928.00Z \
+	#20231028.00Z 20231127.00Z 20240101.00Z 20240131.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases without monthly cases \
 	## ----------------------------------------------------------------------------------------------------- \
@@ -1474,6 +1515,14 @@ foreach DATE ( \
 	#20221023.00Z 20221102.00Z 20221107.00Z 20221112.00Z 20221117.00Z 20221122.00Z 20221202.00Z 20221207.00Z \
 	#20221212.00Z 20221217.00Z 20221222.00Z 20221227.00Z 20230106.00Z 20230111.00Z 20230116.00Z 20230121.00Z \
 	#20230126.00Z 20230205.00Z 20230210.00Z 20230215.00Z 20230220.00Z 20230225.00Z \
+	#20230307.00Z 20230312.00Z 20230317.00Z 20230322.00Z 20230327.00Z 20230406.00Z 20230411.00Z 20230416.00Z \
+	#20230421.00Z 20230426.00Z 20230506.00Z 20230511.00Z 20230516.00Z 20230521.00Z 20230526.00Z 20230605.00Z \
+	#20230610.00Z 20230615.00Z 20230620.00Z 20230625.00Z 20230705.00Z 20230710.00Z 20230715.00Z 20230720.00Z \
+	#20230725.00Z 20230801.00Z 20230804.00Z 20230809.00Z 20230814.00Z 20230819.00Z 20230824.00Z 20230903.00Z \
+	#20230908.00Z 20230913.00Z 20230918.00Z 20230923.00Z 20231003.00Z 20231008.00Z 20231013.00Z 20231018.00Z \
+	#20231023.00Z 20231102.00Z 20231107.00Z 20231112.00Z 20231117.00Z 20231122.00Z 20231202.00Z 20231207.00Z \
+	#20231212.00Z 20231217.00Z 20231222.00Z 20231227.00Z 20240106.00Z 20240111.00Z 20240116.00Z 20240121.00Z \
+	#20240126.00Z 20240205.00Z 20240210.00Z 20240215.00Z 20240220.00Z 20240225.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## daily cases without every 5 days cases \
 	## ----------------------------------------------------------------------------------------------------- \
