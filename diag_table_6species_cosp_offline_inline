@@ -4,6 +4,7 @@
 #"atmos_daily",            24,  "hours",    1, "hours",  "time"
 "atmos_static",           -1,  "hours",    1, "hours",  "time"
 "atmos_sos",               1,  "hours",    1, "hours",  "time"
+"atmos_sos_ave",           1,  "hours",    1, "hours",  "time"
 #NOTE: Using multiple gfs output files appears to cause OOM errors.
 #"gfs_physics",             0,  "hours",    1, "hours",  "time"
 #"gfs_surface",             0,  "hours",    1, "hours",  "time"
@@ -260,7 +261,8 @@
 # "dynamics",  "eds",         "eds",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "oes",         "oes",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "rrs",         "rrs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
-# "dynamics",  "tvs",         "tvs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2 # "dynamics",  "pcg",         "pcg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "tvs",         "tvs",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
+# "dynamics",  "pcg",         "pcg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "edg",         "edg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "oeg",         "oeg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
 # "dynamics",  "rrg",         "rrg",        "cloud3d_4xdaily",  "all",  .false.,  "none",  2
@@ -706,6 +708,10 @@
 # "dynamics",  "w850",        "w850",        "atmos_sos", "all", .false., "none", 2
 # "dynamics",  "ctt",         "ctt",         "atmos_sos", "all", .false., "none", 2
 # "dynamics",  "ctp",         "ctp",         "atmos_sos", "all", .false., "none", 2
+####
+## hourly statistics
+####
+ "dynamics", "uh25", "MXUPHL2_5km", "atmos_sos_ave", "all", max, "none", 2
 ####
 ## Monthly averages:
 ####

@@ -547,7 +547,7 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2023_e015" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_RT2023_e016" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_RT2023_e017" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
-set MEMO = "_RT2023_e021" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+set MEMO = "_RT2023_e023" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -887,7 +887,7 @@ set MEMO = "_RT2023_e021" # SHiELD 2023, fixed atmos_driver and FMS coupler, ene
 #set EXE = "RT2023.e015.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e016.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e017.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
-set EXE = "RT2023.e021.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+set EXE = "RT2023.e023.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"

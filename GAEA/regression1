@@ -77,7 +77,7 @@ set title = "SHiELD_c48_gfsic_rt2023_aero"
 #set MEMO = "_RT2022_e116_res1"
 #set MEMO = "_RT2023_e001_res01"
 #set MEMO = "_RT2023_e002_res01"
-set MEMO = "_RT2023_e021_res01"
+set MEMO = "_RT2023_e023_res01"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -121,7 +121,7 @@ set MEMO = "_RT2023_e021_res01"
 #set EXE = "RT2022.e116.x"
 #set EXE = "RT2023.e001.x"
 #set EXE = "RT2023.e002.x"
-set EXE = "RT2023.e021.x"
+set EXE = "RT2023.e023.x"
 
 set basescript = "RUN_${title}.csh"
 
