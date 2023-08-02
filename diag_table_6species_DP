@@ -4,6 +4,7 @@
 #"atmos_daily",            45,  "seconds",    1, "seconds",  "time"
 "atmos_static",           -1,  "seconds",    1, "seconds",  "time"
 "atmos_sos",              45,  "seconds",    1, "seconds",  "time"
+"atmos_sos_ave",          45,  "seconds",    1, "seconds",  "time"
 #NOTE: Using multiple gfs output files appears to cause OOM errors.
 #"gfs_physics",             0,  "seconds",    1, "seconds",  "time"
 #"gfs_surface",             0,  "seconds",    1, "seconds",  "time"
@@ -249,31 +250,31 @@
 ###
 # cloud
 ###
- "dynamics",  "pcw",         "pcw",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "edw",         "edw",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "oew",         "oew",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "rrw",         "rrw",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "tvw",         "tvw",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "pci",         "pci",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "edi",         "edi",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "oei",         "oei",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "rri",         "rri",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "tvi",         "tvi",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "pcr",         "pcr",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "edr",         "edr",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "oer",         "oer",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "rrr",         "rrr",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "tvr",         "tvr",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "pcs",         "pcs",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "eds",         "eds",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "oes",         "oes",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "rrs",         "rrs",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "tvs",         "tvs",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "pcg",         "pcg",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "edg",         "edg",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "oeg",         "oeg",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "rrg",         "rrg",        "cloud3d",  "all",  .false.,  "none",  2
- "dynamics",  "tvg",         "tvg",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pcw",         "pcw",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "edw",         "edw",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "oew",         "oew",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "rrw",         "rrw",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "tvw",         "tvw",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pci",         "pci",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "edi",         "edi",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "oei",         "oei",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "rri",         "rri",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "tvi",         "tvi",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pcr",         "pcr",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "edr",         "edr",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "oer",         "oer",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "rrr",         "rrr",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "tvr",         "tvr",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pcs",         "pcs",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "eds",         "eds",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "oes",         "oes",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "rrs",         "rrs",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "tvs",         "tvs",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "pcg",         "pcg",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "edg",         "edg",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "oeg",         "oeg",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "rrg",         "rrg",        "cloud3d",  "all",  .false.,  "none",  2
+# "dynamics",  "tvg",         "tvg",        "cloud3d",  "all",  .false.,  "none",  2
 ###
 # more tracer
 ###
@@ -490,6 +491,12 @@
  "gfs_phys",  "DSWRFtoa"       "DSWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "USWRFtoa"       "USWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "ULWRFtoa"       "ULWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csdlf_ave"      "DLWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csulf_ave"      "ULWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csdsf_ave"      "DSWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csusf_ave"      "USWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csusf_avetoa"   "USWRFtoa_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csulf_avetoa"   "ULWRFtoa_clr"   "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_phys",  "gflux_ave"      "GFLUXsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "HGTsfc"         "HGTsfc"     "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "hpbl"           "HPBLsfc"    "nggps2d",         "all",  .false.,  "none",  2
@@ -733,6 +740,10 @@
 # "dynamics",  "w850",        "w850",        "atmos_sos", "all", .false., "none", 2
 # "dynamics",  "ctt",         "ctt",         "atmos_sos", "all", .false., "none", 2
 # "dynamics",  "ctp",         "ctp",         "atmos_sos", "all", .false., "none", 2
+####
+## hourly statistics
+####
+ "dynamics", "uh25", "MXUPHL2_5km", "atmos_sos_ave", "all", max, "none", 2
 ####
 ## Monthly averages:
 ####
