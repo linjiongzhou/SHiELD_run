@@ -1,0 +1,52 @@
+#!/bin/csh -f
+
+#set echo
+
+#set title = "IPDv4_DP_gfdlmp_gfsic_ljz_rt2022_v16_IC_ctrl_res"
+#set title = "IPDv4_DP_gfdlmp_gfsic_ljz_rt2022_v16_IC_cpsd_res"
+set title = "SHiELD_DP_gfsic_rt2023_cpsd"
+
+#set MEMO = "_RT2022_e001_res2"
+#set MEMO = "_RT2022_e002_res2"
+#set MEMO = "_RT2022_e019_res2"
+#set MEMO = "_RT2022_e100_res2"
+#set MEMO = "_RT2022_e101_res02"
+#set MEMO = "_RT2022_e103_res2"
+set MEMO = "_RT2023_e034_res04"
+
+#set EXE = "RT2022.e001.x"
+#set EXE = "RT2022.e002.x"
+#set EXE = "RT2022.e019.x"
+#set EXE = "RT2022.e100.x"
+#set EXE = "RT2022.e101.x"
+#set EXE = "RT2022.e103.x"
+set EXE = "RT2023.e034.x"
+
+set basescript = "RUN_${title}.csh"
+
+set DATE = "20210321.12Z"
+
+set runname = SHiELD_${title}${MEMO}.${DATE}
+echo $runname
+
+sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+     s#EXE=x#EXE='$EXE'#g \
+     s#SBATCH --cluster=c4#SBATCH --cluster=c5#g \
+     s#set COMP = "prod"#set COMP = "debug"#g \
+     s#SBATCH --nodes=1#SBATCH --nodes=2#g \
+     s#set days = "1"#set days = "0"#g \
+     s#set hours = "0"#set hours = "1"#g \
+     s#set layout_x = "18"#set layout_x = "9"#g \
+     s#set layout_y = "18"#set layout_y = "18"#g \
+     s#set nthreads = "2"#set nthreads = "1"#g \
+     s#set NUM_TOT = 1#set NUM_TOT = 2#g \
+     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+     s#fv_debug = .F.#fv_debug = .T.#g' \
+$basescript >! ${runname}.csh
+
+chmod 755 ${runname}.csh
+sbatch --job-name=${runname} ${runname}.csh
+#rm -f ${runname}.csh
+
+exit 0

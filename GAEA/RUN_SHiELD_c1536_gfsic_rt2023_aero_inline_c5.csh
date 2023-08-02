@@ -454,6 +454,10 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       c0s_deep       = 0.002
+       c1_deep        = 0.002
+       c0s_shal       = 0.002
+       c1_shal        = 0.002
 /
 
  &ocean_nml
@@ -521,6 +525,10 @@ cat >! input.nml <<EOF
 /
 
  &sa_sas_nml
+       c0s_deep       = 0.002
+       c1_deep        = 0.002
+       c0s_shal       = 0.002
+       c1_shal        = 0.002
 /
 
  &sa_tke_edmf_nml
