@@ -312,6 +312,12 @@
  "gfs_phys",  "DSWRFtoa"       "DSWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "USWRFtoa"       "USWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "ULWRFtoa"       "ULWRFtoa"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csdlf_ave"      "DLWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csulf_ave"      "ULWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csdsf_ave"      "DSWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csusf_ave"      "USWRFsfc_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csusf_avetoa"   "USWRFtoa_clr"   "nggps2d",         "all",  .false.,  "none",  2
+# "gfs_phys",  "csulf_avetoa"   "ULWRFtoa_clr"   "nggps2d",         "all",  .false.,  "none",  2
 # "gfs_phys",  "gflux_ave"      "GFLUXsfc"   "nggps2d",         "all",  .false.,  "none",  2
  "gfs_sfc",   "HGTsfc"         "HGTsfc"     "nggps2d",         "all",  .false.,  "none",  2
  "gfs_phys",  "hpbl"           "HPBLsfc"    "nggps2d",         "all",  .false.,  "none",  2
