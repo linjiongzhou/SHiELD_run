@@ -6,7 +6,7 @@
 #SBATCH --time=16:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=192
-#SBATCH --export=NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
+#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -15,8 +15,14 @@ set echo
 
 set BASEDIR    = "/lustre/f2/scratch/${USER}/SHiELD"
 set INPUT_DATA = "/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA"
-set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
-set RUN_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_run"
+if ( $CLU == 'c3' || $CLU == 'c4' ) then
+  set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_run"
+endif
+if ( $CLU == 'c5' ) then
+  set BUILD_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_run"
+endif
 
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
@@ -29,7 +35,12 @@ set CASE = "C1536"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
-set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
+if ( $CLU == 'c3' || $CLU == 'c4' ) then
+  set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
+endif
+if ( $CLU == 'c5' ) then
+  set HYPT = "off"         # choices:  on, off  (controls hyperthreading)
+endif
 set COMP = "prod"       # choices:  debug, repro, prod
 set NO_SEND = "send"    # choices:  send, no_send
 #set NUM_TOT = 1         # run cycle, 1: no restart
@@ -223,11 +234,11 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species_cosp_offline_inline >> diag_table
+cat ${BUILD_AREA}/tables/diag_table_6species_cosp_offline_inline >> diag_table
 
 # copy over the other tables and executable
-cp -f ${RUN_AREA}/data_table data_table
-cp -f ${RUN_AREA}/field_table_6species_aero field_table
+cp -f ${BUILD_AREA}/tables/data_table data_table
+cp -f ${BUILD_AREA}/tables/field_table_6species_aero field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
@@ -775,5 +786,5 @@ endif
 if ($num < $NUM_TOT) then
   echo "resubmitting... "
   cd $SCRIPT_AREA
-  sbatch --job-name=$SLURM_JOB_NAME --account=$SLURM_JOB_ACCOUNT --qos=$SLURM_JOB_QOS --cluster=$SLURM_CLUSTER_NAME --nodes=$SLURM_JOB_NUM_NODES --export=NAME=${NAME},MEMO=${MEMO},EXE=${EXE},ALL $SCRIPT:t.csh
+  sbatch --job-name=$SLURM_JOB_NAME --account=$SLURM_JOB_ACCOUNT --qos=$SLURM_JOB_QOS --cluster=$SLURM_CLUSTER_NAME --nodes=$SLURM_JOB_NUM_NODES --export=CLU=${CLU},NAME=${NAME},MEMO=${MEMO},EXE=${EXE},ALL $SCRIPT:t.csh
 endif
