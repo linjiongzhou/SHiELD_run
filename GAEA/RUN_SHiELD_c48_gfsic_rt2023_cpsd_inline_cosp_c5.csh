@@ -223,11 +223,11 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${RUN_AREA}/diag_table_6species_cosp_offline_inline >> diag_table
+cat ${BUILD_AREA}/tables/diag_table_6species_cosp_offline_inline >> diag_table
 
 # copy over the other tables and executable
-cp -f ${RUN_AREA}/data_table data_table
-cp -f ${RUN_AREA}/field_table_6species field_table
+cp -f ${BUILD_AREA}/tables/data_table data_table
+cp -f ${BUILD_AREA}/tables/field_table_6species field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
