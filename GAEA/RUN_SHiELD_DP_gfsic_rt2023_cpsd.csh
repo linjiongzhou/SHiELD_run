@@ -124,7 +124,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "-1"
+    set print_freq = "1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -304,7 +304,7 @@ cat >! input.nml <<EOF
  &test_case_nml
        test_case = 19
        no_wind = .true.
-       dt_amp = 0.0
+       dt_amp = 0.5
        gaussian_dt = .true.
 /
 

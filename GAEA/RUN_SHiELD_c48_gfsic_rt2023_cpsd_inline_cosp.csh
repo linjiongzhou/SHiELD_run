@@ -458,7 +458,6 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -527,6 +526,7 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
+       snow_grauple_combine = .true.
 /
 
  &sa_sas_nml

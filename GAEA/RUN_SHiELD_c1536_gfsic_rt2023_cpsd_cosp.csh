@@ -425,7 +425,7 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
+       imfshalcnv     = 5
        imfdeepcnv     = 3
        cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
@@ -448,7 +448,11 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       do_cosp        = .true.
+       dxcrtas        = 1.e3
+       c0s_deep       = 0.002
+       c1_deep        = 0.002
+       c0s_shal       = 0.002
+       c1_shal        = 0.002
 /
 
  &ocean_nml

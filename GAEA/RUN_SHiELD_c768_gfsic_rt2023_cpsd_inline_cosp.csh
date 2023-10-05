@@ -375,7 +375,7 @@ cat >! input.nml <<EOF
        do_inline_pbl = .T.
        do_inline_cnv = .T.
        do_inline_gwd = .T.
-       inline_cnv_flag = 2
+       inline_cnv_flag = 1
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
@@ -435,8 +435,8 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
        cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
@@ -458,7 +458,6 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       do_cosp        = .true.
 /
 
  &ocean_nml
@@ -470,7 +469,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
