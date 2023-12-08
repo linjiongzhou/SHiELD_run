@@ -77,7 +77,7 @@ set title = "SHiELD_c48_gfsic_rt2023_aero_inline"
 #set MEMO = "_RT2022_e116_res1"
 #set MEMO = "_RT2023_e001_res01"
 #set MEMO = "_RT2023_e002_res01"
-set MEMO = "_RT2023_e036_res01"
+set MEMO = "_RT2023_e039_res01"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -121,13 +121,17 @@ set MEMO = "_RT2023_e036_res01"
 #set EXE = "RT2022.e116.x"
 #set EXE = "RT2023.e001.x"
 #set EXE = "RT2023.e002.x"
-set EXE = "RT2023.e036.x"
+set EXE = "RT2023.e039.x"
 
 set basescript = "RUN_${title}.csh"
 
 #set DATE = "20160801.00Z"
 #set DATE = "20190801.00Z"
 set DATE = "20210401.00Z"
+
+#set cluster = "c3"
+#set cluster = "c4"
+set cluster = "c5"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
@@ -165,39 +169,43 @@ echo $runname
 #$basescript >! ${runname}.csh
 
 # c48 c4
-sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
-     s#MEMO=_RT2018#MEMO='$MEMO'#g \
-     s#EXE=x#EXE='$EXE'#g \
-     s#SBATCH --cluster=c4#SBATCH --cluster=c4#g \
-     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c4#g \
-     s#set COMP = "prod"#set COMP = "debug"#g \
-     s#set days = "10"#set days = "0"#g \
-     s#set hours = "0"#set hours = "2"#g \
-     s#set layout_x = "2"#set layout_x = "2"#g \
-     s#set layout_y = "2"#set layout_y = "2"#g \
-     s#set nthreads = "2"#set nthreads = "2"#g \
-     s#set HYPT = "on"#set HYPT = "on"#g \
-     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
-     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
-     s#fv_debug = .F.#fv_debug = .T.#g' \
-$basescript >! ${runname}.csh
+if ( $cluster == "c4" ) then
+	sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+	     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+	     s#EXE=x#EXE='$EXE'#g \
+	     s#SBATCH --cluster=c4#SBATCH --cluster=c4#g \
+	     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c4#g \
+	     s#set COMP = "prod"#set COMP = "debug"#g \
+	     s#set days = "10"#set days = "0"#g \
+	     s#set hours = "0"#set hours = "2"#g \
+	     s#set layout_x = "2"#set layout_x = "2"#g \
+	     s#set layout_y = "2"#set layout_y = "2"#g \
+	     s#set nthreads = "2"#set nthreads = "2"#g \
+	     s#set HYPT = "on"#set HYPT = "on"#g \
+	     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+	     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+	     s#fv_debug = .F.#fv_debug = .T.#g' \
+	$basescript >! ${runname}.csh
+endif
 
 # c48 c5
-#sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
-#     s#MEMO=_RT2018#MEMO='$MEMO'#g \
-#     s#EXE=x#EXE='$EXE'#g \
-#     s#SBATCH --cluster=c4#SBATCH --cluster=c5#g \
-#     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c5#g \
-#     s#set COMP = "prod"#set COMP = "debug"#g \
-#     s#set days = "10"#set days = "0"#g \
-#     s#set hours = "0"#set hours = "2"#g \
-#     s#set layout_x = "2"#set layout_x = "4"#g \
-#     s#set layout_y = "2"#set layout_y = "4"#g \
-#     s#set nthreads = "2"#set nthreads = "1"#g \
-#     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
-#     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
-#     s#fv_debug = .F.#fv_debug = .T.#g' \
-#$basescript >! ${runname}.csh
+if ( $cluster == "c5" ) then
+	sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+	     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+	     s#EXE=x#EXE='$EXE'#g \
+	     s#SBATCH --cluster=c4#SBATCH --cluster=c5#g \
+	     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c5#g \
+	     s#set COMP = "prod"#set COMP = "debug"#g \
+	     s#set days = "10"#set days = "0"#g \
+	     s#set hours = "0"#set hours = "2"#g \
+	     s#set layout_x = "2"#set layout_x = "4"#g \
+	     s#set layout_y = "2"#set layout_y = "4"#g \
+	     s#set nthreads = "2"#set nthreads = "1"#g \
+	     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+	     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+	     s#fv_debug = .F.#fv_debug = .T.#g' \
+	$basescript >! ${runname}.csh
+endif
 
 chmod 755 ${runname}.csh
 sbatch --job-name=${runname} ${runname}.csh

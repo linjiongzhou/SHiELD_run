@@ -486,6 +486,7 @@ cat >! input.nml <<EOF
        vg_max = 12.
        vr_max = 12.
        prog_ccn = .true.
+       prog_cin = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -493,7 +494,6 @@ cat >! input.nml <<EOF
        qi0_crt = 8.0e-5
        rh_inc = 0.30
        rh_inr = 0.30
-       rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.0e-6
        c_pracw = 0.35

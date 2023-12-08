@@ -382,7 +382,7 @@ cat >! input.nml <<EOF
        do_inline_pbl = .T.
        do_inline_cnv = .T.
        do_inline_gwd = .T.
-       inline_cnv_flag = 2
+       inline_cnv_flag = 1
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
@@ -442,8 +442,8 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
        cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
@@ -476,7 +476,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
@@ -491,6 +491,7 @@ cat >! input.nml <<EOF
        vg_max = 12.
        vr_max = 12.
        prog_ccn = .true.
+       prog_cin = .true.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -498,7 +499,6 @@ cat >! input.nml <<EOF
        qi0_crt = 8.0e-5
        rh_inc = 0.30
        rh_inr = 0.30
-       rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.0e-6
        c_pracw = 0.35

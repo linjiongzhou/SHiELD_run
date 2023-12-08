@@ -479,7 +479,6 @@ cat >! input.nml <<EOF
        qi0_crt = 8.0e-5
        rh_inc = 0.30
        rh_inr = 0.30
-       rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.5e-6
        c_pracw = 0.35

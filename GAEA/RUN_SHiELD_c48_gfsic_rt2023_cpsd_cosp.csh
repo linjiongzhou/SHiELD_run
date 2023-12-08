@@ -425,8 +425,8 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
        cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
@@ -459,7 +459,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
@@ -480,7 +480,6 @@ cat >! input.nml <<EOF
        qi0_crt = 8.0e-5
        rh_inc = 0.30
        rh_inr = 0.30
-       rh_ins = 0.30
        c_paut = 0.5
        rthresh = 8.5e-6
        c_pracw = 0.35

@@ -102,11 +102,15 @@
 #set title = "c48_gfsic_rt2023_cpsd"
 #set title = "c48_gfsic_rt2023_aero_inline"
 #set title = "c48_gfsic_rt2023_cpsd_inline"
-set title = "c768_gfsic_rt2023_aero"
+#set title = "c384_gfsic_rt2023_aero"
+#set title = "c384_gfsic_rt2023_cpsd"
+#set title = "c384_gfsic_rt2023_aero_inline"
+#set title = "c384_gfsic_rt2023_cpsd_inline"
+#set title = "c768_gfsic_rt2023_aero"
 #set title = "c768_gfsic_rt2023_cpsd"
 #set title = "c768_gfsic_rt2023_aero_inline"
 #set title = "c768_gfsic_rt2023_cpsd_inline"
-#set title = "c1536_gfsic_rt2023_aero"
+set title = "c1536_gfsic_rt2023_aero"
 #set title = "c1536_gfsic_rt2023_cpsd"
 #set title = "c1536_gfsic_rt2023_aero_inline"
 #set title = "c1536_gfsic_rt2023_cpsd_inline"
@@ -119,10 +123,6 @@ set title = "c768_gfsic_rt2023_aero"
 #set title = "c48_gfsic_rt2023_cpsd_cosp"
 #set title = "c48_gfsic_rt2023_aero_inline_cosp"
 #set title = "c48_gfsic_rt2023_cpsd_inline_cosp"
-#set title = "c384_gfsic_rt2023_aero_cosp"
-#set title = "c384_gfsic_rt2023_cpsd_cosp"
-#set title = "c384_gfsic_rt2023_aero_inline_cosp"
-#set title = "c384_gfsic_rt2023_cpsd_inline_cosp"
 #set title = "c768_gfsic_rt2023_aero_cosp"
 #set title = "c768_gfsic_rt2023_cpsd_cosp"
 #set title = "c768_gfsic_rt2023_aero_inline_cosp"
@@ -131,10 +131,6 @@ set title = "c768_gfsic_rt2023_aero"
 #set title = "c1536_gfsic_rt2023_cpsd_cosp"
 #set title = "c1536_gfsic_rt2023_aero_inline_cosp"
 #set title = "c1536_gfsic_rt2023_cpsd_inline_cosp"
-#set title = "c3072_gfsic_rt2023_aero_cosp"
-#set title = "c3072_gfsic_rt2023_cpsd_cosp"
-#set title = "c3072_gfsic_rt2023_aero_inline_cosp"
-#set title = "c3072_gfsic_rt2023_cpsd_inline_cosp"
 
 #set title = "DP_gfsic_rt2023_cpsd"
 #set title = "DP_gfsic_rt2023_cpsd_fromprerun"
@@ -939,15 +935,15 @@ set EXE = "RT2023.e039.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set reso = "C96"
 #set reso = "C192"
 #set reso = "C384"
-set reso = "C768"
+#set reso = "C768"
 #set reso = "C768n5r10"
 #set reso = "C1152"
-#set reso = "C1536"
+set reso = "C1536"
 #set reso = "C3072"
 
 #set cluster = "c3"
-set cluster = "c4"
-#set cluster = "c5"
+#set cluster = "c4"
+set cluster = "c5"
 
 set account = "gfdl_w"
 #set account = "nggps_gfdl"
@@ -975,6 +971,12 @@ if ( $cluster == "c3" ) then
 		set LX = 2
 		set LY = 2
 		set NT = 2
+	endif
+	if ( $reso == "C384" ) then
+		set nodes = 96
+		set LX = 16
+		set LY = 16
+		set NT = 4
 	endif
 	if ( $reso == "C768" ) then
 		set nodes = 96
@@ -1025,6 +1027,12 @@ if ( $cluster == "c4" ) then
 		set LY = 2
 		set NT = 2
 	endif
+	if ( $reso == "C384" ) then
+		set nodes = 64
+		set LX = 12
+		set LY = 16
+		set NT = 4
+	endif
 	if ( $reso == "C768" ) then
 		set nodes = 64
 		set LX = 12
@@ -1072,6 +1080,12 @@ if ( $cluster == "c5" ) then
 		set nodes = 1
 		set LX = 2
 		set LY = 2
+		set NT = 4
+	endif
+	if ( $reso == "C384" ) then
+		set nodes = 108
+		set LX = 24
+		set LY = 24
 		set NT = 4
 	endif
 	if ( $reso == "C768" ) then
@@ -1178,7 +1192,7 @@ foreach DATE ( \
 	#20200801.00Z \
 	#20200903.06Z \
 	#20200630.00Z \
-	#20210401.00Z \
+	20210401.00Z \
 	#20210827.00Z \
 	#20220829.00Z \
 	#20210321.12Z \
@@ -1573,11 +1587,11 @@ foreach DATE ( \
 	## ----------------------------------------------------------------------------------------------------- \
 	## monthly cases since 20210327.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
-	20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z 20210630.00Z 20210730.00Z 20210829.00Z 20210928.00Z \
-	20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z \
-	20220302.00Z 20220401.00Z 20220501.00Z 20220531.00Z 20220630.00Z 20220730.00Z 20220829.00Z 20220928.00Z \
-	20221028.00Z 20221127.00Z 20230101.00Z 20230131.00Z \
-	20230302.00Z 20230401.00Z 20230501.00Z 20230531.00Z 20230630.00Z 20230730.00Z 20230829.00Z 20230928.00Z \
+	#20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z 20210630.00Z 20210730.00Z 20210829.00Z 20210928.00Z \
+	#20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z \
+	#20220302.00Z 20220401.00Z 20220501.00Z 20220531.00Z 20220630.00Z 20220730.00Z 20220829.00Z 20220928.00Z \
+	#20221028.00Z 20221127.00Z 20230101.00Z 20230131.00Z \
+	#20230302.00Z 20230401.00Z 20230501.00Z 20230531.00Z 20230630.00Z 20230730.00Z 20230829.00Z 20230928.00Z \
 	#20231028.00Z 20231127.00Z 20240101.00Z 20240131.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases without monthly cases \
