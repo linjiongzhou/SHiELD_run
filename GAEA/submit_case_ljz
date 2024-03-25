@@ -110,7 +110,7 @@
 #set title = "c768_gfsic_rt2023_cpsd"
 #set title = "c768_gfsic_rt2023_aero_inline"
 #set title = "c768_gfsic_rt2023_cpsd_inline"
-set title = "c1536_gfsic_rt2023_aero"
+#set title = "c1536_gfsic_rt2023_aero"
 #set title = "c1536_gfsic_rt2023_cpsd"
 #set title = "c1536_gfsic_rt2023_aero_inline"
 #set title = "c1536_gfsic_rt2023_cpsd_inline"
@@ -131,6 +131,16 @@ set title = "c1536_gfsic_rt2023_aero"
 #set title = "c1536_gfsic_rt2023_cpsd_cosp"
 #set title = "c1536_gfsic_rt2023_aero_inline_cosp"
 #set title = "c1536_gfsic_rt2023_cpsd_inline_cosp"
+
+#set title = "c48_gfsic_rt2024_aero"
+#set title = "c48_gfsic_rt2024_aero_cosp"
+#set title = "c384_gfsic_rt2024_aero"
+#set title = "c768_gfsic_rt2024_aero"
+set title = "c1536_gfsic_rt2024_aero"
+#set title = "c1536_gfsic_rt2024_aero_inline"
+#set title = "c3072_gfsic_rt2024_aero"
+
+#set title = "c1536_gfsic_rt2023_aero_f5"
 
 #set title = "DP_gfsic_rt2023_cpsd"
 #set title = "DP_gfsic_rt2023_cpsd_fromprerun"
@@ -564,7 +574,7 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2023_e026" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_RT2023_e032" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_RT2023_e033" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
-set MEMO = "_RT2023_e039" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
+#set MEMO = "_RT2023_e039" # SHiELD 2023, fixed atmos_driver and FMS coupler, energy and mass diagnostic
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1" # 2018RT + GFDL MP update
 #set MEMO = "_20190305mods_rt1_diag" # dt_atmos=225,n_split=12,days=1,fdiag=0.0625,fhzer=0.0625,diag_table_6species_tmp
@@ -622,6 +632,14 @@ set MEMO = "_RT2023_e039" # SHiELD 2023, fixed atmos_driver and FMS coupler, ene
 #set MEMO = "_20190429mods_rt1_e12" # reiflag=1,xkzm_m=0.1,xkzm_h=0.1,xr_cloud=.true.,liq_ice_combine=.false.,nord=2,d4_bg=0.12,gam=0.1,srflag bugfix
 #set MEMO = "_20190511mods_rt1_e1" # vi_fac=0.8,qi0_crt=7.2e-5,beta=0.976,reiflag=1,nord=2,d4_bg=0.12,gam=0.1,srflag bugfix
 #set MEMO = "_20190512mods_rt1_e1" # vi_fac=0.8,qi0_crt=7.2e-5,beta=0.976,reiflag=1,nord=2,d4_bg=0.12,gam=0.1,srflag bugfix,revise GFDL MP
+#set MEMO = "_RT2024_e001_new" # SHiELD 2024
+#set MEMO = "_RT2024_e002_new" # SHiELD 2024
+#set MEMO = "_RT2024_e003_1hr" # SHiELD 2024
+#set MEMO = "_RT2024_e004_new" # SHiELD 2024
+#set MEMO = "_RT2024_e005_reff_new" # SHiELD 2024
+#set MEMO = "_RT2024_e006_shal5" # SHiELD 2024
+#set MEMO = "_RT2024_e006_mp" # SHiELD 2024
+set MEMO = "_RT2024_e007" # SHiELD 2024
 
 #set EXE = "x"
 #set EXE = "RT2018.bugfix.x" # 2018RT,radiation bugfix
@@ -910,7 +928,7 @@ set MEMO = "_RT2023_e039" # SHiELD 2023, fixed atmos_driver and FMS coupler, ene
 #set EXE = "RT2023.e026.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e032.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "RT2023.e033.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
-set EXE = "RT2023.e039.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
+#set EXE = "RT2023.e039.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt1.x"
 #set EXE = "20190305mods.rt2.x"
@@ -929,6 +947,13 @@ set EXE = "RT2023.e039.x" # SHiELD 2023, fixed atmos_driver and FMS coupler
 #set EXE = "20190429mods.rt1.x" # c_liq,c_ice: new, srflag bugfix, do_moon_z0=.F.
 #set EXE = "20190511mods.rt1.x" # SJ's revision of cloud diagnosis, revoke all c_liq, c_ice
 #set EXE = "20190512mods.rt1.x" # revise gfdl mp
+#set EXE = "RT2024.e001.x" # SHiELD 2024
+#set EXE = "RT2024.e002.x" # SHiELD 2024
+#set EXE = "RT2024.e003.x" # SHiELD 2024
+#set EXE = "RT2024.e004.x" # SHiELD 2024
+#set EXE = "RT2024.e005.x" # SHiELD 2024
+#set EXE = "RT2024.e006.x" # SHiELD 2024
+set EXE = "RT2024.e007.x" # SHiELD 2024
 
 #set reso = "DP"
 #set reso = "C48"
@@ -1192,7 +1217,7 @@ foreach DATE ( \
 	#20200801.00Z \
 	#20200903.06Z \
 	#20200630.00Z \
-	20210401.00Z \
+    20210401.00Z \
 	#20210827.00Z \
 	#20220829.00Z \
 	#20210321.12Z \
@@ -1587,7 +1612,7 @@ foreach DATE ( \
 	## ----------------------------------------------------------------------------------------------------- \
 	## monthly cases since 20210327.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
-	#20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z 20210630.00Z 20210730.00Z 20210829.00Z 20210928.00Z \
+    #20210302.00Z 20210401.00Z 20210501.00Z 20210531.00Z 20210630.00Z 20210730.00Z 20210829.00Z 20210928.00Z \
 	#20211028.00Z 20211127.00Z 20220101.00Z 20220131.00Z \
 	#20220302.00Z 20220401.00Z 20220501.00Z 20220531.00Z 20220630.00Z 20220730.00Z 20220829.00Z 20220928.00Z \
 	#20221028.00Z 20221127.00Z 20230101.00Z 20230131.00Z \
@@ -1596,7 +1621,7 @@ foreach DATE ( \
 	## ----------------------------------------------------------------------------------------------------- \
 	## every 5 days cases without monthly cases \
 	## ----------------------------------------------------------------------------------------------------- \
-	#20210307.00Z 20210312.00Z 20210317.00Z 20210322.00Z 20210327.00Z 20210406.00Z 20210411.00Z 20210416.00Z \
+    #20210307.00Z 20210312.00Z 20210317.00Z 20210322.00Z 20210327.00Z 20210406.00Z 20210411.00Z 20210416.00Z \
 	#20210421.00Z 20210426.00Z 20210506.00Z 20210511.00Z 20210516.00Z 20210521.00Z 20210526.00Z 20210605.00Z \
 	#20210610.00Z 20210615.00Z 20210620.00Z 20210625.00Z 20210705.00Z 20210710.00Z 20210715.00Z 20210720.00Z \
 	#20210725.00Z 20210801.00Z 20210804.00Z 20210809.00Z 20210814.00Z 20210819.00Z 20210824.00Z 20210903.00Z \
@@ -1604,7 +1629,7 @@ foreach DATE ( \
 	#20211023.00Z 20211102.00Z 20211107.00Z 20211112.00Z 20211117.00Z 20211122.00Z 20211202.00Z 20211207.00Z \
 	#20211212.00Z 20211217.00Z 20211222.00Z 20211227.00Z 20220106.00Z 20220111.00Z 20220116.00Z 20220121.00Z \
 	#20220126.00Z 20220205.00Z 20220210.00Z 20220215.00Z 20220220.00Z 20220225.00Z \
-	#20220307.00Z 20220312.00Z 20220317.00Z 20220322.00Z 20220327.00Z 20220406.00Z 20220411.00Z 20220416.00Z \
+    #20220307.00Z 20220312.00Z 20220317.00Z 20220322.00Z 20220327.00Z 20220406.00Z 20220411.00Z 20220416.00Z \
 	#20220421.00Z 20220426.00Z 20220506.00Z 20220511.00Z 20220516.00Z 20220521.00Z 20220526.00Z 20220605.00Z \
 	#20220610.00Z 20220615.00Z 20220620.00Z 20220625.00Z 20220705.00Z 20220710.00Z 20220715.00Z 20220720.00Z \
 	#20220725.00Z 20220801.00Z 20220804.00Z 20220809.00Z 20220814.00Z 20220819.00Z 20220824.00Z 20220903.00Z \
@@ -1612,7 +1637,7 @@ foreach DATE ( \
 	#20221023.00Z 20221102.00Z 20221107.00Z 20221112.00Z 20221117.00Z 20221122.00Z 20221202.00Z 20221207.00Z \
 	#20221212.00Z 20221217.00Z 20221222.00Z 20221227.00Z 20230106.00Z 20230111.00Z 20230116.00Z 20230121.00Z \
 	#20230126.00Z 20230205.00Z 20230210.00Z 20230215.00Z 20230220.00Z 20230225.00Z \
-	#20230307.00Z 20230312.00Z 20230317.00Z 20230322.00Z 20230327.00Z 20230406.00Z 20230411.00Z 20230416.00Z \
+    #20230307.00Z 20230312.00Z 20230317.00Z 20230322.00Z 20230327.00Z 20230406.00Z 20230411.00Z 20230416.00Z \
 	#20230421.00Z 20230426.00Z 20230506.00Z 20230511.00Z 20230516.00Z 20230521.00Z 20230526.00Z 20230605.00Z \
 	#20230610.00Z 20230615.00Z 20230620.00Z 20230625.00Z 20230705.00Z 20230710.00Z 20230715.00Z 20230720.00Z \
 	#20230725.00Z 20230801.00Z 20230804.00Z 20230809.00Z 20230814.00Z 20230819.00Z 20230824.00Z 20230903.00Z \
