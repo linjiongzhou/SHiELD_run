@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C1536_20150801.00Z
+#SBATCH --job-name=C48_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=16:00:00
+#SBATCH --time=04:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=192
-#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
+#SBATCH --nodes=1
+#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -31,7 +31,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C1536"
+set CASE = "C48"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -42,8 +42,8 @@ if ( $CLU == 'c5' ) then
   set HYPT = "off"         # choices:  on, off  (controls hyperthreading)
 endif
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "send"    # choices:  send, no_send
-#set NUM_TOT = 1         # run cycle, 1: no restart
+set NO_SEND = "no_send"    # choices:  send, no_send
+set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
 set SCRIPT = "${SCRIPT_AREA}/$SLURM_JOB_NAME"
@@ -69,7 +69,7 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${
 # input filesets
 set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set FIX  = ${INPUT_DATA}/fix.v202104
-set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -79,13 +79,13 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "1537"
-    set npy = "1537"
+    set npx = "49"
+    set npy = "49"
     set npz = "91"
-    set layout_x = $LX
-    set layout_y = $LY
-    set io_layout = "2,2"
-    set nthreads = $NT
+    set layout_x = "2" 
+    set layout_y = "2" 
+    set io_layout = "1,1"
+    set nthreads = "2"
 
     # blocking factor used for threading and general physics performance
     set blocksize = "32"
@@ -94,7 +94,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set months = "0"
     set days = "10"
     set hours = "0"
-    set dt_atmos = "150"
+    set dt_atmos = "450"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
@@ -104,7 +104,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
-    set ncep_levs = "128"
+    set ncep_levs = "127"
     set gfs_dwinds = ".true."
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
@@ -123,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set no_dycore = ".false."
     set dycore_only = ".false."
     set chksum_debug = ".false."
-    set print_freq = "6"
+    set print_freq = "-1"
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
@@ -134,7 +134,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set consv_te = "1."
         # time step parameters in FV3
       set k_split = "2"
-      set n_split = "8"
+      set n_split = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -301,7 +301,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 12000000,
+       domains_stack_size = 3000000,
        print_memory_usage = .false.
 /
 
@@ -442,10 +442,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
-       limit_shal_conv = .true.
-       cdmbgwd        = 5.0, 0.25
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -455,8 +454,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 0.5
-       xkzm_h         = 0.5
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -466,11 +465,6 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       dxcrtas        = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
 /
 
  &ocean_nml
@@ -482,7 +476,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
@@ -538,20 +532,14 @@ cat >! input.nml <<EOF
 /
 
  &sa_sas_nml
-       dxcrtas        = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-       limit_shal_conv = .true.
 /
 
  &sa_tke_edmf_nml
        dspheat        = .true.
        do_dk_hb19     = .false.
        xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
+	   xkzm_mo        = 1.5
+       xkzm_ho        = 1.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -564,7 +552,7 @@ cat >! input.nml <<EOF
 /
 
  &sa_gwd_nml
-       cdmbgwd        = 5.0, 0.25
+       cdmbgwd        = 3.5, 0.25
 /
 
  &diag_manager_nml 
