@@ -140,10 +140,15 @@ set title = "c1536_gfsic_rt2024_aero"
 #set title = "c1536_gfsic_rt2024_aero_inline"
 #set title = "c3072_gfsic_rt2024_aero"
 
+#set title = "c768_ifsic_rt2024_aero"
+#set title = "c1536_ifsic_rt2024_aero"
+
 #set title = "c1536_gfsic_rt2023_aero_f5"
 
 #set title = "DP_gfsic_rt2023_cpsd"
 #set title = "DP_gfsic_rt2023_cpsd_fromprerun"
+#set title = "DP_gfsic_rt2024_cpsd"
+#set title = "DP_gfsic_rt2024_cpsd_inline"
 
 #set basescript = "RUN_IPDv4_${title}.csh"
 #set basescript = "Z_RUN_${title}.csh"
@@ -639,7 +644,13 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2024_e005_reff_new" # SHiELD 2024
 #set MEMO = "_RT2024_e006_shal5" # SHiELD 2024
 #set MEMO = "_RT2024_e006_mp" # SHiELD 2024
-set MEMO = "_RT2024_e007" # SHiELD 2024
+#set MEMO = "_RT2024_e007" # SHiELD 2024
+#set MEMO = "_RT2024_e008" # SHiELD 2024
+#set MEMO = "_RT2024_e009" # SHiELD 2024
+#set MEMO = "_RT2024_e010" # SHiELD 2024
+#set MEMO = "_RT2024_e011" # SHiELD 2024
+#set MEMO = "_RT2024_e012" # SHiELD 2024
+set MEMO = "_RT2024_e013" # SHiELD 2024
 
 #set EXE = "x"
 #set EXE = "RT2018.bugfix.x" # 2018RT,radiation bugfix
@@ -953,7 +964,13 @@ set MEMO = "_RT2024_e007" # SHiELD 2024
 #set EXE = "RT2024.e004.x" # SHiELD 2024
 #set EXE = "RT2024.e005.x" # SHiELD 2024
 #set EXE = "RT2024.e006.x" # SHiELD 2024
-set EXE = "RT2024.e007.x" # SHiELD 2024
+#set EXE = "RT2024.e007.x" # SHiELD 2024
+#set EXE = "RT2024.e008.x" # SHiELD 2024
+#set EXE = "RT2024.e009.x" # SHiELD 2024
+#set EXE = "RT2024.e010.x" # SHiELD 2024
+#set EXE = "RT2024.e011.x" # SHiELD 2024
+#set EXE = "RT2024.e012.x" # SHiELD 2024
+set EXE = "RT2024.e013.x" # SHiELD 2024
 
 #set reso = "DP"
 #set reso = "C48"
@@ -969,9 +986,11 @@ set reso = "C1536"
 #set cluster = "c3"
 #set cluster = "c4"
 set cluster = "c5"
+#set cluster = "c6"
 
 set account = "gfdl_w"
 #set account = "nggps_gfdl"
+#set account = "bil-coastal-gfdl"
 
 set qos = "normal"
 #set qos = "urgent"
@@ -980,7 +999,7 @@ set qos = "normal"
 set NUM_TOT = 1
 
 # node request should not exceed 299 for c3, 454 for c4, and 512 for c5.
-# 32 cores per node on c3, 36 cores per node on c4, 128 cores per node on c5
+# 32 cores per node on c3, 36 cores per node on c4, 128 cores per node on c5, 192 cores per node on c6
 set LX = 0
 set LY = 0
 set NT = 0
@@ -1148,6 +1167,65 @@ if ( $cluster == "c5" ) then
 	endif
 	if ( $reso == "C3072" ) then
 		set nodes = 432
+		set LX = 48
+		set LY = 48
+		set NT = 4
+	endif
+endif
+if ( $cluster == "c6" ) then
+	if ( $reso == "DP" ) then
+		set nodes = 12
+		set LX = 24
+		set LY = 24
+		set NT = 4
+	endif
+	if ( $reso == "C48" ) then
+		set nodes = 1
+		set LX = 2
+		set LY = 2
+		set NT = 4
+	endif
+	if ( $reso == "C384" ) then
+		set nodes = 72
+		set LX = 24
+		set LY = 24
+		set NT = 4
+	endif
+	if ( $reso == "C768" ) then
+		set nodes = 72
+		set LX = 24
+		set LY = 24
+		set NT = 4
+		# COSP
+		#set nodes = 48
+		#set LX = 24
+		#set LY = 16
+		#set NT = 4
+	endif
+	if ( $reso == "C768n5r10" ) then
+		set nodes = 36
+		set LX = 12
+		set LY = 16
+		set NT = 4
+	endif
+	if ( $reso == "C1152" ) then
+		set nodes = 72
+		set LX = 24
+		set LY = 24
+		set NT = 4
+	endif
+	if ( $reso == "C1536" ) then
+		#set nodes = 288
+		set nodes = 144
+		#set nodes = 72
+		set LX = 48
+		set LY = 48
+		#set NT = 4
+		set NT = 2
+		#set NT = 1
+	endif
+	if ( $reso == "C3072" ) then
+		set nodes = 288
 		set LX = 48
 		set LY = 48
 		set NT = 4

@@ -1,12 +1,12 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f6/gfdl/proj-shared/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=DP_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
 #SBATCH --time=16:00:00
 #SBATCH --cluster=c4
 #SBATCH --nodes=9
-#SBATCH --qos=normal
 #SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=18,LY=18,NT=2,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
@@ -14,8 +14,14 @@
 
 set echo
 
-set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
-set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
+if ( $CLU == 'c5' ) then
+  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
+endif
+if ( $CLU == 'c6' ) then
+  set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
   set RUN_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_run"
@@ -23,6 +29,10 @@ endif
 if ( $CLU == 'c5' ) then
   set BUILD_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_build"
   set RUN_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_run"
+endif
+if ( $CLU == 'c6' ) then
+  set BUILD_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_run"
 endif
 
 # release number for the script
@@ -39,7 +49,7 @@ set CASE = "DP"
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 endif
-if ( $CLU == 'c5' ) then
+if ( $CLU == 'c5' || $CLU == 'c6' ) then
   set HYPT = "off"         # choices:  on, off  (controls hyperthreading)
 endif
 set COMP = "prod"       # choices:  debug, repro, prod
@@ -68,7 +78,12 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set FIX  = ${INPUT_DATA}/fix.v202104
+if ( $CLU == 'c5' ) then
+  set FIX  = ${INPUT_DATA}/fix.v202104
+endif
+if ( $CLU == 'c6' ) then
+  set FIX  = ${INPUT_DATA}/emc.glopara/fix.v20231023/am/20220805
+endif
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl

@@ -1,5 +1,6 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f6/gfdl/proj-shared/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=C1536_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
@@ -13,8 +14,14 @@
 
 set echo
 
-set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
-set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
+if ( $CLU == 'c5' ) then
+  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
+endif
+if ( $CLU == 'c6' ) then
+  set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
   set RUN_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_run"
@@ -22,6 +29,10 @@ endif
 if ( $CLU == 'c5' ) then
   set BUILD_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_build"
   set RUN_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_run"
+endif
+if ( $CLU == 'c6' ) then
+  set BUILD_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_run"
 endif
 
 # release number for the script
@@ -38,7 +49,7 @@ set CASE = "C1536"
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set HYPT = "on"         # choices:  on, off  (controls hyperthreading)
 endif
-if ( $CLU == 'c5' ) then
+if ( $CLU == 'c5' || $CLU == 'c6' ) then
   set HYPT = "off"         # choices:  on, off  (controls hyperthreading)
 endif
 set COMP = "prod"       # choices:  debug, repro, prod
@@ -68,7 +79,12 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${
 
 # input filesets
 set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
-set FIX  = ${INPUT_DATA}/fix.v202104
+if ( $CLU == 'c5' ) then
+  set FIX  = ${INPUT_DATA}/fix.v202104
+endif
+if ( $CLU == 'c6' ) then
+  set FIX  = ${INPUT_DATA}/emc.glopara/fix.v20231023/am/20220805
+endif
 set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
@@ -247,9 +263,19 @@ cp -rf ${GRID}/* INPUT/
 
 # aerosol data
 if ( $io_layout == "1,1" ) then
+  if ( $CLU == 'c5' ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+  endif
+  if ( $CLU == 'c6' ) then
+	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+  endif
 else
+  if ( $CLU == 'c5' ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+  endif
+  if ( $CLU == 'c6' ) then
+	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+  endif
 endif
 
 # GFS FIX data
@@ -471,6 +497,7 @@ cat >! input.nml <<EOF
        c1_deep        = 0.002
        c0s_shal       = 0.002
        c1_shal        = 0.002
+       scale_awareness_factor = 2.0
 /
 
  &ocean_nml

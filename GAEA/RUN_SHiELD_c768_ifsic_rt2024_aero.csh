@@ -1,26 +1,25 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 ####SBATCH --output=/gpfs/f6/gfdl/proj-shared/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C1536_20150801.00Z
+#SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=06:00:00
+#SBATCH --time=03:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=192
-#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
+#SBATCH --nodes=64
+#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,LY=16,NT=4,NUM_TOT=1,ALL
 
-# This script is optimized for GFDL MP runs using GFS ICs
+# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
 # Linjiong.Zhou@noaa.gov
 
 set echo
 
-if ( $CLU == 'c5' ) then
-  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
-  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
-endif
 if ( $CLU == 'c6' ) then
   set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
   set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+else
+  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
 endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
@@ -42,7 +41,7 @@ set RELEASE = "`cat ${BUILD_AREA}/release`"
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C1536"
+set CASE = "C768"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -78,14 +77,22 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
+if ( $CLU == 'c5' ) then
+  set EC_data = /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/IFS_IC/EC_data/IFS_AN0_${NAME}.nc
+  set EC_sst_data_dir = /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/IFS_IC/EC_SST_data/${NAME}
+endif
+if ( $CLU == 'c6' ) then
+  set EC_data = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_data/IFS_AN0_${NAME}.nc
+  set EC_sst_data_dir = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_SST_data/${NAME}
+endif
+set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
 endif
 if ( $CLU == 'c6' ) then
   set FIX  = ${INPUT_DATA}/emc.glopara/fix.v20231023/am/20220805
 endif
-set GRID = ${INPUT_DATA}/global.v202012/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -95,12 +102,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "1537"
-    set npy = "1537"
+    set npx = "769"
+    set npy = "769"
     set npz = "91"
     set layout_x = $LX
     set layout_y = $LY
-    set io_layout = "2,2"
+    set io_layout = "1,1"
     set nthreads = $NT
 
     # blocking factor used for threading and general physics performance
@@ -116,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -143,13 +150,13 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".F."
+      set make_nh = ".T."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "2"
+      set k_split = "1"
       set n_split = "8"
     else
       # hydrostatic options
@@ -211,9 +218,18 @@ if (${RESTART_RUN} == "F") then
   # Date specific ICs
   mkdir -p INPUT
   cp -rf ${ICS}/* INPUT/
+  cp -rf $EC_data INPUT/gk03_CF0.nc
+
+  # EC IFS SST data (from IC)
+  set ntile = 6
+  @ tile = 1
+  while ( $tile <= $ntile )
+    cp $EC_sst_data_dir/*_${CASE}_ifs_sst_data.tile${tile}.nc INPUT/ifs_sst_data.tile${tile}.nc
+    @ tile++
+  end
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".T."
+  set nggps_ic = ".F."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -327,7 +343,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 12000000,
+       domains_stack_size = 3000000,
        print_memory_usage = .false.
 /
 
@@ -348,7 +364,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .T.
+       nudge_qv = .F.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -382,6 +398,9 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
+       ecmwf_ic = .T.
+       use_gfsO3 = .F.
+       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -458,10 +477,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
-       limit_shal_conv = .true.
-       cdmbgwd        = 5.0, 0.25
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -471,8 +489,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 0.5
-       xkzm_h         = 0.5
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -481,13 +499,8 @@ cat >! input.nml <<EOF
        cloud_gfdl     = .true.
        do_sat_adj     = .false.
        do_ocean       = .true.
+       use_ifs_ini_sst = .true.
        do_z0_hwrf17_hwonly = .true.
-       dxcrtas        = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-       scale_awareness_factor = 2.0
 /
 
  &ocean_nml
@@ -499,7 +512,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.

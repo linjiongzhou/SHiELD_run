@@ -9,18 +9,17 @@
 #SBATCH --nodes=192
 #SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
 
-# This script is optimized for GFDL MP runs using GFS ICs
+# This script is optimized for GFDL MP runs using IFS ICs from Jan-Huey Chen
 # Linjiong.Zhou@noaa.gov
 
 set echo
 
-if ( $CLU == 'c5' ) then
-  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
-  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
-endif
 if ( $CLU == 'c6' ) then
   set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
   set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+else
+  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
 endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
@@ -78,6 +77,14 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+if ( $CLU == 'c5' ) then
+  set EC_data = /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/IFS_IC/EC_data/IFS_AN0_${NAME}.nc
+  set EC_sst_data_dir = /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/IFS_IC/EC_SST_data/${NAME}
+endif
+if ( $CLU == 'c6' ) then
+  set EC_data = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_data/IFS_AN0_${NAME}.nc
+  set EC_sst_data_dir = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_SST_data/${NAME}
+endif
 set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -116,7 +123,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -143,7 +150,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     if (${TYPE} == "nh") then
       # non-hydrostatic options
-      set make_nh = ".F."
+      set make_nh = ".T."
       set hydrostatic = ".F."
       set phys_hydrostatic = ".F."     # can be tested
       set use_hydro_pressure = ".F."   # can be tested
@@ -211,9 +218,18 @@ if (${RESTART_RUN} == "F") then
   # Date specific ICs
   mkdir -p INPUT
   cp -rf ${ICS}/* INPUT/
+  cp -rf $EC_data INPUT/gk03_CF0.nc
+
+  # EC IFS SST data (from IC)
+  set ntile = 6
+  @ tile = 1
+  while ( $tile <= $ntile )
+    cp $EC_sst_data_dir/*_${CASE}_ifs_sst_data.tile${tile}.nc INPUT/ifs_sst_data.tile${tile}.nc
+    @ tile++
+  end
 
   # set variables in input.nml for initial run
-  set nggps_ic = ".T."
+  set nggps_ic = ".F."
   set mountain = ".F."
   set external_ic = ".T."
   set warm_start = ".F."
@@ -348,7 +364,7 @@ cat >! input.nml <<EOF
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .T.
+       nudge_qv = .F.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -382,6 +398,9 @@ cat >! input.nml <<EOF
        external_ic = $external_ic
        gfs_phil = $gfs_phil
        nggps_ic = $nggps_ic
+       ecmwf_ic = .T.
+       use_gfsO3 = .F.
+       res_latlon_dynamics = 'INPUT/gk03_CF0.nc'
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -481,6 +500,7 @@ cat >! input.nml <<EOF
        cloud_gfdl     = .true.
        do_sat_adj     = .false.
        do_ocean       = .true.
+       use_ifs_ini_sst = .true.
        do_z0_hwrf17_hwonly = .true.
        dxcrtas        = 1.e3
        c0s_deep       = 0.002
