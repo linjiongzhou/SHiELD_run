@@ -409,6 +409,7 @@ cat >! input.nml <<EOF
        do_inline_cnv = .T.
        do_inline_gwd = .T.
        inline_cnv_flag = 2
+       inline_pbl_flag = 1
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16
@@ -565,7 +566,15 @@ cat >! input.nml <<EOF
 /
 
  &sa_sas_nml
-       dxcrtas        = 1.e3
+       dxcrtas_deep   = 1.e3
+       c0s_deep       = 0.002
+       c1_deep        = 0.002
+       c0s_shal       = 0.002
+       c1_shal        = 0.002
+/
+
+ &sa_aamf_nml
+       dxcrtas_deep   = 1.e3
        c0s_deep       = 0.002
        c1_deep        = 0.002
        c0s_shal       = 0.002
@@ -574,6 +583,23 @@ cat >! input.nml <<EOF
 /
 
  &sa_tke_edmf_nml
+       dspheat        = .true.
+       do_dk_hb19     = .false.
+       xkzinv         = 0.0
+	   xkzm_mo        = 0.5
+       xkzm_ho        = 0.5
+	   xkzm_ml        = 1.0
+       xkzm_hl        = 1.0
+	   xkzm_mi        = 1.5
+       xkzm_hi        = 1.5
+       cap_k0_land    = .false.
+       rlmx           = 500.0
+       redrag         = .true.
+       do_z0_hwrf17_hwonly = .true.
+       ivegsrc        = 1
+/
+
+ &sa_tke_edmf_new_nml
        dspheat        = .true.
        do_dk_hb19     = .false.
        xkzinv         = 0.0
