@@ -722,6 +722,9 @@ if ($NO_SEND == "send") then
     find $WORKDIR/rundir -maxdepth 1 -type f -regex '.*.nc.....' -exec mv {} $dateDir \;
 
     cd $dateDir
+      if ( ! -d ${begindate}_atmos3d ) mkdir -p ${begindate}_atmos3d
+      mv atmos3d*.nc* ${begindate}_atmos3d
+      mv ${begindate}_atmos3d ../.
       if ( ! -d ${begindate}_nggps3d ) mkdir -p ${begindate}_nggps3d
       mv nggps3d*.nc* ${begindate}_nggps3d
       mv ${begindate}_nggps3d ../.
@@ -738,6 +741,7 @@ if ($NO_SEND == "send") then
     cd $WORKDIR/rundir
 
     sbatch --export=source=$WORKDIR/history/$begindate,destination=gfdl:$gfdl_archive/history/$begindate,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_atmos3d,destination=gfdl:$gfdl_archive/history/${begindate}_atmos3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_nggps3d,destination=gfdl:$gfdl_archive/history/${begindate}_nggps3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
