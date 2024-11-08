@@ -136,6 +136,8 @@
 #set title = "c48_gfsic_rt2024_aero_cosp"
 #set title = "c384_gfsic_rt2024_aero"
 #set title = "c768_gfsic_rt2024_aero"
+#set title = "c768n5r10_gfsic_rt2024_aero_old"
+#set title = "c768n5r10_gfsic_rt2024_aero"
 set title = "c1536_gfsic_rt2024_aero"
 #set title = "c1536_gfsic_rt2024_aero_inline"
 #set title = "c3072_gfsic_rt2024_aero"
@@ -1144,10 +1146,15 @@ if ( $cluster == "c5" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 36
-		set LX = 12
-		set LY = 16
+		set nodes = 176
+		set LX = 24
+		set LY = 24
 		set NT = 4
+        # when using the following setting, layout_x_g2 = 24, layout_y_g2 = 40 must be set in the runscript
+        #set nodes = 78
+		#set LX = 16
+		#set LY = 16
+		#set NT = 4
 	endif
 	if ( $reso == "C1152" ) then
 		set nodes = 108
@@ -1203,10 +1210,15 @@ if ( $cluster == "c6" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 36
-		set LX = 12
-		set LY = 16
+		set nodes = 117
+		set LX = 24
+		set LY = 24
 		set NT = 4
+        # when using the following setting, layout_x_g2 = 24, layout_y_g2 = 40 must be set in the runscript
+        #set nodes = 52
+		#set LX = 16
+		#set LY = 16
+		#set NT = 4
 	endif
 	if ( $reso == "C1152" ) then
 		set nodes = 72
@@ -1299,6 +1311,11 @@ foreach DATE ( \
 	#20210827.00Z \
 	#20220829.00Z \
 	#20210321.12Z \
+	## ----------------------------------------------------------------------------------------------------- \
+    # C-SHiELD 2023 cases
+    #20230302.00Z 20230324.00Z 20230404.00Z 20230415.00Z 20230419.00Z 20230425.00Z 20230506.00Z 20230518.00Z \
+    #20230611.00Z 20230615.00Z 20230621.00Z 20230628.00Z 20230719.00Z 20230728.00Z 20230805.00Z 20230811.00Z \
+    #20230923.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	#20150101.00Z 20150106.00Z 20150111.00Z 20150116.00Z 20150121.00Z 20150126.00Z 20150131.00Z 20150205.00Z \
 	#20150210.00Z 20150215.00Z 20150220.00Z 20150225.00Z 20150302.00Z 20150307.00Z 20150312.00Z 20150317.00Z \
