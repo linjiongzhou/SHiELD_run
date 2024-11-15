@@ -136,6 +136,7 @@ set DATE = "20210401.00Z"
 #set cluster = "c3"
 #set cluster = "c4"
 set cluster = "c5"
+#set cluster = "c6"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
@@ -199,6 +200,25 @@ if ( $cluster == "c5" ) then
 	     s#EXE=x#EXE='$EXE'#g \
 	     s#SBATCH --cluster=c4#SBATCH --cluster=c5#g \
 	     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c5#g \
+	     s#set COMP = "prod"#set COMP = "debug"#g \
+	     s#set days = "10"#set days = "0"#g \
+	     s#set hours = "0"#set hours = "2"#g \
+	     s#set layout_x = "2"#set layout_x = "4"#g \
+	     s#set layout_y = "2"#set layout_y = "4"#g \
+	     s#set nthreads = "2"#set nthreads = "1"#g \
+	     s#set NUM_TOT = 1#set NUM_TOT = 1#g \
+	     s#set chksum_debug = ".false."#set chksum_debug = ".true."#g \
+	     s#fv_debug = .F.#fv_debug = .T.#g' \
+	$basescript >! ${runname}.csh
+endif
+
+# c48 c6
+if ( $cluster == "c6" ) then
+	sed 's#NAME=20150801.00Z#NAME='$DATE'#g \
+	     s#MEMO=_RT2018#MEMO='$MEMO'#g \
+	     s#EXE=x#EXE='$EXE'#g \
+	     s#SBATCH --cluster=c4#SBATCH --cluster=c6#g \
+	     s#SBATCH --export=CLU=c4#SBATCH --export=CLU=c6#g \
 	     s#set COMP = "prod"#set COMP = "debug"#g \
 	     s#set days = "10"#set days = "0"#g \
 	     s#set hours = "0"#set hours = "2"#g \

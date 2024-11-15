@@ -125,7 +125,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # run length
     set months = "0"
-    set days = "3"
+    set days = "1"
     set hours = "0"
     set dt_atmos = "150"
 
