@@ -38,6 +38,11 @@ endif
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
 
+if ( ! $?COMPILER  ) then
+  set COMPILER = "intel"
+endif
+source ${BUILD_AREA}/site/environment.${COMPILER}.csh
+
 # case specific details
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit

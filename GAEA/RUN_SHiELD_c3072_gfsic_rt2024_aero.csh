@@ -38,6 +38,11 @@ endif
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
 
+if ( ! $?COMPILER  ) then
+  set COMPILER = "intel"
+endif
+source ${BUILD_AREA}/site/environment.${COMPILER}.csh
+
 # case specific details
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
@@ -210,7 +215,7 @@ if (${RESTART_RUN} == "F") then
 
   # Date specific ICs
   mkdir -p INPUT
-  ln -sf ${ICS}/* INPUT/
+  cp -rf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
   set nggps_ic = ".T."
@@ -259,47 +264,47 @@ cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # Grid and orography data
-ln -sf ${GRID}/* INPUT/
+cp -rf ${GRID}/* INPUT/
 
 # aerosol data
 if ( $io_layout == "1,1" ) then
   if ( $CLU == 'c5' ) then
-	ln -sf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	ln -sf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
 else
   if ( $CLU == 'c5' ) then
-	ln -sf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	ln -sf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
 endif
 
 # GFS FIX data
-ln -sf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
-ln -sf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
-ln -sf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
-ln -sf $FIX/global_sfc_emissivity_idx.txt INPUT/sfc_emissivity_idx.txt
-ln -sf $FIX/global_co2historicaldata_glob.txt INPUT/co2historicaldata_glob.txt
-ln -sf $FIX/co2monthlycyc.txt INPUT/co2monthlycyc.txt
+cp -rf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
+cp -rf $FIX/global_h2o_pltc.f77 INPUT/global_h2oprdlos.f77
+cp -rf $FIX/global_solarconstant_noaa_an.txt INPUT/solarconstant_noaa_an.txt
+cp -rf $FIX/global_sfc_emissivity_idx.txt INPUT/sfc_emissivity_idx.txt
+cp -rf $FIX/global_co2historicaldata_glob.txt INPUT/co2historicaldata_glob.txt
+cp -rf $FIX/co2monthlycyc.txt INPUT/co2monthlycyc.txt
 foreach file ( $FIX/fix_co2_proj/global_co2historicaldata_????.txt )
-	ln -sf $file INPUT/`echo $file:t | sed s/global_co2historicaldata/co2historicaldata/g`
+	cp -rf $file INPUT/`echo $file:t | sed s/global_co2historicaldata/co2historicaldata/g`
 end
-ln -sf $FIX/global_climaeropac_global.txt INPUT/aerosol.dat
+cp -rf $FIX/global_climaeropac_global.txt INPUT/aerosol.dat
 foreach file ( $FIX/global_volcanic_aerosols_????-????.txt )
-	ln -sf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
+	cp -rf $file INPUT/`echo $file:t | sed s/global_volcanic_aerosols/volcanic_aerosols/g`
 end
-ln -sf $FIX_bqx/mld/mld_DR003_c1m_reg2.0.grb INPUT/
-ln -sf $FIX/global_glacier.2x2.grb INPUT/
-ln -sf $FIX/global_maxice.2x2.grb INPUT/
-ln -sf $FIX/RTGSST.1982.2012.monthly.clim.grb INPUT/
-ln -sf $FIX/global_snoclim.1.875.grb INPUT/
-ln -sf $FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb INPUT/
-ln -sf $FIX/global_soilmgldas.t1534.3072.1536.grb INPUT/
-ln -sf $FIX/global_slmask.t1534.3072.1536.grb INPUT/
+cp -rf $FIX_bqx/mld/mld_DR003_c1m_reg2.0.grb INPUT/
+cp -rf $FIX/global_glacier.2x2.grb INPUT/
+cp -rf $FIX/global_maxice.2x2.grb INPUT/
+cp -rf $FIX/RTGSST.1982.2012.monthly.clim.grb INPUT/
+cp -rf $FIX/global_snoclim.1.875.grb INPUT/
+cp -rf $FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb INPUT/
+cp -rf $FIX/global_soilmgldas.t1534.3072.1536.grb INPUT/
+cp -rf $FIX/global_slmask.t1534.3072.1536.grb INPUT/
 
 cat >! input.nml <<EOF
  &amip_interp_nml

@@ -38,6 +38,11 @@ endif
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
 
+if ( ! $?COMPILER  ) then
+  set COMPILER = "intel"
+endif
+source ${BUILD_AREA}/site/environment.${COMPILER}.csh
+
 # case specific details
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
@@ -401,6 +406,7 @@ cat >! input.nml <<EOF
        do_inline_cnv = .T.
        do_inline_gwd = .T.
        inline_cnv_flag = 2
+       inline_pbl_flag = 1
        !consv_checker = .T.
        !te_err = 1.e-16
        !tw_err = 1.e-16

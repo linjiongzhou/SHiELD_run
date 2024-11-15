@@ -14,12 +14,13 @@
 
 set echo
 
+if ( $CLU == 'c5' ) then
+  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
+endif
 if ( $CLU == 'c6' ) then
   set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
   set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
-else
-  set BASEDIR    = "/gpfs/f5/gfdl_w/scratch/${USER}/SHiELD"
-  set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
 endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
@@ -36,6 +37,11 @@ endif
 
 # release number for the script
 set RELEASE = "`cat ${BUILD_AREA}/release`"
+
+if ( ! $?COMPILER  ) then
+  set COMPILER = "intel"
+endif
+source ${BUILD_AREA}/site/environment.${COMPILER}.csh
 
 # case specific details
 set TYPE = "nh"         # choices:  nh, hydro
