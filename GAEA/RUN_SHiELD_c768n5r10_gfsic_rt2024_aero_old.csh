@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
-####SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --output=/gpfs/f6/gfdl/proj-shared/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+#SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
@@ -20,8 +20,8 @@ if ( $CLU == 'c5' ) then
   set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
 endif
 if ( $CLU == 'c6' ) then
-  set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
-  set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+  set BASEDIR    = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
 endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
@@ -32,8 +32,8 @@ if ( $CLU == 'c5' ) then
   set RUN_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_run"
 endif
 if ( $CLU == 'c6' ) then
-  set BUILD_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_build"
-  set RUN_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_run"
+  set BUILD_AREA = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD/SHiELD_run"
 endif
 
 # release number for the script
@@ -90,8 +90,8 @@ if ( $CLU == 'c5' ) then
   set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
 endif
 if ( $CLU == 'c6' ) then
-  set ICS  = /gpfs/f6/gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f6/gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
 endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -295,14 +295,14 @@ if ( $io_layout == "1,1" ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
 else
   if ( $CLU == 'c5' ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
 endif
 
@@ -868,14 +868,10 @@ cat >! input_nest02.nml <<EOF
        c_paut = 0.5
        rthresh = 10.0e-6
        c_pracw = 0.75
-       !c_psacw = 1.0
-       !c_pgacw = 1.e-4
-       !c_praci = 1.0
+       c_pgacw = 1.0
        c_psaci = 0.05
-       !c_pgaci = 0.05
+       c_pgaci = 0.05
        c_pgacs = 0.2
-       ccn_l = 200.
-       ccn_o = 70.
        do_hail = .true.
        do_cond_timescale = .true.
        delay_cond_evap = .true.
@@ -1052,7 +1048,7 @@ if ($NO_SEND == "send") then
 
       ln -sf $restart_file/* $WORKDIR/rundir/RESTART/
 
-      sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+      #sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
    endif
 

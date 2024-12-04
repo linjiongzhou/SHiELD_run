@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-####SBATCH --output=/gpfs/f6/gfdl/proj-shared/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
@@ -19,8 +19,8 @@ if ( $CLU == 'c5' ) then
   set INPUT_DATA = "/gpfs/f5/gfdl_w/proj-shared/fvGFS_INPUT_DATA"
 endif
 if ( $CLU == 'c6' ) then
-  set BASEDIR    = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD"
-  set INPUT_DATA = "/gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
+  set BASEDIR    = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD"
+  set INPUT_DATA = "/gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA"
 endif
 if ( $CLU == 'c3' || $CLU == 'c4' ) then
   set BUILD_AREA = "/lustre/f2/dev/${USER}/SHiELD/SHiELD_build"
@@ -31,8 +31,8 @@ if ( $CLU == 'c5' ) then
   set RUN_AREA = "/ncrc/proj/gfdl/${USER}/SHiELD/SHiELD_run"
 endif
 if ( $CLU == 'c6' ) then
-  set BUILD_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_build"
-  set RUN_AREA = "/gpfs/f6/gfdl/proj-shared/${USER}/SHiELD/SHiELD_run"
+  set BUILD_AREA = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD/SHiELD_build"
+  set RUN_AREA = "/gpfs/f6/bil-coastal-gfdl/scratch/${USER}/SHiELD/SHiELD_run"
 endif
 
 # release number for the script
@@ -88,8 +88,8 @@ if ( $CLU == 'c5' ) then
   set EC_sst_data_dir = /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/IFS_IC/EC_SST_data/${NAME}
 endif
 if ( $CLU == 'c6' ) then
-  set EC_data = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_data/IFS_AN0_${NAME}.nc
-  set EC_sst_data_dir = /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_SST_data/${NAME}
+  set EC_data = /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_data/IFS_AN0_${NAME}.nc
+  set EC_sst_data_dir = /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/IFS_ICs/EC_SST_data/${NAME}
 endif
 set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
@@ -289,14 +289,14 @@ if ( $io_layout == "1,1" ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
   endif
 else
   if ( $CLU == 'c5' ) then
 	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
   if ( $CLU == 'c6' ) then
-	cp -rf /gpfs/f6/gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
   endif
 endif
 
@@ -720,7 +720,7 @@ if ($NO_SEND == "send") then
 
       ln -sf $restart_file/* $WORKDIR/rundir/RESTART/
 
-      sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+      #sbatch --export=source=$WORKDIR/restart/$enddate,destination=gfdl:$gfdl_archive/restart/$enddate,extension=tar,type=restart --output=$HOME/STDOUT/%x.o%j $SEND_FILE
 
    endif
 
