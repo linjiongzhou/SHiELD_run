@@ -98,8 +98,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "145"
-    set npy = "145"
+    set npx = "217"
+    set npy = "217"
     set npz = "50"
     set layout_x = $LX
     set layout_y = $LY
@@ -107,7 +107,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set nthreads = $NT
 
     # blocking factor used for threading and general physics performance
-    set blocksize = "32"
+    set blocksize = "36"
 
     # run length
     set months = "0"
@@ -459,7 +459,8 @@ cat >! input.nml <<EOF
        cnvcld         = .false.
        imfshalcnv     = 3
        imfdeepcnv     = 3
-       cdmbgwd        = 3.5, 0.25
+       limit_shal_conv = .true.
+       cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -469,8 +470,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 1.5
-       xkzm_h         = 1.5
+	   xkzm_m         = 0.5
+       xkzm_h         = 0.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5

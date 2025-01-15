@@ -80,7 +80,7 @@ echo ${num} >! ${RST_COUNT}
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
-set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
+set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
 if ( $CLU == 'c5' ) then
@@ -400,18 +400,7 @@ cat >! input.nml <<EOF
 
  &integ_phys_nml
        do_sat_adj = .F.
-       do_fast_phys = .T.
        do_inline_mp = .T.
-       do_inline_pbl = .T.
-       do_inline_cnv = .T.
-       do_inline_gwd = .T.
-       inline_cnv_flag = 2
-       inline_pbl_flag = 1
-       !consv_checker = .T.
-       !te_err = 1.e-16
-       !tw_err = 1.e-16
-       !!te_err = 1.e-9
-       !!tw_err = 1.e-9
 /
 
  &coupler_nml
@@ -421,11 +410,18 @@ cat >! input.nml <<EOF
        minutes = $minutes
        seconds = $seconds
        dt_atmos = $dt_atmos
-       dt_ocean = $dt_atmos
+       !dt_ocean = $dt_atmos
        current_date =  $curr_date
        calendar = 'julian'
        atmos_nthreads = $nthreads
        use_hyper_thread = $hyperthread
+       ice_npes = -1
+       land_npes = -1
+       do_ocean = .False.
+       dt_cpld = $dt_atmos
+       do_flux = .False.
+       do_land = .False.
+       do_ice = .False.
 /
 
  &external_ic_nml 
@@ -564,61 +560,6 @@ cat >! input.nml <<EOF
        blini = 1.0
        reiflag = 7
        reifac = 0.8
-/
-
- &sa_sas_nml
-       dxcrtas_deep   = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-/
-
- &sa_aamf_nml
-       dxcrtas_deep   = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-       limit_shal_conv = .true.
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 1.0
-       xkzm_hl        = 1.0
-	   xkzm_mi        = 1.5
-       xkzm_hi        = 1.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_tke_edmf_new_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 1.0
-       xkzm_hl        = 1.0
-	   xkzm_mi        = 1.5
-       xkzm_hi        = 1.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 5.0, 0.25
 /
 
  &diag_manager_nml 

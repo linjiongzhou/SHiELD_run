@@ -1,16 +1,17 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 ####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=DP_20150801.00Z
+#SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=16:00:00
+#SBATCH --time=03:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=9
-#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=18,LY=18,NT=2,NUM_TOT=1,ALL
+#SBATCH --nodes=64
+#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,LY=16,NT=4,NUM_TOT=1,ALL
 
+# This script is designed to run C-SHiELD
 # This script is optimized for GFDL MP runs using GFS ICs
-# Linjiong.Zhou@noaa.gov
+# Kai-Yuan.Cheng@noaa.gov and Linjiong.Zhou@noaa.gov
 
 set echo
 
@@ -47,7 +48,8 @@ source ${BUILD_AREA}/site/environment.${COMPILER}.csh
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "DP"
+set CASE = "C768n5r10"
+set CRES = "C768"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -58,7 +60,7 @@ if ( $CLU == 'c5' || $CLU == 'c6' ) then
   set HYPT = "off"         # choices:  on, off  (controls hyperthreading)
 endif
 set COMP = "prod"       # choices:  debug, repro, prod
-set NO_SEND = "no_send"    # choices:  send, no_send
+set NO_SEND = "send"    # choices:  send, no_send
 #set NUM_TOT = 1         # run cycle, 1: no restart
 
 set SCRIPT_AREA = $PWD
@@ -80,9 +82,17 @@ echo ${num} >! ${RST_COUNT}
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
-set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
+set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+if ( $CLU == 'c5' ) then
+  set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
+endif
+if ( $CLU == 'c6' ) then
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
 endif
@@ -98,30 +108,37 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "217"
-    set npy = "217"
-    set npz = "50"
+    set npx = "769"
+    set npy = "769"
+    set npx_g2 = "2161"
+    set npy_g2 = "1201"
+    set npz = "91"
+    set npz_g2 = "50"
     set layout_x = $LX
     set layout_y = $LY
+    set layout_x_g2 = "36"
+    set layout_y_g2 = "60" 
+    #set layout_x_g2 = "24"
+    #set layout_y_g2 = "40" 
     set io_layout = "1,1"
+    set io_layout_g2 = "1,1"
     set nthreads = $NT
 
     # blocking factor used for threading and general physics performance
-    set blocksize = "36"
+    set blocksize = "32"
+    set blocksize_g2 = "20"
 
     # run length
     set months = "0"
     set days = "1"
     set hours = "0"
-    set minutes = "0"
-    set seconds = "0"
-    set dt_atmos = "5"
+    set dt_atmos = "150"
 
     # set the pre-conditioning of the solution
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -130,9 +147,9 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # variables for gfs diagnostic output intervals and time to zero out time-accumulated data
 #    set fdiag = "6.,12.,18.,24.,30.,36.,42.,48.,54.,60.,66.,72.,78.,84.,90.,96.,102.,108.,114.,120.,126.,132.,138.,144.,150.,156.,162.,168.,174.,180.,186.,192.,198.,204.,210.,216.,222.,228.,234.,240."
-    set fdiag = "0.0125"
-    set fhzer = "0.0125"
-    set fhcyc = "0."
+    set fdiag = "1."
+    set fhzer = "1."
+    set fhcyc = "24."
 
     # determines whether FV3 or GFS physics calculate geopotential
     set gfs_phil = ".false."
@@ -154,8 +171,10 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "2"
+      set k_split = "1"
       set n_split = "8"
+      set k_split_g2 = "4"
+      set n_split_g2 = "10"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -166,6 +185,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
         # time step parameters in FV3
       set k_split = "2"
       set n_split = "6"
+      set k_split_g2 = "4"
+      set n_split_g2 = "10"
     endif
 
     if (${MONO} == "mono" || ${MONO} == "monotonic") then
@@ -190,7 +211,9 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     endif
 
 # when running with threads, need to use the following command
-    @ npes = ${layout_x} * ${layout_y}
+    @ npes_g1 = ${layout_x} * ${layout_y} * 6
+    @ npes_g2 = ${layout_x_g2} * ${layout_y_g2}
+    @ npes = ${npes_g1} + ${npes_g2}
 	@ skip = ${nthreads} / ${div}
 	set run_cmd = "srun --ntasks=$npes --cpus-per-task=$skip ./$executable:t"
 
@@ -215,9 +238,12 @@ if (${RESTART_RUN} == "F") then
 
   # Date specific ICs
   mkdir -p INPUT
+  cp -rf ${ICS}/* INPUT/
 
   # set variables in input.nml for initial run
+  set nggps_ic = ".T."
   set mountain = ".F."
+  set external_ic = ".T."
   set warm_start = ".F."
 
 else
@@ -230,7 +256,9 @@ else
 
   # reset values in input.nml for restart run
   set make_nh = ".F."
+  set nggps_ic = ".F."
   set mountain = ".T."
+  set external_ic = ".F."
   set warm_start = ".T."
   set na_init = 0
 
@@ -250,13 +278,33 @@ cat >! diag_table << EOF
 ${NAME}.${CASE}.${MODE}.${MONO}
 $y $m $d $h 0 0 
 EOF
-cat ${BUILD_AREA}/tables/diag_table_6species_DP >> diag_table
+cat ${BUILD_AREA}/tables/diag_table_6species_hwt >> diag_table
 
 # copy over the other tables and executable
 cp -f ${BUILD_AREA}/tables/data_table data_table
-cp -f ${BUILD_AREA}/tables/field_table_6species field_table
+cp -f ${BUILD_AREA}/tables/field_table_6species_aero field_table
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
+
+# Grid and orography data
+cp -rf ${GRID}/* INPUT/
+
+# aerosol data
+if ( $io_layout == "1,1" ) then
+  if ( $CLU == 'c5' ) then
+	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+  endif
+  if ( $CLU == 'c6' ) then
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc INPUT/
+  endif
+else
+  if ( $CLU == 'c5' ) then
+	cp -rf /gpfs/f5/gfdl_w/proj-shared/Linjiong.Zhou/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+  endif
+  if ( $CLU == 'c6' ) then
+	cp -rf /gpfs/f6/bil-coastal-gfdl/proj-shared/gfdl_w/SHiELD_INPUT_DATA/MERRA2_2015_2023_new/$CASE/*.nc.* INPUT/
+  endif
+endif
 
 # GFS FIX data
 cp -rf $FIX/ozprdlos_2015_new_sbuvO3_tclm15_nuchem.f77 INPUT/global_o3prdlos.f77
@@ -277,19 +325,13 @@ cp -rf $FIX/global_glacier.2x2.grb INPUT/
 cp -rf $FIX/global_maxice.2x2.grb INPUT/
 cp -rf $FIX/RTGSST.1982.2012.monthly.clim.grb INPUT/
 cp -rf $FIX/global_snoclim.1.875.grb INPUT/
-cp -rf $FIX/global_snowfree_albedo.bosu.t1534.3072.1536.rg.grb INPUT/
-cp -rf $FIX/global_albedo4.1x1.grb INPUT/
 cp -rf $FIX/CFSR.SEAICE.1982.2012.monthly.clim.grb INPUT/
-cp -rf $FIX/global_tg3clim.2.6x1.5.grb INPUT/
-cp -rf $FIX/global_vegfrac.0.144.decpercent.grb INPUT/
-cp -rf $FIX/global_vegtype.igbp.t1534.3072.1536.rg.grb INPUT/
-cp -rf $FIX/global_soiltype.statsgo.t1534.3072.1536.rg.grb INPUT/
 cp -rf $FIX/global_soilmgldas.t1534.3072.1536.grb INPUT/
 cp -rf $FIX/global_slmask.t1534.3072.1536.grb INPUT/
-cp -rf $FIX/global_shdmin.0.144x0.144.grb INPUT/
-cp -rf $FIX/global_shdmax.0.144x0.144.grb INPUT/
-cp -rf $FIX/global_slope.1x1.grb INPUT/
-cp -rf $FIX/global_mxsnoalb.uariz.t1534.3072.1536.rg.grb INPUT/
+#Nested grid fix for new files
+foreach i ( INPUT/*.tile7.nc )
+  cp -rf $i ${i:r:r}.nest02.tile7.nc
+end
 
 cat >! input.nml <<EOF
  &amip_interp_nml
@@ -317,15 +359,12 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 30000000,
+       domains_stack_size = 3000000,
        print_memory_usage = .false.
 /
 
- &test_case_nml
-       test_case = 19
-       no_wind = .true.
-       dt_amp = 0.5
-       gaussian_dt = .true.
+ &fv_grid_nml
+       !grid_file = 'INPUT/grid_spec.nc'
 /
 
  &fv_core_nml
@@ -333,19 +372,15 @@ cat >! input.nml <<EOF
        io_layout = $io_layout
        npx      = $npx
        npy      = $npy
-	   dx_const = 500.
-	   dy_const = 500.
-       deglat = 0.0
-       ntiles   = 1
+       ntiles   = 6
        npz    = $npz
-       grid_type = 4
-       is_ideal_case = .T.
+       !grid_type = -1
        make_nh = $make_nh
        fv_debug = .F.
        range_warn = .T.
        reset_eta = .F.
        n_sponge = 30
-       nudge_qv = .F.
+       nudge_qv = .T.
        rf_fast = .F.
        tau = 5.
        rf_cutoff = 7.5e2
@@ -366,19 +401,19 @@ cat >! input.nml <<EOF
        nwat = 6 
        na_init = $na_init
        d_ext = 0.0
-       dnats = 1
+       dnats = 2
        fv_sg_adj = 600
        d2_bg = 0.
-       nord =  2
+       nord =  3
        dddmp = 0.2
        d4_bg = 0.15
-       vtdm4 = 0.01
+       vtdm4 = 0.03
        delt_max = 0.002
        ke_bg = 0.
        do_vort_damp = $do_vort_damp
-       external_ic = .F.
+       external_ic = $external_ic
        gfs_phil = $gfs_phil
-       nggps_ic = .F.
+       nggps_ic = $nggps_ic
        mountain = $mountain
        ncep_ic = .F.
        d_con = $d_con
@@ -396,30 +431,341 @@ cat >! input.nml <<EOF
        warm_start = $warm_start
        no_dycore = $no_dycore
        z_tracer = .T.
+       do_schmidt = .true.
+       target_lat = 39.5
+       target_lon = -97.5
+       stretch_fac = 1.0
 /
 
  &integ_phys_nml
        do_sat_adj = .F.
-       do_fast_phys = .T.
        do_inline_mp = .T.
-       do_inline_pbl = .T.
-       do_inline_cnv = .T.
-       do_inline_gwd = .T.
-       inline_cnv_flag = 2
-       inline_pbl_flag = 1
-       !consv_checker = .T.
-       !te_err = 1.e-16
-       !tw_err = 1.e-16
-       !!te_err = 1.e-9
-       !!tw_err = 1.e-9
+       do_aerosol = .T.
+/
+
+&fv_nest_nml
+       grid_pes = $npes_g1,$npes_g2
+       num_tile_top = 6
+       tile_coarse = 0,6
+       nest_refine = 0,5
+       nest_ioffsets = 999,169
+       nest_joffsets = 999,265
+       p_split = 1
 /
 
  &coupler_nml
        months = $months
        days  = $days
        hours = $hours
-       minutes = $minutes
-       seconds = $seconds
+       dt_atmos = $dt_atmos
+       !dt_ocean = $dt_atmos
+       current_date =  $curr_date
+       calendar = 'julian'
+       atmos_nthreads = $nthreads
+       use_hyper_thread = $hyperthread
+       ice_npes = -1
+       land_npes = -1
+       do_ocean = .False.
+       dt_cpld = $dt_atmos
+       do_flux = .False.
+       do_land = .False.
+       do_ice = .False.
+/
+
+ &external_ic_nml 
+       filtered_terrain = $filtered_terrain
+       levp = $ncep_levs
+       gfs_dwinds = $gfs_dwinds
+       checker_tr = .F.
+       nt_checker = 0
+/
+
+ &gfs_physics_nml
+       fhzero         = $fhzer
+       ldiag3d        = .false.
+       fhcyc          = $fhcyc
+       nst_anl        = .true.
+       use_ufo        = .true.
+       pre_rad        = .false.
+       ncld           = 5
+       zhao_mic       = .false.
+       pdfcld         = .true.
+       fhswr          = 3600.
+       fhlwr          = 3600.
+       ialb           = 1
+       iems           = 1
+       IAER           = 111
+       ico2           = 2
+       isubc_sw       = 2
+       isubc_lw       = 2
+       isol           = 2
+       lwhtr          = .true.
+       swhtr          = .true.
+       cnvgwd         = .true.
+       do_deep        = .true.
+       shal_cnv       = .true.
+       cal_pre        = .false.
+       redrag         = .true.
+       dspheat        = .true.
+       hybedmf        = .false.
+       random_clds    = .false.
+       trans_trac     = .true.
+       cnvcld         = .false.
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
+       cdmbgwd        = 3.5, 0.25
+       prslrd0        = 0.
+       ivegsrc        = 1
+       isot           = 1
+       ysupbl         = .false.
+       satmedmf       = .true.
+       isatmedmf      = 0
+       rlmx           = 500.0
+       do_dk_hb19     = .false.
+       xkzminv        = 0.0
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
+	   xkzm_ml        = 1.0
+       xkzm_hl        = 1.0
+	   xkzm_mi        = 1.5
+       xkzm_hi        = 1.5
+       cap_k0_land    = .false.
+       cloud_gfdl     = .true.
+       do_sat_adj     = .false.
+       do_ocean       = .true.
+       do_z0_hwrf17_hwonly = .true.
+/
+
+ &ocean_nml
+     mld_option       = "obs"
+     ocean_option     = "MLM"
+     restore_method   = 2
+     mld_obs_ratio    = 1.
+     use_rain_flux    = .true.
+     sst_restore_tscale = 2.
+     start_lat        = -30.
+     end_lat          = 30.
+     Gam              = 0.2
+     use_old_mlm      = .true.
+     do_mld_restore   = .true.
+	 mld_restore_tscale = 2.
+     stress_ratio     = 1.
+     eps_day          = 10.
+/
+
+ &gfdl_mp_nml
+       do_sedi_heat = .false.
+       vi_max = 1.
+       vs_max = 2.
+       vg_max = 12.
+       vr_max = 12.
+       prog_ccn = .true.
+       prog_cin = .true.
+       tau_l2v = 225.
+       dw_land = 0.16
+       dw_ocean = 0.10
+       ql_mlt = 1.0e-3
+       qi0_crt = 8.0e-5
+       rh_inc = 0.30
+       rh_inr = 0.30
+       c_paut = 0.5
+       rthresh = 8.0e-6
+       c_pracw = 0.35
+       c_psacw = 1.0
+       c_pgacw = 1.e-4
+       c_praci = 1.0
+       c_psaci = 0.35
+       c_pgaci = 0.05
+       do_cld_adj = .true.
+       use_rhc_revap = .true.
+       f_dq_p = 3.0
+       rewmax = 10.0
+       rermin = 10.0
+       vdiffflag = 2
+       do_new_acc_water = .true.
+       do_psd_water_fall = .true.
+       n0w_sig = 1.2
+       n0w_exp = 66
+       muw = 11.0
+       alinw = 3.e7
+       blinw = 2.0
+       rewflag = 4
+       do_new_acc_ice = .true.
+       do_psd_ice_fall = .true.
+       n0i_sig = 1.0
+       n0i_exp = 10
+       mui = 1.0
+       alini = 11.72
+       blini = 0.41
+       reiflag = 7
+/
+
+ &diag_manager_nml 
+       prepend_date = .F.
+/
+
+  &interpolator_nml
+       interp_method = 'conserve_great_circle'
+/
+
+&namsfc
+       FNGLAC   = "INPUT/global_glacier.2x2.grb",
+       FNMXIC   = "INPUT/global_maxice.2x2.grb",
+       FNTSFC   = "INPUT/RTGSST.1982.2012.monthly.clim.grb",
+       FNMLDC   = "INPUT/mld_DR003_c1m_reg2.0.grb"
+       FNSNOC   = "INPUT/global_snoclim.1.875.grb",
+       FNZORC   = "igbp",
+       FNALBC   = "INPUT/fix_sfc/${CRES}.snowfree_albedo.tileX.nc",
+       FNALBC2  = "INPUT/fix_sfc/${CRES}.facsf.tileX.nc",
+       FNAISC   = "INPUT/CFSR.SEAICE.1982.2012.monthly.clim.grb",
+       FNTG3C   = "INPUT/fix_sfc/${CRES}.substrate_temperature.tileX.nc",
+       FNVEGC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNVETC   = "INPUT/fix_sfc/${CRES}.vegetation_type.tileX.nc",
+       FNSOTC   = "INPUT/fix_sfc/${CRES}.soil_type.tileX.nc",
+       FNSMCC   = "INPUT/global_soilmgldas.t1534.3072.1536.grb",
+       FNMSKH   = "INPUT/global_slmask.t1534.3072.1536.grb",
+       FNTSFA   = "",
+       FNACNA   = "",
+       FNSNOA   = "",
+       FNVMNC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNVMXC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNSLPC   = "INPUT/fix_sfc/${CRES}.slope_type.tileX.nc",
+       FNABSC   = "INPUT/fix_sfc/${CRES}.maximum_snow_albedo.tileX.nc",
+       LDEBUG   =.false.,
+       FSMCL(2) = 99999
+       FSMCL(3) = 99999
+       FSMCL(4) = 99999
+       FTSFS    = 90
+       FAISS    = 99999
+       FSNOL    = 99999
+       FSICL    = 99999
+       FTSFL    = 99999,
+       FAISL    = 99999,
+       FVETL    = 99999,
+       FSOTL    = 99999,
+       FvmnL    = 99999,
+       FvmxL    = 99999,
+       FSLPL    = 99999,
+       FABSL    = 99999,
+       FSNOS    = 99999,
+       FSICS    = 99999,
+/
+EOF
+
+# namlist for nested domain
+cat >! input_nest02.nml <<EOF
+ &amip_interp_nml
+     interp_oi_sst = .true.
+     use_ncep_sst = .true.
+     use_ncep_ice = .false.
+     no_anom_sst = .false.
+     data_set = 'reynolds_oi',
+     date_out_of_range = 'climo',
+/
+
+ &atmos_model_nml
+     blocksize = $blocksize_g2
+     chksum_debug = $chksum_debug
+     dycore_only = $dycore_only
+     fdiag = $fdiag
+     first_time_step = .false.
+/
+
+ &fms_io_nml
+       checksum_required   = .false.
+       max_files_r = 100,
+       max_files_w = 100,
+/
+
+ &fms_nml
+       clock_grain = 'ROUTINE',
+       domains_stack_size = 12000000,
+       print_memory_usage = .false.
+/
+
+ &fv_grid_nml
+       !grid_file = 'INPUT/grid_spec.nc'
+/
+
+ &fv_core_nml
+       layout   = $layout_x_g2,$layout_y_g2
+       io_layout = $io_layout_g2
+       npx      = $npx_g2
+       npy      = $npy_g2
+       ntiles   = 1
+       npz    = $npz_g2
+       !grid_type = -1
+       make_nh = $make_nh
+       fv_debug = .F.
+       range_warn = .T.
+       reset_eta = .F.
+       n_sponge = $npz_g2
+       nudge_qv = .T.
+       rf_fast = .F.
+       tau = 1.
+       rf_cutoff = 7.5e2
+       d2_bg_k1 = 0.20
+       d2_bg_k2 = 0.15
+       kord_tm = -11
+       kord_mt =  11
+       kord_wz =  11
+       kord_tr =  11
+       hydrostatic = $hydrostatic
+       phys_hydrostatic = $phys_hydrostatic
+       use_hydro_pressure = $use_hydro_pressure
+       beta = 0.
+       a_imp = 1.
+       p_fac = 0.1
+       k_split  = $k_split_g2
+       n_split  = $n_split_g2
+       nwat = 6 
+       na_init = $na_init
+       d_ext = 0.0
+       dnats = 2
+       fv_sg_adj = 300
+       fv_sg_adj_weak = 1200 
+       d2_bg = 0.
+       nord =  3
+       dddmp = 0.2
+       d4_bg = 0.12
+       vtdm4 = 0.02
+       !delt_max = 0.002
+       ke_bg = 0.
+       do_vort_damp = $do_vort_damp
+       external_ic = $external_ic
+       gfs_phil = $gfs_phil
+       nggps_ic = $nggps_ic
+       mountain = $mountain
+       ncep_ic = .F.
+       d_con = $d_con
+       hord_mt = 5
+       hord_vt = 5
+       hord_tm = 5
+       hord_dp = -5
+       hord_tr = -5
+       adjust_dry_mass = .F.
+       consv_te = 0.
+       consv_am = .F.
+       fill = .T.
+       dwind_2d = .F.
+       print_freq = $print_freq
+       warm_start = $warm_start
+       no_dycore = $no_dycore
+       !z_tracer = .T.
+       twowaynest = .t.
+       nestupdate = 7
+/
+
+ &integ_phys_nml
+       do_sat_adj = .F.
+       do_inline_mp = .T.
+       do_aerosol = .T.
+/
+
+ &coupler_nml
+       months = $months
+       days  = $days
+       hours = $hours
        dt_atmos = $dt_atmos
        dt_ocean = $dt_atmos
        current_date =  $curr_date
@@ -450,17 +796,16 @@ cat >! input.nml <<EOF
        fhlwr          = 3600.
        ialb           = 1
        iems           = 1
-       IAER           = 000
-       ico2           = 0
+       IAER           = 111
+       ico2           = 2
        isubc_sw       = 2
        isubc_lw       = 2
        isol           = 2
        lwhtr          = .true.
        swhtr          = .true.
-       orogwd         = .false.
-       cnvgwd         = .false.
+       cnvgwd         = .true.
        do_deep        = .false.
-       shal_cnv       = .false.
+       shal_cnv       = .true.
        cal_pre        = .false.
        redrag         = .true.
        dspheat        = .true.
@@ -468,10 +813,9 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 3
-       imfdeepcnv     = 3
-       limit_shal_conv = .true.
-       cdmbgwd        = 5.0, 0.25
+       imfshalcnv     = 2
+       imfdeepcnv     = 2
+       cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -481,8 +825,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 0.5
-       xkzm_h         = 0.5
+	   xkzm_m         = 1.5
+       xkzm_h         = 1.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -490,13 +834,8 @@ cat >! input.nml <<EOF
        cap_k0_land    = .false.
        cloud_gfdl     = .true.
        do_sat_adj     = .false.
-       do_ocean       = .false.
+       do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       fixed_date     = .true.
-       fixed_solhr    = .true.
-       fixed_sollat   = .true.
-       sollat         = 0.0
-       daily_mean     = .true.
 /
 
  &ocean_nml
@@ -508,7 +847,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.1
+     Gam              = 0.2
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.
@@ -517,27 +856,33 @@ cat >! input.nml <<EOF
 /
 
  &gfdl_mp_nml
-       do_sedi_heat = .false.
+       do_sedi_heat = .true.
        vi_max = 1.
-       vs_max = 2.
+       vs_max = 6.
        vg_max = 12.
        vr_max = 12.
+       qi_lim = 2.
+       prog_ccn = .true.
+       prog_cin = .true.
        tau_l2v = 225.
+       tau_v2l = 120.
        dw_land = 0.16
        dw_ocean = 0.10
        ql_mlt = 1.0e-3
-       qi0_crt = 8.0e-5
+       qi0_crt = 7.5e-5
+       qs0_crt = 1.0e-3
        rh_inc = 0.30
        rh_inr = 0.30
        c_paut = 0.5
-       rthresh = 8.5e-6
-       c_pracw = 0.35
-       c_psacw = 1.0
-       c_pgacw = 1.e-4
-       c_praci = 1.0
-       c_psaci = 0.35
-       c_pgaci = 0.05
-       fi2s_fac = 0.05
+       rthresh = 10.0e-6
+       c_pracw = 0.75
+       c_pgacw = 1.e-2
+       c_psaci = 0.05
+       c_pgaci = 0.03
+       c_pgacs = 0.05
+       do_hail = .true.
+       do_cond_timescale = .true.
+       delay_cond_evap = .true.
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
@@ -546,79 +891,20 @@ cat >! input.nml <<EOF
        vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
-       do_psd_water_num = .true.
        n0w_sig = 1.2
        n0w_exp = 66
        muw = 11.0
        alinw = 3.e7
        blinw = 2.0
        rewflag = 4
-       rewfac = 1.0
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
-       do_psd_ice_num = .true.
-       n0i_sig = 1.1
-       n0i_exp = 18
-       mui = 3.445
-       alini = 7.e2
-       blini = 1.0
+       n0i_sig = 1.0
+       n0i_exp = 10
+       mui = 1.0
+       alini = 11.72
+       blini = 0.41
        reiflag = 7
-       reifac = 0.8
-/
-
- &sa_sas_nml
-       dxcrtas_deep   = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-/
-
- &sa_aamf_nml
-       dxcrtas_deep   = 1.e3
-       c0s_deep       = 0.002
-       c1_deep        = 0.002
-       c0s_shal       = 0.002
-       c1_shal        = 0.002
-       limit_shal_conv = .true.
-/
-
- &sa_tke_edmf_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 1.0
-       xkzm_hl        = 1.0
-	   xkzm_mi        = 1.5
-       xkzm_hi        = 1.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_tke_edmf_new_nml
-       dspheat        = .true.
-       do_dk_hb19     = .false.
-       xkzinv         = 0.0
-	   xkzm_mo        = 0.5
-       xkzm_ho        = 0.5
-	   xkzm_ml        = 1.0
-       xkzm_hl        = 1.0
-	   xkzm_mi        = 1.5
-       xkzm_hi        = 1.5
-       cap_k0_land    = .false.
-       rlmx           = 500.0
-       redrag         = .true.
-       do_z0_hwrf17_hwonly = .true.
-       ivegsrc        = 1
-/
-
- &sa_gwd_nml
-       cdmbgwd        = 5.0, 0.25
 /
 
  &diag_manager_nml 
@@ -636,22 +922,22 @@ cat >! input.nml <<EOF
        FNMLDC   = "INPUT/mld_DR003_c1m_reg2.0.grb"
        FNSNOC   = "INPUT/global_snoclim.1.875.grb",
        FNZORC   = "igbp",
-       FNALBC   = "INPUT/global_snowfree_albedo.bosu.t1534.3072.1536.rg.grb",
-       FNALBC2  = "INPUT/global_albedo4.1x1.grb",
+       FNALBC   = "INPUT/fix_sfc/${CRES}.snowfree_albedo.tileX.nc",
+       FNALBC2  = "INPUT/fix_sfc/${CRES}.facsf.tileX.nc",
        FNAISC   = "INPUT/CFSR.SEAICE.1982.2012.monthly.clim.grb",
-       FNTG3C   = "INPUT/global_tg3clim.2.6x1.5.grb",
-       FNVEGC   = "INPUT/global_vegfrac.0.144.decpercent.grb",
-       FNVETC   = "INPUT/global_vegtype.igbp.t1534.3072.1536.rg.grb",
-       FNSOTC   = "INPUT/global_soiltype.statsgo.t1534.3072.1536.rg.grb",
+       FNTG3C   = "INPUT/fix_sfc/${CRES}.substrate_temperature.tileX.nc",
+       FNVEGC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNVETC   = "INPUT/fix_sfc/${CRES}.vegetation_type.tileX.nc",
+       FNSOTC   = "INPUT/fix_sfc/${CRES}.soil_type.tileX.nc",
        FNSMCC   = "INPUT/global_soilmgldas.t1534.3072.1536.grb",
        FNMSKH   = "INPUT/global_slmask.t1534.3072.1536.grb",
        FNTSFA   = "",
        FNACNA   = "",
        FNSNOA   = "",
-       FNVMNC   = "INPUT/global_shdmin.0.144x0.144.grb",
-       FNVMXC   = "INPUT/global_shdmax.0.144x0.144.grb",
-       FNSLPC   = "INPUT/global_slope.1x1.grb",
-       FNABSC   = "INPUT/global_mxsnoalb.uariz.t1534.3072.1536.rg.grb",
+       FNVMNC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNVMXC   = "INPUT/fix_sfc/${CRES}.vegetation_greenness.tileX.nc",
+       FNSLPC   = "INPUT/fix_sfc/${CRES}.slope_type.tileX.nc",
+       FNABSC   = "INPUT/fix_sfc/${CRES}.maximum_snow_albedo.tileX.nc",
        LDEBUG   =.false.,
        FSMCL(2) = 99999
        FSMCL(3) = 99999
@@ -672,7 +958,6 @@ cat >! input.nml <<EOF
        FSICS    = 99999,
 /
 EOF
-
 # run the executable
 ${run_cmd} | tee fms.out
 if ( $? != 0 || `grep Main fms.out | wc -l ` != 1 ) then
@@ -799,9 +1084,9 @@ if ($NO_SEND == "send") then
       if ( ! -d ${begindate}_atmos3d ) mkdir -p ${begindate}_atmos3d
       mv atmos3d*.nc* ${begindate}_atmos3d
       mv ${begindate}_atmos3d ../.
-      if ( ! -d ${begindate}_nggps3d ) mkdir -p ${begindate}_nggps3d
-      mv nggps3d*.nc* ${begindate}_nggps3d
-      mv ${begindate}_nggps3d ../.
+      if ( ! -d ${begindate}_phys3d ) mkdir -p ${begindate}_phys3d
+      mv phys3d*.nc* ${begindate}_phys3d
+      mv ${begindate}_phys3d ../.
       if ( ! -d ${begindate}_tracer3d ) mkdir -p ${begindate}_tracer3d
       mv tracer3d*.nc* ${begindate}_tracer3d
       mv ${begindate}_tracer3d ../.
@@ -816,7 +1101,7 @@ if ($NO_SEND == "send") then
 
     sbatch --export=source=$WORKDIR/history/$begindate,destination=gfdl:$gfdl_archive/history/$begindate,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_atmos3d,destination=gfdl:$gfdl_archive/history/${begindate}_atmos3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
-    #sbatch --export=source=$WORKDIR/history/${begindate}_nggps3d,destination=gfdl:$gfdl_archive/history/${begindate}_nggps3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
+    #sbatch --export=source=$WORKDIR/history/${begindate}_phys3d,destination=gfdl:$gfdl_archive/history/${begindate}_phys3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_tracer3d,destination=gfdl:$gfdl_archive/history/${begindate}_tracer3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_gfs_physics,destination=gfdl:$gfdl_archive/history/${begindate}_gfs_physics,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
     #sbatch --export=source=$WORKDIR/history/${begindate}_cloud3d,destination=gfdl:$gfdl_archive/history/${begindate}_cloud3d,extension=tar,type=history --output=$HOME/STDOUT/%x.o%j $SEND_FILE
