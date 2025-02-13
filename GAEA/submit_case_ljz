@@ -142,11 +142,17 @@
 #set title = "c1536_gfsic_rt2024_aero_inline"
 #set title = "c3072_gfsic_rt2024_aero"
 
+#set title = "c48_v2025"
 #set title = "c384_v2025"
 #set title = "c768_v2025"
 #set title = "c768n5r10_v2025"
 set title = "c1536_v2025"
 #set title = "c3072_v2025"
+
+#set title = "p3_c48_v2025"
+#set title = "p3_c768_v2025"
+#set title = "p3_c768n5r10_v2025"
+#set title = "p3_c1536_v2025"
 
 #set title = "c768_ifsic_rt2024_aero"
 #set title = "c1536_ifsic_rt2024_aero"
@@ -159,6 +165,7 @@ set title = "c1536_v2025"
 #set title = "DP_gfsic_rt2024_cpsd_inline"
 
 #set title = "DP_v2025"
+#set title = "p3_DP_v2025"
 
 #set basescript = "RUN_IPDv4_${title}.csh"
 #set basescript = "Z_RUN_${title}.csh"
@@ -663,7 +670,9 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2024_e013" # SHiELD 2024
 #set MEMO = "_RT2024_e013" # SHiELD 2024
 #set MEMO = "_RT2024_e015_e000" # SHiELD 2024
-set MEMO = "_v2025_e0001_r0001" # SHiELD 2024
+set MEMO = "_v2025_e0001_p3mp" # SHiELD 2024
+#set MEMO = "_v2025_e0002_p3mp" # SHiELD 2024
+#set MEMO = "_v2025_e0008_p3mp" # SHiELD 2024
 
 #set EXE = "x"
 #set EXE = "RT2018.bugfix.x" # 2018RT,radiation bugfix
@@ -987,6 +996,8 @@ set MEMO = "_v2025_e0001_r0001" # SHiELD 2024
 #set EXE = "RT2024.e013.x" # SHiELD 2024
 #set EXE = "RT2024.e015.x" # SHiELD 2024
 set EXE = "v2025.e0001.x" # SHiELD 2024
+#set EXE = "v2025.e0002.x" # SHiELD 2024
+#set EXE = "v2025.e0008.x" # SHiELD 2024
 
 #set reso = "DP"
 #set reso = "C48"
