@@ -146,12 +146,12 @@
 #set title = "c384_v2025"
 #set title = "c768_v2025"
 #set title = "c768n5r10_v2025"
-set title = "c1536_v2025"
+#set title = "c1536_v2025"
 #set title = "c3072_v2025"
 
 #set title = "p3_c48_v2025"
 #set title = "p3_c768_v2025"
-#set title = "p3_c768n5r10_v2025"
+set title = "p3_c768n5r10_v2025"
 #set title = "p3_c1536_v2025"
 
 #set title = "c768_ifsic_rt2024_aero"
@@ -670,9 +670,9 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2024_e013" # SHiELD 2024
 #set MEMO = "_RT2024_e013" # SHiELD 2024
 #set MEMO = "_RT2024_e015_e000" # SHiELD 2024
-set MEMO = "_v2025_e0001_p3mp" # SHiELD 2024
+#set MEMO = "_v2025_e0001_p3mp" # SHiELD 2024
 #set MEMO = "_v2025_e0002_p3mp" # SHiELD 2024
-#set MEMO = "_v2025_e0008_p3mp" # SHiELD 2024
+set MEMO = "_v2025_e0020_p3mp_r0006" # SHiELD 2024
 
 #set EXE = "x"
 #set EXE = "RT2018.bugfix.x" # 2018RT,radiation bugfix
@@ -995,9 +995,9 @@ set MEMO = "_v2025_e0001_p3mp" # SHiELD 2024
 #set EXE = "RT2024.e013.x" # SHiELD 2024
 #set EXE = "RT2024.e013.x" # SHiELD 2024
 #set EXE = "RT2024.e015.x" # SHiELD 2024
-set EXE = "v2025.e0001.x" # SHiELD 2024
+#set EXE = "v2025.e0001.x" # SHiELD 2024
 #set EXE = "v2025.e0002.x" # SHiELD 2024
-#set EXE = "v2025.e0008.x" # SHiELD 2024
+set EXE = "v2025.e0020.x" # SHiELD 2024
 
 #set reso = "DP"
 #set reso = "C48"
@@ -1005,9 +1005,9 @@ set EXE = "v2025.e0001.x" # SHiELD 2024
 #set reso = "C192"
 #set reso = "C384"
 #set reso = "C768"
-#set reso = "C768n5r10"
+set reso = "C768n5r10"
 #set reso = "C1152"
-set reso = "C1536"
+#set reso = "C1536"
 #set reso = "C3072"
 
 #set cluster = "c3"
@@ -1061,10 +1061,10 @@ if ( $cluster == "c3" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 164
+		set nodes = 41
 		set LX = 16
 		set LY = 16
-		set NT = 4
+		set NT = 1
 	endif
 	if ( $reso == "C1152" ) then
 		set nodes = 216
@@ -1116,10 +1116,10 @@ if ( $cluster == "c4" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 124
+		set nodes = 31
 		set LX = 12
 		set LY = 16
-		set NT = 4
+		set NT = 1
 	endif
 	if ( $reso == "C1152" ) then
 		set nodes = 192
@@ -1171,10 +1171,10 @@ if ( $cluster == "c5" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 176
+		set nodes = 44
 		set LX = 24
 		set LY = 24
-		set NT = 4
+		set NT = 1
         # when using the following setting, layout_x_g2 = 24, layout_y_g2 = 40 must be set in the runscript
         #set nodes = 78
 		#set LX = 16
@@ -1235,10 +1235,10 @@ if ( $cluster == "c6" ) then
 		#set NT = 4
 	endif
 	if ( $reso == "C768n5r10" ) then
-		set nodes = 117
+		set nodes = 30
 		set LX = 24
 		set LY = 24
-		set NT = 4
+		set NT = 1
         # when using the following setting, layout_x_g2 = 24, layout_y_g2 = 40 must be set in the runscript
         #set nodes = 52
 		#set LX = 16
@@ -1332,19 +1332,20 @@ foreach DATE ( \
 	#20200801.00Z \
 	#20200903.06Z \
 	#20200630.00Z \
-    20210401.00Z \
+    #20210401.00Z \
 	#20210827.00Z \
 	#20220829.00Z \
     #20210321.12Z \
+    #20250101.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
     # C-SHiELD 2023 cases \
-    #20230302.00Z 20230303.00Z 20230324.00Z 20230325.00Z 20230331.00Z 20230401.00Z 20230404.00Z 20230405.00Z \
-    #20230415.00Z 20230419.00Z 20230420.00Z 20230425.00Z 20230426.00Z 20230427.00Z 20230505.00Z 20230507.00Z \
-    #20230508.00Z 20230510.00Z 20230511.00Z 20230512.00Z 20230517.00Z 20230518.00Z 20230519.00Z 20230611.00Z \
-    #20230612.00Z 20230613.00Z 20230615.00Z 20230616.00Z 20230617.00Z 20230621.00Z 20230622.00Z 20230623.00Z \
-    #20230625.00Z 20230627.00Z 20230629.00Z 20230630.00Z 20230701.00Z 20230702.00Z 20230718.00Z 20230719.00Z \
-    #20230720.00Z 20230727.00Z 20230728.00Z 20230804.00Z 20230805.00Z 20230806.00Z 20230807.00Z 20230810.00Z \
-    #20230811.00Z 20230922.00Z 20230923.00Z \
+    20230302.00Z 20230303.00Z 20230324.00Z 20230325.00Z 20230331.00Z 20230401.00Z 20230404.00Z 20230405.00Z \
+    20230415.00Z 20230419.00Z 20230420.00Z 20230425.00Z 20230426.00Z 20230427.00Z 20230505.00Z 20230507.00Z \
+    20230508.00Z 20230510.00Z 20230511.00Z 20230512.00Z 20230517.00Z 20230518.00Z 20230519.00Z 20230611.00Z \
+    20230612.00Z 20230613.00Z 20230615.00Z 20230616.00Z 20230617.00Z 20230621.00Z 20230622.00Z 20230623.00Z \
+    20230625.00Z 20230627.00Z 20230629.00Z 20230630.00Z 20230701.00Z 20230702.00Z 20230718.00Z 20230719.00Z \
+    20230720.00Z 20230727.00Z 20230728.00Z 20230804.00Z 20230805.00Z 20230806.00Z 20230807.00Z 20230810.00Z \
+    20230811.00Z 20230922.00Z 20230923.00Z \
 	## ----------------------------------------------------------------------------------------------------- \
 	#20150101.00Z 20150106.00Z 20150111.00Z 20150116.00Z 20150121.00Z 20150126.00Z 20150131.00Z 20150205.00Z \
 	#20150210.00Z 20150215.00Z 20150220.00Z 20150225.00Z 20150302.00Z 20150307.00Z 20150312.00Z 20150317.00Z \

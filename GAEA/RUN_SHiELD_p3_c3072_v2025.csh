@@ -1,13 +1,13 @@
 #!/bin/tcsh -f
 #SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 ####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --job-name=C768_20150801.00Z
+#SBATCH --job-name=C3072_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
-#SBATCH --time=03:00:00
+#SBATCH --time=06:00:00
 #SBATCH --cluster=c4
-#SBATCH --nodes=64
-#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=12,LY=16,NT=4,NUM_TOT=1,ALL
+#SBATCH --nodes=192
+#SBATCH --export=CLU=c4,NAME=20150801.00Z,MEMO=_RT2018,EXE=x,LX=32,LY=32,NT=4,NUM_TOT=1,ALL
 
 # This script is optimized for GFDL MP runs using GFS ICs
 # Linjiong.Zhou@noaa.gov
@@ -47,7 +47,7 @@ source ${BUILD_AREA}/site/environment.${COMPILER}.csh
 set TYPE = "nh"         # choices:  nh, hydro
 set MODE = "32bit"      # choices:  32bit, 64bit
 set MONO = "non-mono"   # choices:  mono, non-mono
-set CASE = "C768"
+set CASE = "C3072"
 #set NAME = "20150801.00Z"
 #set MEMO = "_RT2018"
 #set EXE = "x"
@@ -83,14 +83,14 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
 endif
 if ( $CLU == 'c6' ) then
   set FIX  = ${INPUT_DATA}/emc.glopara/fix.v20231023/am/20220805
 endif
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202103/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -100,12 +100,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
 # changeable parameters
     # dycore definitions
-    set npx = "769"
-    set npy = "769"
+    set npx = "3073"
+    set npy = "3073"
     set npz = "91"
     set layout_x = $LX
     set layout_y = $LY
-    set io_layout = "1,1"
+    set io_layout = "4,4"
     set nthreads = $NT
 
     # blocking factor used for threading and general physics performance
@@ -163,7 +163,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
+      set k_split = "5"
       set n_split = "8"
     else
       # hydrostatic options
@@ -355,7 +355,7 @@ cat >! input.nml <<EOF
 
  &fms_nml
        clock_grain = 'ROUTINE',
-       domains_stack_size = 3000000,
+       domains_stack_size = 48000000,
        print_memory_usage = .false.
 /
 
@@ -495,9 +495,10 @@ cat >! input.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
-       imfdeepcnv     = 2
-       cdmbgwd        = 3.5, 0.25
+       imfshalcnv     = 3
+       imfdeepcnv     = 3
+       limit_shal_conv = .true.
+       cdmbgwd        = 5.0, 0.25
        prslrd0        = 0.
        ivegsrc        = 1
        isot           = 1
@@ -507,8 +508,8 @@ cat >! input.nml <<EOF
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
-	   xkzm_m         = 1.5
-       xkzm_h         = 1.5
+	   xkzm_m         = 0.5
+       xkzm_h         = 0.5
 	   xkzm_ml        = 1.0
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
@@ -518,6 +519,12 @@ cat >! input.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       dxcrtas        = 1.e3
+       c0s_deep       = 0.002
+       c1_deep        = 0.002
+       c0s_shal       = 0.002
+       c1_shal        = 0.002
+       scale_awareness_factor = 2.0
 /
 
  &ocean_nml
@@ -529,7 +536,7 @@ cat >! input.nml <<EOF
      sst_restore_tscale = 2.
      start_lat        = -30.
      end_lat          = 30.
-     Gam              = 0.2
+     Gam              = 0.1
      use_old_mlm      = .true.
      do_mld_restore   = .true.
 	 mld_restore_tscale = 2.

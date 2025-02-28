@@ -143,6 +143,12 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # determine which microphysics scheme is used
     set mp_flag = "7"
 
+    # determine how many mass species is used
+    set nwat = "4"
+
+    # determine how many ice category is used
+    set ncat = "1"
+
     # set various debug options
     set no_dycore = ".false."
     set dycore_only = ".false."
@@ -257,13 +263,22 @@ cat ${BUILD_AREA}/tables/diag_table_6species_DP >> diag_table
 
 # copy over the other tables and executable
 cp -f ${BUILD_AREA}/tables/data_table data_table
-cp -f ${BUILD_AREA}/tables/field_table_mp_$mp_flag field_table
+if ( $mp_flag == 7 ) then
+    cp -f ${BUILD_AREA}/tables/field_table_mp_${mp_flag}_${ncat} field_table
+else
+    cp -f ${BUILD_AREA}/tables/field_table_mp_${mp_flag} field_table
+endif
 cp -f $executable .
 cp -f ${SCRIPT}.csh .
 
 # P3 microphysics
 if ( $mp_flag == "7" ) then
-    cp -rf /gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/P3-microphysics/lookup_tables/* INPUT/
+    if ( $CLU == 'c5' ) then
+        cp -rf /gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/P3-microphysics/lookup_tables/* INPUT/
+    endif
+    if ( $CLU == 'c6' ) then
+        cp -rf /gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/P3-microphysics/lookup_tables/* INPUT/
+    endif
 endif
 
 # GFS FIX data
@@ -372,7 +387,8 @@ cat >! input.nml <<EOF
        p_fac = 0.1
        k_split  = $k_split
        n_split  = $n_split
-       nwat = 4
+       nwat = $nwat
+       ncat = $ncat
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
@@ -573,8 +589,15 @@ cat >! input.nml <<EOF
 /
 
  &p3_mp_nml
-       trplMomI = .F.
-       liqfrac = .F.
+       log_trplMomI = .F.
+       log_liqfrac = .F.
+       cp_heating = .F.
+       dt_max = 60.0
+       iparam = 3
+       rparam = 1
+       scpf_on = .T.
+       scpf_pfrac = 1.0
+       scpf_resfact = 1.0
 /
 
  &diag_manager_nml 

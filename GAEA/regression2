@@ -84,7 +84,7 @@ set title = "SHiELD_p3_c48_v2025"
 #set MEMO = "_RT2023_e002_res02"
 #set MEMO = "_RT2023_e039_res02"
 #set MEMO = "_RT2024_e001_res02"
-set MEMO = "_v2025_e0001_res02"
+set MEMO = "_v2025_e0020_res02"
 
 #set EXE = "x"
 #set EXE = "20190305mods.rt1.x"
@@ -130,7 +130,7 @@ set MEMO = "_v2025_e0001_res02"
 #set EXE = "RT2023.e002.x"
 #set EXE = "RT2023.e039.x"
 #set EXE = "RT2024.e001.x"
-set EXE = "v2025.e0001.x"
+set EXE = "v2025.e0020.x"
 
 set basescript = "RUN_${title}.csh"
 
@@ -140,8 +140,8 @@ set DATE = "20210401.00Z"
 
 #set cluster = "c3"
 #set cluster = "c4"
-#set cluster = "c5"
-set cluster = "c6"
+set cluster = "c5"
+#set cluster = "c6"
 
 set runname = SHiELD_${title}${MEMO}.${DATE}
 echo $runname
