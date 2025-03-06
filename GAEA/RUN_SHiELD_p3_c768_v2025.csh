@@ -121,7 +121,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 0
+    set na_init = 1
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."

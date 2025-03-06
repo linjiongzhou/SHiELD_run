@@ -591,7 +591,7 @@ cat >! input.nml <<EOF
        dt_max = 60.0
        iparam = 3
        rparam = 1
-       scpf_on = .T.
+       scpf_on = .F.
        scpf_pfrac = 1.0
        scpf_resfact = 1.0
 /

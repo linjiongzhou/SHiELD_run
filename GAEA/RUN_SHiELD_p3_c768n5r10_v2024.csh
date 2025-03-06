@@ -112,8 +112,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npy = "769"
     set npx_g2 = "2161"
     set npy_g2 = "1201"
-    set npz = "91"
-    set npz_g2 = "50"
+    set npz = "63"
+    set npz_g2 = "63"
     set layout_x = $LX
     set layout_y = $LY
     set layout_x_g2 = "36"
@@ -180,10 +180,10 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "1"
-      set n_split = "8"
-      set k_split_g2 = "4"
-      set n_split_g2 = "10"
+      set k_split = "2"
+      set n_split = "4"
+      set k_split_g2 = "5"
+      set n_split_g2 = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -465,7 +465,7 @@ cat >! input.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .T.
+       do_aerosol = .F.
 /
 
 &fv_nest_nml
@@ -515,8 +515,8 @@ cat >! input.nml <<EOF
        ncld           = 5
        zhao_mic       = .false.
        pdfcld         = .true.
-       fhswr          = 3600.
-       fhlwr          = 3600.
+       fhswr          = 1800.
+       fhlwr          = 1800.
        ialb           = 1
        iems           = 1
        IAER           = 111
@@ -544,8 +544,8 @@ cat >! input.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 0
-       rlmx           = 500.0
+       isatmedmf      = 1
+       rlmx           = 300.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5
@@ -584,8 +584,8 @@ cat >! input.nml <<EOF
        vs_max = 2.
        vg_max = 12.
        vr_max = 12.
-       prog_ccn = .true.
-       prog_cin = .true.
+       prog_ccn = .false.
+       prog_cin = .false.
        tau_l2v = 225.
        dw_land = 0.16
        dw_ocean = 0.10
@@ -595,34 +595,35 @@ cat >! input.nml <<EOF
        rh_inr = 0.30
        c_paut = 0.5
        rthresh = 8.0e-6
-       c_pracw = 0.35
-       c_psacw = 1.0
-       c_pgacw = 1.e-4
-       c_praci = 1.0
-       c_psaci = 0.35
-       c_pgaci = 0.05
+       !c_pracw = 0.35
+       !c_psacw = 1.0
+       !c_pgacw = 1.e-4
+       !c_praci = 1.0
+       !c_psaci = 0.35
+       !c_pgaci = 0.05
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
        rewmax = 10.0
        rermin = 10.0
-       vdiffflag = 2
-       do_new_acc_water = .true.
-       do_psd_water_fall = .true.
-       n0w_sig = 1.2
-       n0w_exp = 66
-       muw = 11.0
-       alinw = 3.e7
-       blinw = 2.0
-       rewflag = 4
-       do_new_acc_ice = .true.
-       do_psd_ice_fall = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
-       reiflag = 7
+       !vdiffflag = 2
+       !do_new_acc_water = .true.
+       !do_psd_water_fall = .true.
+       !n0w_sig = 1.2
+       !n0w_exp = 66
+       !muw = 11.0
+       !alinw = 3.e7
+       !blinw = 2.0
+       !rewflag = 4
+       !do_new_acc_ice = .true.
+       !do_psd_ice_fall = .true.
+       !n0i_sig = 1.0
+       !n0i_exp = 10
+       !mui = 1.0
+       !alini = 11.72
+       !blini = 0.41
+       !reiflag = 7
+       snow_grauple_combine = .false.
 /
 
  &p3_mp_nml
@@ -786,7 +787,7 @@ cat >! input_nest02.nml <<EOF
        consv_te = 0.
        consv_am = .F.
        fill = .T.
-       fill_gfs = .T.
+       fill_gfs = .F.
        dwind_2d = .F.
        print_freq = $print_freq
        warm_start = $warm_start
@@ -799,7 +800,7 @@ cat >! input_nest02.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .T.
+       do_aerosol = .F.
 /
 
  &coupler_nml
@@ -832,10 +833,10 @@ cat >! input_nest02.nml <<EOF
        ncld           = 5
        zhao_mic       = .false.
        pdfcld         = .true.
-       fhswr          = 3600.
-       fhlwr          = 3600.
+       fhswr          = 1800.
+       fhlwr          = 1800.
        ialb           = 1
-       iems           = 1
+       iems           = 2
        IAER           = 111
        ico2           = 2
        isubc_sw       = 2
@@ -846,6 +847,9 @@ cat >! input_nest02.nml <<EOF
        cnvgwd         = .true.
        do_deep        = .false.
        shal_cnv       = .true.
+       clam_shal      = 0.1
+       c0s_shal       = 0.01
+       c1_shal        = 1.
        cal_pre        = .false.
        redrag         = .true.
        dspheat        = .true.
@@ -853,7 +857,7 @@ cat >! input_nest02.nml <<EOF
        random_clds    = .false.
        trans_trac     = .true.
        cnvcld         = .false.
-       imfshalcnv     = 2
+       imfshalcnv     = 4
        imfdeepcnv     = 2
        cdmbgwd        = 3.5, 0.25
        prslrd0        = 0.
@@ -861,8 +865,8 @@ cat >! input_nest02.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 0
-       rlmx           = 500.0
+       isatmedmf      = 1
+       rlmx           = 300.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
 	   xkzm_m         = 1.5
@@ -871,11 +875,16 @@ cat >! input_nest02.nml <<EOF
        xkzm_hl        = 1.0
 	   xkzm_mi        = 1.5
        xkzm_hi        = 1.5
-       cap_k0_land    = .false.
+       gwd_p_crit     = 50.e2
+       cap_k0_land    = .true.
        cloud_gfdl     = .true.
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       lsm = 2
+       iopt_alb       = 1
+       iopt_snf       = 4
+       iopt_dveg      = 5
 /
 
  &ocean_nml
@@ -902,8 +911,8 @@ cat >! input_nest02.nml <<EOF
        vg_max = 12.
        vr_max = 12.
        qi_lim = 2.
-       prog_ccn = .true.
-       prog_cin = .true.
+       prog_ccn = .false.
+       prog_cin = .false.
        tau_l2v = 225.
        tau_v2l = 120.
        dw_land = 0.16
@@ -911,40 +920,45 @@ cat >! input_nest02.nml <<EOF
        ql_mlt = 1.0e-3
        qi0_crt = 7.5e-5
        qs0_crt = 1.0e-3
-       rh_inc = 0.30
-       rh_inr = 0.30
+       rh_inc = 0.20
+       rh_inr = 0.20
        c_paut = 0.5
        rthresh = 10.0e-6
        c_pracw = 0.75
+       c_psacw = 1.0
        c_pgacw = 1.e-2
+       c_praci = 1.0
        c_psaci = 0.05
        c_pgaci = 0.03
        c_pgacs = 0.05
+       ccn_l = 200.
+       ccn_o = 70.
        do_hail = .true.
        do_cond_timescale = .true.
        delay_cond_evap = .true.
        do_cld_adj = .true.
        use_rhc_revap = .true.
        f_dq_p = 3.0
-       rewmax = 10.0
-       rermin = 10.0
+       rewmax = 15.0
+       rermin = 15.0
        vdiffflag = 2
        do_new_acc_water = .true.
        do_psd_water_fall = .true.
-       n0w_sig = 1.2
-       n0w_exp = 66
-       muw = 11.0
-       alinw = 3.e7
-       blinw = 2.0
-       rewflag = 4
+       !n0w_sig = 1.2
+       !n0w_exp = 66
+       !muw = 11.0
+       !alinw = 3.e7
+       !blinw = 2.0
+       rewflag = 1
        do_new_acc_ice = .true.
        do_psd_ice_fall = .true.
-       n0i_sig = 1.0
-       n0i_exp = 10
-       mui = 1.0
-       alini = 11.72
-       blini = 0.41
-       reiflag = 7
+       !n0i_sig = 1.0
+       !n0i_exp = 10
+       !mui = 1.0
+       !alini = 11.72
+       !blini = 0.41
+       !reiflag = 7
+       snow_grauple_combine = .false.
 /
 
  &p3_mp_nml
