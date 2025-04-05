@@ -154,7 +154,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
       set use_hydro_pressure = ".F."   # can be tested
       set consv_te = "1."
         # time step parameters in FV3
-      set k_split = "4"
+      set k_split = "5"
       set n_split = "8"
     else
       # hydrostatic options

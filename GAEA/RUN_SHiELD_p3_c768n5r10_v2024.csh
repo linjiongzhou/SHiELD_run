@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
-#SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+#SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
@@ -86,12 +86,16 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.inte
 
 # input filesets
 if ( $CLU == 'c5' ) then
-  set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/GRID
 endif
 if ( $CLU == 'c6' ) then
-  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
 endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104

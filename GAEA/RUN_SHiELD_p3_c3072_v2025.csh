@@ -141,10 +141,10 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set ozcalc = ".true."
 
     # determine which microphysics scheme is used
-    set mp_flag = "7"
+    set mp_flag = "2"
 
     # determine how many mass species is used
-    set nwat = "4"
+    set nwat = "6"
 
     # determine how many ice category is used
     set ncat = "1"
@@ -399,7 +399,7 @@ cat >! input.nml <<EOF
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
-       dnats = 1
+       dnats = 2
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -434,7 +434,7 @@ cat >! input.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .F.
+       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -592,15 +592,12 @@ cat >! input.nml <<EOF
 /
 
  &p3_mp_nml
-       log_trplMomI = .F.
-       log_liqfrac = .F.
+       log_trplMomI = .T.
+       log_liqfrac = .T.
        cp_heating = .F.
-       dt_max = 60.0
-       iparam = 3
-       rparam = 1
        scpf_on = .T.
        scpf_pfrac = 1.0
-       scpf_resfact = 1.0
+       scpf_resfact = 0.5
 /
 
  &diag_manager_nml 

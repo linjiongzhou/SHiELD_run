@@ -111,8 +111,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # run length
     set months = "0"
-    set days = "0"
-    set hours = "3"
+    set days = "1"
+    set hours = "0"
     set minutes = "0"
     set seconds = "0"
     set dt_atmos = "5"
@@ -141,10 +141,10 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set ozcalc = ".true."
 
     # determine which microphysics scheme is used
-    set mp_flag = "7"
+    set mp_flag = "2"
 
     # determine how many mass species is used
-    set nwat = "4"
+    set nwat = "6"
 
     # determine how many ice category is used
     set ncat = "1"
@@ -347,9 +347,8 @@ cat >! input.nml <<EOF
  &test_case_nml
        test_case = 19
        no_wind = .true.
-       dt_amp = 5.0
-       gaussian_dt = .false.
-       bubble_do = .true.
+       dt_amp = 0.5
+       gaussian_dt = .true.
 /
 
  &fv_core_nml
@@ -589,15 +588,9 @@ cat >! input.nml <<EOF
 /
 
  &p3_mp_nml
-       log_trplMomI = .F.
-       log_liqfrac = .F.
+       log_trplMomI = .T.
+       log_liqfrac = .T.
        cp_heating = .F.
-       dt_max = 60.0
-       iparam = 3
-       rparam = 1
-       scpf_on = .T.
-       scpf_pfrac = 1.0
-       scpf_resfact = 1.0
 /
 
  &diag_manager_nml 

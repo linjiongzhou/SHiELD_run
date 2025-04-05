@@ -83,14 +83,14 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
-set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
+set ICS  = ${INPUT_DATA}/global.v202311/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
 endif
 if ( $CLU == 'c6' ) then
   set FIX  = ${INPUT_DATA}/emc.glopara/fix.v20231023/am/20220805
 endif
-set GRID = ${INPUT_DATA}/global.v202101/${CASE}/GRID
+set GRID = ${INPUT_DATA}/global.v202311/${CASE}/GRID
 set FIX_bqx  = ${INPUT_DATA}/climo_data.v201807
 
 # sending file to gfdl
@@ -121,7 +121,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # =0 implies no pre-conditioning
     # >0 means new adiabatic pre-conditioning
     # <0 means older adiabatic pre-conditioning
-    set na_init = 1
+    set na_init = 0
 
     # variables for controlling initialization of NCEP/NGGPS ICs
     set filtered_terrain = ".true."
@@ -141,10 +141,10 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set ozcalc = ".true."
 
     # determine which microphysics scheme is used
-    set mp_flag = "7"
+    set mp_flag = "2"
 
     # determine how many mass species is used
-    set nwat = "4"
+    set nwat = "6"
 
     # determine how many ice category is used
     set ncat = "1"
@@ -399,7 +399,7 @@ cat >! input.nml <<EOF
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
-       dnats = 1
+       dnats = 2
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -434,7 +434,7 @@ cat >! input.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .F.
+       do_aerosol = .T.
 /
 
  &coupler_nml
@@ -585,12 +585,9 @@ cat >! input.nml <<EOF
 /
 
  &p3_mp_nml
-       log_trplMomI = .F.
-       log_liqfrac = .F.
+       log_trplMomI = .T.
+       log_liqfrac = .T.
        cp_heating = .F.
-       dt_max = 60.0
-       iparam = 3
-       rparam = 1
        scpf_on = .T.
        scpf_pfrac = 1.0
        scpf_resfact = 1.0
