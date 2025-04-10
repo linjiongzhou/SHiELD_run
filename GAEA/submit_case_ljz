@@ -673,7 +673,7 @@ set basescript = "RUN_SHiELD_${title}.csh"
 #set MEMO = "_RT2024_e015_e000" # SHiELD 2024
 #set MEMO = "_v2025_e0001_p3mp" # SHiELD 2024
 #set MEMO = "_v2025_e0002_p3mp" # SHiELD 2024
-set MEMO = "_v2025_e0031_r0001" # SHiELD 2024
+set MEMO = "_v2025_e0034_r0001" # SHiELD 2024
 
 #set EXE = "x"
 #set EXE = "RT2018.bugfix.x" # 2018RT,radiation bugfix
@@ -998,7 +998,7 @@ set MEMO = "_v2025_e0031_r0001" # SHiELD 2024
 #set EXE = "RT2024.e015.x" # SHiELD 2024
 #set EXE = "v2025.e0001.x" # SHiELD 2024
 #set EXE = "v2025.e0002.x" # SHiELD 2024
-set EXE = "v2025.e0031.x" # SHiELD 2024
+set EXE = "v2025.e0034.x" # SHiELD 2024
 
 #set reso = "DP"
 #set reso = "C48"

@@ -134,7 +134,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # run length
     set months = "0"
-    set days = "1"
+    set days = "3"
     set hours = "12"
     set dt_atmos = "150"
 
@@ -631,12 +631,9 @@ cat >! input.nml <<EOF
 /
 
  &p3_mp_nml
-       log_trplMomI = .F.
-       log_liqfrac = .F.
+       log_trplMomI = .T.
+       log_liqfrac = .T.
        cp_heating = .F.
-       dt_max = 60.0
-       iparam = 3
-       rparam = 1
        scpf_on = .T.
        scpf_pfrac = 1.0
        scpf_resfact = 1.0
@@ -885,7 +882,7 @@ cat >! input_nest02.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
-       lsm = 2
+       lsm            = 2
        iopt_alb       = 1
        iopt_snf       = 4
        iopt_dveg      = 5
@@ -966,12 +963,9 @@ cat >! input_nest02.nml <<EOF
 /
 
  &p3_mp_nml
-       log_trplMomI = .F.
-       log_liqfrac = .F.
+       log_trplMomI = .T.
+       log_liqfrac = .T.
        cp_heating = .F.
-       dt_max = 60.0
-       iparam = 3
-       rparam = 1
        scpf_on = .T.
        scpf_pfrac = 1.0
        scpf_resfact = 0.5
