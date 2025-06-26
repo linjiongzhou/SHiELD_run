@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
-####SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
-#SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+#SBATCH --output=/gpfs/f5/gfdl_w/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
+####SBATCH --output=/gpfs/f6/bil-coastal-gfdl/scratch/Linjiong.Zhou/SHiELD/stdout/%x.o%j
 #SBATCH --job-name=C768_20150801.00Z
 #SBATCH --partition=batch
 #SBATCH --account=gfdl_w
@@ -82,7 +82,7 @@ echo ${num} >! ${RST_COUNT}
 
 # directory structure
 set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${MEMO}/
-set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.intel.${EXE}
+set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
 if ( $CLU == 'c5' ) then
@@ -94,8 +94,10 @@ endif
 if ( $CLU == 'c6' ) then
   #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
-  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/GRID
 endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -134,7 +136,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
 
     # run length
     set months = "0"
-    set days = "3"
+    set days = "1"
     set hours = "12"
     set dt_atmos = "150"
 

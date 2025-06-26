@@ -86,12 +86,18 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELDFULL_${TYPE}.${COMP}.${MODE}.inte
 
 # input filesets
 if ( $CLU == 'c5' ) then
-  set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  set GRID = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/GRID
 endif
 if ( $CLU == 'c6' ) then
-  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/GRID
 endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -113,7 +119,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set npx_g2 = "2161"
     set npy_g2 = "1201"
     set npz = "91"
-    set npz_g2 = "50"
+    set npz_g2 = "63"
     set layout_x = $LX
     set layout_y = $LY
     set layout_x_g2 = "36"
@@ -131,7 +137,7 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     # run length
     set months = "0"
     set days = "1"
-    set hours = "0"
+    set hours = "12"
     set dt_atmos = "150"
 
     # set the pre-conditioning of the solution
@@ -173,8 +179,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
         # time step parameters in FV3
       set k_split = "1"
       set n_split = "8"
-      set k_split_g2 = "4"
-      set n_split_g2 = "10"
+      set k_split_g2 = "5"
+      set n_split_g2 = "6"
     else
       # hydrostatic options
       set make_nh = ".F."
@@ -185,8 +191,8 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
         # time step parameters in FV3
       set k_split = "2"
       set n_split = "6"
-      set k_split_g2 = "4"
-      set n_split_g2 = "10"
+      set k_split_g2 = "5"
+      set n_split_g2 = "6"
     endif
 
     if (${MONO} == "mono" || ${MONO} == "monotonic") then
@@ -379,7 +385,7 @@ cat >! input.nml <<EOF
        fv_debug = .F.
        range_warn = .T.
        reset_eta = .F.
-       n_sponge = 30
+       sg_cutoff = 100.e2
        nudge_qv = .T.
        rf_fast = .F.
        tau = 5.
@@ -699,7 +705,7 @@ cat >! input_nest02.nml <<EOF
        fv_debug = .F.
        range_warn = .T.
        reset_eta = .F.
-       n_sponge = $npz_g2
+       sg_cutoff = 100.e2
        nudge_qv = .T.
        rf_fast = .F.
        tau = 1.
@@ -747,6 +753,7 @@ cat >! input_nest02.nml <<EOF
        consv_te = 0.
        consv_am = .F.
        fill = .T.
+       fill_gfs = .T.
        dwind_2d = .F.
        print_freq = $print_freq
        warm_start = $warm_start
@@ -821,7 +828,9 @@ cat >! input_nest02.nml <<EOF
        isot           = 1
        ysupbl         = .false.
        satmedmf       = .true.
-       isatmedmf      = 0
+       isatmedmf      = 1
+       use_tke_pbl    = .true.
+       use_shear_pbl  = .true.
        rlmx           = 500.0
        do_dk_hb19     = .false.
        xkzminv        = 0.0
@@ -836,6 +845,10 @@ cat >! input_nest02.nml <<EOF
        do_sat_adj     = .false.
        do_ocean       = .true.
        do_z0_hwrf17_hwonly = .true.
+       lsm            = 2
+       iopt_alb       = 1
+       iopt_snf       = 4
+       iopt_dveg      = 5
 /
 
  &ocean_nml
@@ -858,9 +871,16 @@ cat >! input_nest02.nml <<EOF
  &gfdl_mp_nml
        do_sedi_heat = .true.
        vi_max = 1.
-       vs_max = 6.
-       vg_max = 12.
-       vr_max = 12.
+       vs_max = 4.
+       vg_max = 40.
+       vr_max = 10.
+       vi_fac = 1.
+       vs_fac = 1.5
+       vg_fac = 1.5
+       vr_fac = 1.
+       radr_flag = 2
+       rads_flag = 2
+       radg_flag = 2
        qi_lim = 2.
        prog_ccn = .true.
        prog_cin = .true.
