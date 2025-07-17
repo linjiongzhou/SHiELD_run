@@ -598,6 +598,7 @@ cat >! input.nml <<EOF
        scpf_on = .T.
        scpf_pfrac = 1.0
        scpf_resfact = 0.7
+       dt_max = 30.0
 /
 
  &diag_manager_nml 

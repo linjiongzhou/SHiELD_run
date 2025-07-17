@@ -88,16 +88,18 @@ set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${
 if ( $CLU == 'c5' ) then
   #set ICS  = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
-  set ICS  = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/${NAME}_IC
-  set GRID = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/${NAME}_IC
+  #set GRID = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/GRID
+  set ICS  = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/${NAME}_IC
+  set GRID = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/GRID
 endif
 if ( $CLU == 'c6' ) then
   #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
   #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
-  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/${NAME}_IC
-  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/C768n5r10_hwt/GRID
+  set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/${NAME}_IC
+  set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/GRID
 endif
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -970,6 +972,7 @@ cat >! input_nest02.nml <<EOF
        scpf_on = .T.
        scpf_pfrac = 1.0
        scpf_resfact = 0.5
+       dt_max = 15.0
 /
 
  &diag_manager_nml 
