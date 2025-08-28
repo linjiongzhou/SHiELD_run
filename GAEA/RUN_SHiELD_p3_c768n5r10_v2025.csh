@@ -90,6 +90,8 @@ if ( $CLU == 'c5' ) then
   #set GRID = /gpfs/f5/gfdl_w/world-shared/Kai-yuan.Cheng/SHiELD_IC/NEST_${CASE}/GRID
   #set ICS  = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f5/gfdl_w/world-shared/Alex.Kaltenbaugh/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202101/${CASE}_hwt/${NAME}_IC
+  #set GRID = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202101/${CASE}_hwt/GRID
   set ICS  = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/${NAME}_IC
   set GRID = /gpfs/f5/gfdl_w/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/GRID
 endif
@@ -98,6 +100,8 @@ if ( $CLU == 'c6' ) then
   #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Kai-yuan.Cheng/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
   #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/${NAME}_IC
   #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/C-SHiELD/SHiELD_IC/NEST_${CASE}/GRID
+  #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202101/${CASE}_hwt/${NAME}_IC
+  #set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202101/${CASE}_hwt/GRID
   set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/${NAME}_IC
   set GRID = /gpfs/f6/bil-coastal-gfdl/proj-shared/Matthew.Morin/SHiELD_INPUT_DATA/variable.v202311/${CASE}_hwt/GRID
 endif
@@ -166,13 +170,22 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set ozcalc = ".true."
 
     # determine which microphysics scheme is used
-    set mp_flag = "2"
-
-    # determine how many mass species is used
-    set nwat = "6"
-
-    # determine how many ice category is used
-    set ncat = "1"
+    set mp_scheme = "GFDL"  # choices: GFDL, P3
+    
+    if (${mp_scheme} == "GFDL") then
+      set mp_flag = "2"
+      set nwat = "6"
+      set ncat = "1"
+      set dnats = "2"
+      set do_aerosol = ".true."
+    endif
+    if (${mp_scheme} == "P3") then
+      set mp_flag = "7"
+      set nwat = "5"
+      set ncat = "2"
+      set dnats = "1"
+      set do_aerosol = ".false."
+    endif
 
     # set various debug options
     set no_dycore = ".false."
@@ -434,7 +447,7 @@ cat >! input.nml <<EOF
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = $dnats
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -473,7 +486,7 @@ cat >! input.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .T.
+       do_aerosol = $do_aerosol
 /
 
 &fv_nest_nml
@@ -765,7 +778,7 @@ cat >! input_nest02.nml <<EOF
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = $dnats
        fv_sg_adj = 300
        fv_sg_adj_weak = 1200 
        d2_bg = 0.
@@ -804,7 +817,7 @@ cat >! input_nest02.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .T.
+       do_aerosol = $do_aerosol
 /
 
  &coupler_nml

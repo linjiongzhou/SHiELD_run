@@ -83,6 +83,7 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+#set ICS  = ${INPUT_DATA}/global.v202101/${CASE}/${NAME}_IC
 set ICS  = ${INPUT_DATA}/global.v202311/${CASE}/${NAME}_IC
 if ( $CLU == 'c5' ) then
   set FIX  = ${INPUT_DATA}/fix.v202104
@@ -141,13 +142,22 @@ set TIME_STAMP = ${BUILD_AREA}/site/time_stamp.csh
     set ozcalc = ".true."
 
     # determine which microphysics scheme is used
-    set mp_flag = "2"
-
-    # determine how many mass species is used
-    set nwat = "6"
-
-    # determine how many ice category is used
-    set ncat = "1"
+    set mp_scheme = "GFDL"  # choices: GFDL, P3
+    
+    if (${mp_scheme} == "GFDL") then
+      set mp_flag = "2"
+      set nwat = "6"
+      set ncat = "1"
+      set dnats = "2"
+      set do_aerosol = ".true."
+    endif
+    if (${mp_scheme} == "P3") then
+      set mp_flag = "7"
+      set nwat = "5"
+      set ncat = "2"
+      set dnats = "1"
+      set do_aerosol = ".false."
+    endif
 
     # set various debug options
     set no_dycore = ".false."
@@ -399,7 +409,7 @@ cat >! input.nml <<EOF
        mp_flag = $mp_flag
        na_init = $na_init
        d_ext = 0.0
-       dnats = 2
+       dnats = $dnats
        fv_sg_adj = 600
        d2_bg = 0.
        nord =  3
@@ -434,7 +444,7 @@ cat >! input.nml <<EOF
  &integ_phys_nml
        do_sat_adj = .F.
        do_inline_mp = .T.
-       do_aerosol = .T.
+       do_aerosol = $do_aerosol
 /
 
  &coupler_nml
