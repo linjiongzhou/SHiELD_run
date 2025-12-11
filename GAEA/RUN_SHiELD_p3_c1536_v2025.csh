@@ -83,6 +83,7 @@ set WORKDIR    = ${BASEDIR}/${RELEASE}/${NAME}.${CASE}.${TYPE}.${MODE}.${MONO}${
 set executable = ${BUILD_AREA}/Build/bin/SHiELD_${TYPE}.${COMP}.${MODE}.intel.${EXE}
 
 # input filesets
+#set ICS  = /gpfs/f5/gfdl_w/proj-shared/Alex.Kaltenbaugh/SHiELD_INPUT_DATA/global.v202311/${CASE}/${NAME}_IC
 #set ICS  = /gpfs/f6/bil-coastal-gfdl/proj-shared/Alex.Kaltenbaugh/SHiELD_INPUT_DATA/global.v202311/${CASE}/${NAME}_IC
 #set ICS  = ${INPUT_DATA}/global.v202103/${CASE}/${NAME}_IC
 set ICS  = ${INPUT_DATA}/global.v202311/${CASE}/${NAME}_IC

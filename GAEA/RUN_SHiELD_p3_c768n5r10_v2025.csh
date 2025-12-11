@@ -926,11 +926,11 @@ cat >! input_nest02.nml <<EOF
        vg_max = 40.
        vr_max = 10.
        vi_fac = 1.
-       vs_fac = 1.5
-       vg_fac = 1.5
+       vs_fac = 1.0
+       vg_fac = 1.0
        vr_fac = 1.
        radr_flag = 2
-       rads_flag = 2
+       rads_flag = 1
        radg_flag = 2
        qi_lim = 2.
        prog_ccn = .true.
